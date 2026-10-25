@@ -31,23 +31,19 @@
             <p id="usdtBalance" class="text-2xl font-bold text-green-400">0.00 USDT</p>
         </div>
 
-        <!-- Income & Earnings Breakdown Dashboard -->
+        <!-- Income Breakdown Dashboard -->
         <div class="grid grid-cols-2 gap-3">
-            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
-                <p class="text-xs text-slate-400">Income Wallet</p>
-                <p id="incomeWallet" class="text-lg font-bold text-yellow-400">0.00 USDT</p>
-            </div>
             <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
                 <p class="text-xs text-slate-400">Direct Income</p>
                 <p id="directIncome" class="text-lg font-bold text-blue-400">0.00 USDT</p>
             </div>
             <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
-                <p class="text-xs text-slate-400">Autopool Income</p>
+                <p class="text-xs text-slate-400">Global Autopool</p>
                 <p id="autopoolIncome" class="text-lg font-bold text-purple-400">0.00 USDT</p>
             </div>
-            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
-                <p class="text-xs text-slate-400">Awards</p>
-                <p id="awardsIncome" class="text-lg font-bold text-pink-400">0.00 USDT</p>
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 col-span-2">
+                <p class="text-xs text-slate-400">Award Income</p>
+                <p id="awardIncome" class="text-lg font-bold text-pink-400">0.00 USDT</p>
             </div>
         </div>
 
@@ -74,10 +70,10 @@
             <input type="text" id="sponsorInput" placeholder="0x..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-orange-500">
         </div>
 
-        <!-- Level Package Selection (1 to 20) -->
+        <!-- Level Package Selection -->
         <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 space-y-3">
             <div class="flex justify-between items-center">
-                <h2 class="text-sm font-bold text-slate-200">Select Level Package (1 - 20)</h2>
+                <h2 class="text-sm font-bold text-slate-200">Select Level Package</h2>
                 <span id="selectedInfo" class="text-xs text-orange-400 font-semibold">Level 1 (2 USDT)</span>
             </div>
             
@@ -101,7 +97,8 @@
             "function buyLevel(uint256 level, address referrer) external",
             "function users(address) view returns (uint256 id, address referrer, uint256 partnersCount, uint256 income)",
             "function levelIncome(address, uint256) view returns (uint256)",
-            "function isUserExists(address) view returns (bool)"
+            "function isUserExists(address) view returns (bool)",
+            "function activeLevels(address, uint256) view returns (bool)"
         ];
 
         const USDT_ABI = [
@@ -110,10 +107,8 @@
             "function balanceOf(address) view returns (uint256)"
         ];
 
-        const levelPrices = [
-            2, 5, 10, 20, 40, 80, 160, 320, 640, 1280, 
-            2500, 5000, 10000, 20000, 40000, 80000, 150000, 300000, 800000, 1500000
-        ];
+        // लेव्हल १ ते १५ च्या किंमती
+        const levelPrices = [2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000];
 
         let provider, signer, userAddress, contract;
         let selectedLevelIndex = 0;
@@ -175,16 +170,25 @@
                 const balance = await usdtContract.balanceOf(userAddress);
                 document.getElementById("usdtBalance").innerText = parseFloat(ethers.utils.formatUnits(balance, 18)).toFixed(2) + " USDT";
 
+                const exists = await contract.isUserExists(userAddress);
+                if (!exists) {
+                    document.getElementById("totalIncome").innerText = "0.00 USDT";
+                    document.getElementById("directIncome").innerText = "0.00 USDT";
+                    document.getElementById("autopoolIncome").innerText = "0.00 USDT";
+                    document.getElementById("awardIncome").innerText = "0.00 USDT";
+                    document.getElementById("totalPartnersBadge").innerText = "0 Partners";
+                    return;
+                }
+
                 const userInfo = await contract.users(userAddress);
                 const totalInc = ethers.utils.formatUnits(userInfo.income, 18);
                 const partnersCount = userInfo.partnersCount.toString();
                 
-                // डॅशबोर्ड डेटा अपडेट करणे
+                // सर्व इन्कम डॅशबोर्डवर सेट करणे
                 document.getElementById("totalIncome").innerText = totalInc + " USDT";
-                document.getElementById("incomeWallet").innerText = totalInc + " USDT";
                 document.getElementById("directIncome").innerText = "0.00 USDT"; 
                 document.getElementById("autopoolIncome").innerText = "0.00 USDT";
-                document.getElementById("awardsIncome").innerText = "0.00 USDT";
+                document.getElementById("awardIncome").innerText = "0.00 USDT";
 
                 // डायरेक्ट टीम सेक्शन अपडेट करणे
                 document.getElementById("totalPartnersBadge").innerText = partnersCount + " Partners";
