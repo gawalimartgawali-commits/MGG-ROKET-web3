@@ -1,93 +1,158 @@
-<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-<script>
-    const CONTRACT_ADDRESS = "0x843162bFc44b13dAAdB13652681b3902332f324D";
-    const USDT_ADDRESS = "0x55d398326f99059ff775485246999027b3197955";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MGGROKET DApp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+</head>
+<body class="bg-slate-950 text-white min-h-screen p-4">
+    <div class="max-w-md mx-auto space-y-4">
+        <!-- Header -->
+        <div class="flex justify-between items-center bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+            <h1 class="text-xl font-bold text-orange-500">🚀 MGGROKET</h1>
+            <button id="connectBtn" onclick="connectWallet()" class="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg font-semibold text-sm transition">Connect Wallet</button>
+        </div>
 
-    // तुमच्या कॉन्ट्रॅक्टचे आवश्यक ABI (Functions & Views)
-    const CONTRACT_ABI = [
-        "function buyLevel(uint256 level, address referrer) external",
-        "function users(address) view returns (uint256 id, address referrer, uint256 partnersCount, uint256 income)",
-        "function levelIncome(address, uint256) view returns (uint256)",
-        "function isUserExists(address) view returns (bool)"
-    ];
+        <!-- Connected Wallet Card -->
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 space-y-2">
+            <p class="text-xs text-slate-400 uppercase tracking-wider">Connected Wallet</p>
+            <p id="walletStatus" class="text-orange-400 font-mono text-sm font-bold">Not Connected</p>
+            <div class="flex justify-between items-center text-xs text-slate-400 pt-2 border-t border-slate-800">
+                <span>Network:</span>
+                <span class="text-slate-200">BNB Smart Chain</span>
+            </div>
+        </div>
 
-    const USDT_ABI = [
-        "function approve(address spender, uint256 amount) external returns (bool)",
-        "function allowance(address owner, address spender) view returns (uint256)"
-    ];
+        <!-- USDT Balance Card -->
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 space-y-2">
+            <p class="text-xs text-slate-400 uppercase tracking-wider">USDT Balance</p>
+            <p id="usdtBalance" class="text-2xl font-bold text-green-400">0.00 USDT</p>
+        </div>
 
-    let provider, signer, userAddress, contract;
+        <!-- Dashboard Stats Card -->
+        <div class="grid grid-cols-2 gap-4">
+            <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+                <p class="text-xs text-slate-400">Total Partners</p>
+                <p id="totalPartners" class="text-xl font-bold text-blue-400">0</p>
+            </div>
+            <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+                <p class="text-xs text-slate-400">Total Income</p>
+                <p id="totalIncome" class="text-xl font-bold text-emerald-400">0.00 USDT</p>
+            </div>
+        </div>
 
-    async function connectWallet() {
-        if (typeof window.ethereum !== 'undefined') {
+        <!-- Sponsor Input -->
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 space-y-2">
+            <label class="text-xs text-slate-400 uppercase tracking-wider">Sponsor / Referrer Address</label>
+            <input type="text" id="sponsorInput" placeholder="0x..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-orange-500">
+        </div>
+
+        <!-- Level Package Selection -->
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 space-y-3">
+            <h2 class="text-sm font-bold text-slate-200">Select Level Package</h2>
+            <div class="grid grid-cols-2 gap-2">
+                <button onclick="selectLevel(0, 2)" class="p-3 rounded-lg border border-orange-500 bg-orange-500/10 text-left transition">
+                    <p class="font-bold text-sm">Level 1</p>
+                    <p class="text-xs text-orange-400">2 USDT</p>
+                </button>
+                <button onclick="selectLevel(1, 5)" class="p-3 rounded-lg border border-slate-800 bg-slate-950 text-left transition hover:border-slate-700">
+                    <p class="font-bold text-sm">Level 2</p>
+                    <p class="text-xs text-slate-400">5 USDT</p>
+                </button>
+                <button onclick="selectLevel(2, 10)" class="p-3 rounded-lg border border-slate-800 bg-slate-950 text-left transition hover:border-slate-700">
+                    <p class="font-bold text-sm">Level 3</p>
+                    <p class="text-xs text-slate-400">10 USDT</p>
+                </button>
+                <button onclick="selectLevel(3, 20)" class="p-3 rounded-lg border border-slate-800 bg-slate-950 text-left transition hover:border-slate-700">
+                    <p class="font-bold text-sm">Level 4</p>
+                    <p class="text-xs text-slate-400">20 USDT</p>
+                </button>
+            </div>
+
+            <div class="pt-2 space-y-2">
+                <button onclick="approveUSDT()" class="w-full bg-blue-600 hover:bg-blue-700 p-3 rounded-xl font-bold text-sm transition">1. Approve USDT</button>
+                <button onclick="buyPackage()" class="w-full bg-green-600 hover:bg-green-700 p-3 rounded-xl font-bold text-sm transition">2. Buy Package</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CONTRACT_ADDRESS = "0x843162bFc44b13dAAdB13652681b3902332f324D";
+        const USDT_ADDRESS = "0x55d398326f99059ff775485246999027b3197955";
+
+        const CONTRACT_ABI = [
+            "function buyLevel(uint256 level, address referrer) external",
+            "function users(address) view returns (uint256 id, address referrer, uint256 partnersCount, uint256 income)",
+            "function levelIncome(address, uint256) view returns (uint256)",
+            "function isUserExists(address) view returns (bool)"
+        ];
+
+        const USDT_ABI = [
+            "function approve(address spender, uint256 amount) external returns (bool)",
+            "function allowance(address owner, address spender) view returns (uint256)",
+            "function balanceOf(address) view returns (uint256)"
+        ];
+
+        let provider, signer, userAddress, contract;
+        let selectedLevelIndex = 0;
+        let selectedLevelPrice = 2;
+
+        function selectLevel(index, price) {
+            selectedLevelIndex = index;
+            selectedLevelPrice = price;
+        }
+
+        async function connectWallet() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    provider = new ethers.providers.Web3Provider(window.ethereum);
+                    await provider.send("eth_requestAccounts", []);
+                    signer = provider.getSigner();
+                    userAddress = await signer.getAddress();
+                    
+                    document.getElementById("connectBtn").innerText = userAddress.substring(0, 6) + "..." + userAddress.substring(38);
+                    document.getElementById("walletStatus").innerText = userAddress;
+                    
+                    contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+                    loadUserData();
+                } catch (error) {
+                    console.error(error);
+                    alert("Error connecting wallet!");
+                }
+            } else {
+                alert("Please use Trust Wallet or Web3 browser!");
+            }
+        }
+
+        async function loadUserData() {
             try {
-                provider = new ethers.providers.Web3Provider(window.ethereum);
-                await provider.send("eth_requestAccounts", []);
-                signer = provider.getSigner();
-                userAddress = await signer.getAddress();
-                
-                document.getElementById("connectBtn").innerText = userAddress.substring(0, 6) + "..." + userAddress.substring(38);
-                document.getElementById("walletStatus").innerText = userAddress;
-                
-                contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-                loadUserData();
+                const usdtContract = new ethers.Contract(USDT_ADDRESS, USDT_ABI, provider);
+                const balance = await usdtContract.balanceOf(userAddress);
+                document.getElementById("usdtBalance").innerText = parseFloat(ethers.utils.formatUnits(balance, 18)).toFixed(2) + " USDT";
+
+                const userInfo = await contract.users(userAddress);
+                document.getElementById("totalPartners").innerText = userInfo.partnersCount.toString();
+                document.getElementById("totalIncome").innerText = ethers.utils.formatUnits(userInfo.income, 18) + " USDT";
+            } catch (e) {
+                console.log("Data load error: ", e);
+            }
+        }
+
+        async function approveUSDT() {
+            if (!signer) {
+                alert("Please connect wallet first!");
+                return;
+            }
+            try {
+                const usdtContract = new ethers.Contract(USDT_ADDRESS, USDT_ABI, signer);
+                const amount = ethers.utils.parseUnits(selectedLevelPrice.toString(), 18);
+
+                alert("Approving USDT...");
+                const txApprove = await usdtContract.approve(CONTRACT_ADDRESS, amount);
+                await txApprove.wait();
+                alert("USDT Approved successfully!");
             } catch (error) {
                 console.error(error);
-                alert("वॉलेट कनेक्ट करताना एरर आली!");
-            }
-        } else {
-            alert("कृपया Trust Wallet किंवा Web3 ब्राउझर वापरा!");
-        }
-    }
-
-    async function loadUserData() {
-        try {
-            // USDT बॅलन्स तपासणे
-            const usdtContract = new ethers.Contract(USDT_ADDRESS, ["function balanceOf(address) view returns (uint256)"], provider);
-            const balance = await usdtContract.balanceOf(userAddress);
-            document.getElementById("usdtBalance").innerText = parseFloat(ethers.utils.formatUnits(balance, 18)).toFixed(2) + " USDT";
-
-            // युजरची माहिती (Members & Income) कॉन्ट्रॅक्टमधून फेच करणे
-            const userInfo = await contract.users(userAddress);
-            document.getElementById("totalPartners").innerText = userInfo.partnersCount.toString();
-            document.getElementById("totalIncome").innerText = ethers.utils.formatUnits(userInfo.income, 18) + " USDT";
-        } catch (e) {
-            console.log("Data load error: ", e);
-        }
-    }
-
-    async function approveAndBuy(levelIndex, priceInUSDT, defaultRef) {
-        let refAddress = document.getElementById("sponsorInput").value || defaultRef;
-        if (!ethers.utils.isAddress(refAddress)) {
-            alert("कृपया वैध स्पॉन्सर (रिफरर) ॲड्रेस टाका!");
-            return;
-        }
-
-        try {
-            const usdtContract = new ethers.Contract(USDT_ADDRESS, USDT_ABI, signer);
-            const amount = ethers.utils.parseUnits(priceInUSDT.toString(), 18);
-
-            alert("पायरी १: USDT अप्रूव्ह होत आहे...");
-            const txApprove = await usdtContract.approve(CONTRACT_ADDRESS, amount);
-            await txApprove.wait();
-
-            alert("पायरी २: लेव्हल खरेदी ट्रान्जेक्शन सुरू होत आहे...");
-            const txBuy = await contract.buyLevel(levelIndex, refAddress);
-            await txBuy.wait();
-
-            alert("अभिनंदन! लेव्हल यशस्वीपणे ॲक्टिव्ह झाली आहे!");
-            loadUserData();
-        } catch (error) {
-            console.error(error);
-            alert("ट्रान्जेक्शन अयशस्वी झाले: " + (error.data?.message || error.message));
-        }
-    }
-
-    window.onload = function() {
-        if (typeof window.ethereum !== 'undefined') {
-            window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
-                if (accounts.length > 0) connectWallet();
-            });
-        }
-    };
-</script>
+                alert("Approval failed: " + (error.data?.message || error.message));
