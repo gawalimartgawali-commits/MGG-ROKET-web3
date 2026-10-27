@@ -1,109 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MGG ROCKET - BEP20</title>
+<title>MGG ROCKET - Working</title>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
 <style>
-body{background:#0a0a0a;color:#fff;font-family:Arial;text-align:center;padding:20px}
-.card{background:#1a1a1a;border:1px solid gold;border-radius:15px;padding:20px;margin:15px auto;max-width:500px}
-button{background:gold;color:#000;padding:12px 20px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;margin:5px;width:90%}
-button:hover{background:#ffd700}
-.gold{color:gold}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0a0a;color:#fff;font-family:system-ui;text-align:center;padding:16px}
+.gold{color:#facc15}
+.card{background:#151515;border:1px solid #333;border-radius:16px;padding:18px;margin:14px auto;max-width:600px}
+button{background:#facc15;color:#000;padding:12px 18px;border:none;border-radius:10px;font-weight:800;cursor:pointer;margin:6px;width:90%;max-width:300px}
+button:disabled{background:#555;color:#999}
 .level-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.level{background:#222;padding:10px;border-radius:10px;border:1px solid #333}
+@media(max-width:500px){.level-grid{grid-template-columns:1fr}}
+.level{background:#1f1f1f;padding:12px;border-radius:10px;border:1px solid #2a2a2a;text-align:left;font-size:13px}
+.muted{color:#888;font-size:12px}
+.error{background:#3f1a1a;border:1px solid #7f1d1d;color:#fca5a5;padding:10px;border-radius:10px;margin:10px 0;font-size:12px}
 </style>
 </head>
 <body>
-<h1 class="gold">🚀 MGG ROCKET BEP20</h1>
-<p>BSC Network | 15 Levels | 3X Income | Auto + Manual Upgrade</p>
+<h1 class="gold">🚀 MGG ROCKET - TEST</h1>
+<p class="muted">जर हा दिसत असेल तर HTML चालतोय ✅</p>
 
 <div class="card">
-<button onclick="connect()">🔗 Connect Wallet</button>
-<p id="wallet">Not Connected</p>
-<p>USDT Balance: <span id="usdtBal">0</span></p>
+<button onclick="test()">1. HTML Test करा</button>
+<p id="testResult" class="muted"></p>
 </div>
 
 <div class="card">
-<h3 class="gold">⚙️ Settings</h3>
-<button onclick="setAuto(true)">Auto Upgrade ON</button>
-<button onclick="setAuto(false)">Auto Upgrade OFF</button>
-<p id="autoStatus"></p>
+<button onclick="connect()">2. Wallet Connect करा</button>
+<p id="wallet" class="muted">Not Connected</p>
+<p>USDT: <span id="usdtBal" class="gold">0</span></p>
+<p id="chain" class="muted"></p>
+<p id="error" class="error" style="display:none"></p>
 </div>
 
 <div class="card">
-<h3 class="gold">15 LEVELS - Full Amount</h3>
+<h3 class="gold">15 LEVELS</h3>
 <div class="level-grid" id="levels"></div>
 </div>
 
 <div class="card">
-<h3 class="gold">💰 Global Claim</h3>
-<div id="claims"></div>
+<h3 class="gold">💰 Claim</h3>
+<div id="claims" class="muted">Wallet connect करा</div>
 </div>
 
 <script>
-const CONTRACT_ADDRESS = "0xTUMCHA_DEPLOY_ADDRESS_TAKA"; // इथे तुझा Address टाक
+const CONTRACT_ADDRESS = "0xTUMCHA_DEPLOY_ADDRESS_TAKA";
 const USDT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955";
 const ABI = [
 "function join(uint256 _level, address _upline) external",
 "function claimGlobalIncome(uint256 _level) external",
 "function setAutoUpgrade(bool _on) external",
 "function getPending(address,uint256) view returns(uint256)",
-"function packages(uint256) view returns(uint256)",
 "function isActive(address,uint256) view returns(bool)",
 "function autoUpgrade(address) view returns(bool)"
 ];
-let signer, contract, usdtContract;
+let signer, contract, usdtContract, userAddress;
 const prices = [2,5,10,20,50,100,200,500,1000,2000,3000,5000,7000,9000,10000];
 
+function test(){
+ document.getElementById("testResult").innerText = "✅ HTML + JS चालतोय! Level count: "+prices.length;
+ loadOffline();
+}
+function loadOffline(){
+ let html="";
+ for(let i=0;i<15;i++){
+  html+=`<div class="level"><b>Level ${i+1} = ${prices[i]} USDT</b><br><span class="muted">3X Cap: ${prices[i]*3} USDT</span><br><button onclick="alert('पहले CONTRACT_ADDRESS टाका!')" >Buy Level ${i+1}</button></div>`;
+ }
+ document.getElementById("levels").innerHTML=html;
+}
 async function connect(){
-if(!window.ethereum) return alert("MetaMask Install Kara");
-const provider = new ethers.BrowserProvider(window.ethereum);
-await provider.send("eth_requestAccounts", []);
-signer = await provider.getSigner();
-const addr = await signer.getAddress();
-document.getElementById("wallet").innerText = addr.slice(0,6)+"..."+addr.slice(-4);
-contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-usdtContract = new ethers.Contract(USDT_ADDRESS, ["function balanceOf(address) view returns(uint256)","function approve(address,uint256) returns(bool)","function allowance(address,address) view returns(uint256)"], signer);
-load();
+ const errBox = document.getElementById("error");
+ errBox.style.display="none";
+ try{
+  if(!window.ethereum) throw new Error("MetaMask नाहीये");
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  await provider.send("eth_requestAccounts", []);
+  const net = await provider.getNetwork();
+  document.getElementById("chain").innerText = "Chain: "+net.chainId+" "+(Number(net.chainId)===56?"BSC ✅":"BSC नाही ❌");
+  if(Number(net.chainId)!==56){ try{ await window.ethereum.request({method:'wallet_switchEthereumChain', params:[{chainId:'0x38'}]}); }catch(e){} }
+  signer = await provider.getSigner();
+  userAddress = await signer.getAddress();
+  document.getElementById("wallet").innerText = userAddress.slice(0,6)+"..."+userAddress.slice(-4);
+  try{
+    usdtContract = new ethers.Contract(USDT_ADDRESS, ["function balanceOf(address) view returns(uint256)"], provider);
+    const bal = await usdtContract.balanceOf(userAddress);
+    document.getElementById("usdtBal").innerText = ethers.formatUnits(bal,18);
+  }catch(e){}
+  if(ethers.isAddress(CONTRACT_ADDRESS)){
+    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+    usdtContract = new ethers.Contract(USDT_ADDRESS, ["function balanceOf(address) view returns(uint256)","function approve(address,uint256) returns(bool)","function allowance(address,address) view returns(uint256)"], signer);
+    await loadWithContract();
+  }else{
+    document.getElementById("claims").innerText = "⚠️ CONTRACT_ADDRESS टाकलेला नाही. Demo Level दिसतायत.";
+    loadOffline();
+  }
+ }catch(e){
+  errBox.style.display="block";
+  errBox.innerText = "Error: "+(e.reason||e.message);
+ }
 }
-
-async function load(){
-const user = await signer.getAddress();
-const bal = await usdtContract.balanceOf(user);
-document.getElementById("usdtBal").innerText = ethers.formatUnits(bal,18);
-let html="", claimHtml="";
-for(let i=0;i<15;i++){
-const active = await contract.isActive(user,i);
-const pending = await contract.getPending(user,i);
-html+=`<div class="level"><b>Level ${i+1}<br>${prices[i]} USDT</b><br>${active?'✅ Active':'❌ Not Active'}<br>
-${!active?`<button onclick="joinLevel(${i})">Buy Level ${i+1}</button>`:''}</div>`;
-if(pending>0) claimHtml+=`<p>Level ${i+1}: ${ethers.formatUnits(pending,18)} USDT <button onclick="claimLevel(${i})">Claim</button></p>`;
+async function loadWithContract(){
+ let html="", claimHtml="";
+ for(let i=0;i<15;i++){
+  let active=false, pending=0n;
+  try{ active = await contract.isActive(userAddress,i); }catch{}
+  try{ pending = await contract.getPending(userAddress,i); }catch{}
+  html+=`<div class="level"><b>L${i+1} = ${prices[i]} USDT</b><br>${active?'✅ Active':'❌ Not Active'}<br>${!active?`<button onclick="joinLevel(${i})">Buy L${i+1}</button>`:'Joined'}</div>`;
+  if(pending>0) claimHtml+=`<p>L${i+1}: ${ethers.formatUnits(pending,18)} <button onclick="claimLevel(${i})">Claim</button></p>`;
+ }
+ document.getElementById("levels").innerHTML=html;
+ document.getElementById("claims").innerHTML=claimHtml||"No Pending";
 }
-document.getElementById("levels").innerHTML=html;
-document.getElementById("claims").innerHTML=claimHtml||"No Pending Income<br>1 Direct Compulsory for Autopool";
-const auto = await contract.autoUpgrade(user);
-document.getElementById("autoStatus").innerText = "Auto Upgrade: "+(auto?"ON ✅":"OFF ❌");
-}
-
 async function joinLevel(lvl){
-try{
-const price = ethers.parseUnits(prices[lvl].toString(),18);
-const allowance = await usdtContract.allowance(await signer.getAddress(), CONTRACT_ADDRESS);
-if(allowance < price){ const tx1 = await usdtContract.approve(CONTRACT_ADDRESS, price); await tx1.wait(); alert("Approved"); }
-const upline = prompt("Upline Address Taka (Creator cha asel tar):","0x843162bFc44b13dAAdB13652681b3902332f324D");
-const tx = await contract.join(lvl, upline); await tx.wait(); alert("Joined Level "+(lvl+1)); load();
-}catch(e){ alert(e.reason||e.message); }
+ if(!ethers.isAddress(CONTRACT_ADDRESS)) return alert("पहले CONTRACT_ADDRESS टाका!");
+ try{
+  const price=ethers.parseUnits(prices[lvl].toString(),18);
+  const allowance=await usdtContract.allowance(userAddress, CONTRACT_ADDRESS);
+  if(allowance < price){ const tx=await usdtContract.approve(CONTRACT_ADDRESS, ethers.parseUnits("1000000000",18)); await tx.wait(); }
+  const upline=prompt("Upline:","0x843162bFc44b13dAAdB13652681b3902332f324D");
+  const tx=await contract.join(lvl,upline); await tx.wait(); alert("Joined!"); loadWithContract();
+ }catch(e){ alert(e.reason||e.message); }
 }
-
-async function claimLevel(lvl){
-try{ const tx = await contract.claimGlobalIncome(lvl); await tx.wait(); alert("Claimed!"); load(); }catch(e){ alert(e.reason||e.message); }
-}
-
-async function setAuto(on){
-try{ const tx = await contract.setAutoUpgrade(on); await tx.wait(); alert("Auto "+(on?"ON":"OFF")); load(); }catch(e){ alert(e.message); }
-}
+async function claimLevel(lvl){ try{const tx=await contract.claimGlobalIncome(lvl); await tx.wait(); alert("Claimed"); loadWithContract();}catch(e){alert(e.reason||e.message);} }
+loadOffline();
 </script>
 </body>
 </html>
