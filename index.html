@@ -1,24 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MGG ROCKET - Dashboard</title>
+<title>MGG ROCKET - Final</title>
 <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
 <style>
-body{background:#000;color:#fff;font-family:Arial;text-align:center;padding:15px;margin:0}
-.header{color:#FFD700;font-size:28px;font-weight:bold;margin:10px}
-.card{background:#111;border:2px solid #FFD700;border-radius:15px;padding:15px;margin:12px auto;max-width:500px}
-.btn{background:linear-gradient(45deg,#FFD700,#FFA500);color:#000;padding:12px 20px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;margin:5px;width:90%;font-size:15px}
-.income-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
-.income-box{background:#1a1a1a;border:1px solid #FFD700;border-radius:10px;padding:12px}
-.income-box h4{margin:5px;color:#FFD700;font-size:14px}
-.income-box p{margin:5px;font-size:18px;font-weight:bold;color:#00ff00}
-.level{border:1px solid #333;padding:10px;margin:5px;border-radius:8px;cursor:pointer}
-.level.active{border-color:#FFD700;background:#222;color:#FFD700}
-.level.owned{border-color:#00ff00;background:#0a2a0a}
-.refund{background:#ff3333!important;color:#fff!important}
-.total{background:linear-gradient(45deg,#111,#222);border:2px solid #00ff00!important}
+* {box-sizing:border-box}
+body{background:#000;color:#fff;font-family:Arial;text-align:center;padding:15px;margin:0;overflow-x:hidden}
+.header{color:#FFD700;font-size:32px;font-weight:bold;margin:10px}
+.card{background:#111;border:2px solid #FFD700;border-radius:15px;padding:18px;margin:14px auto;max-width:520px;width:100%;display:block;overflow:visible;min-height:auto}
+.btn{background:linear-gradient(45deg,#FFD700,#FFA500);color:#000;padding:13px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;width:92%;margin:6px;font-size:15px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+.box{background:#1a1a1a;border:1px solid #444;border-radius:12px;padding:14px;min-height:110px;display:flex;flex-direction:column;justify-content:center}
+.box.gold{border-color:#FFD700}
+.box.green{border-color:#00ff00;border-width:2px}
+.box h4{margin:4px;color:#FFD700;font-size:13px}
+.box p{margin:6px;font-size:18px;font-weight:bold;color:#fff}
+.total-box{border:2px solid #00ff00!important;padding-bottom:20px}
+.level{border:1px solid #333;padding:11px;margin:6px 0;border-radius:10px;cursor:pointer;text-align:left}
+.level.active{border-color:#FFD700;background:#2a2210;color:#FFD700}
+.claim-btn{background:#00ff00!important;color:#000!important;padding:8px!important;font-size:13px!important;margin-top:8px!important;width:100%!important;border-radius:8px!important}
+.refund{background:#ff1a1a!important;color:#fff!important}
+small{color:#aaa;font-size:11px;display:block;margin-top:4px}
+#totalBox{grid-column:span 2;min-height:100px}
 </style>
 </head>
 <body>
@@ -29,144 +34,89 @@ body{background:#000;color:#fff;font-family:Arial;text-align:center;padding:15px
 <div class="card">
 <button class="btn" onclick="connect()">🔗 Connect Wallet</button>
 <p id="wallet">Not Connected</p>
-<div class="income-grid">
-<div class="income-box"><h4>Direct Count</h4><p id="direct">-</p></div>
-<div class="income-box"><h4>USDT Balance</h4><p id="balance">-</p></div>
+<div class="grid">
+<div class="box gold"><h4>Direct Count</h4><p id="direct">-</p></div>
+<div class="box gold"><h4>USDT Balance</h4><p id="balance">-</p></div>
 </div>
 </div>
 
-<!-- NEW INCOME DASHBOARD -->
-<div class="card total">
-<h3 style="color:#00ff00">💰 MY INCOME DASHBOARD</h3>
-<div class="income-grid">
-<div class="income-box"><h4>💸 Direct Income (20%)</h4><p id="directIncome">0.00 USDT</p><small>तू Refer केलेल्यांचे 20%</small></div>
-<div class="income-box"><h4>🌍 Global Income (70%)</h4><p id="globalIncome">0.00 USDT</p><small>Global Pool मधला वाटा</small></div>
+<!-- FINAL INCOME DASHBOARD - FULL HEIGHT - NO CUT -->
+<div class="card total-box">
+<h3 style="color:#00ff00;margin:8px 0 12px 0">💰 MY INCOME DASHBOARD</h3>
+
+<div class="grid">
+<div class="box">
+<h4>💸 Direct Income</h4>
+<p id="directIncome" style="color:#00ff00">0.00 USDT</p>
+<small>20% From Referrals</small>
 </div>
-<div class="income-grid">
-<div class="income-box"><h4>👑 Creator Income</h4><p id="creatorIncome">0.00 USDT</p></div>
-<div class="income-box" style="border-color:#00ff00"><h4>💵 Total Income</h4><p id="totalIncome" style="font-size:22px">0.00 USDT</p></div>
+
+<div class="box">
+<h4>🌍 Global Income</h4>
+<p id="globalIncome" style="color:#00ff00">0.00 USDT</p>
+<small>70% Pool Share</small>
+<button class="claim-btn" onclick="claimGlobal()">✅ Claim Global</button>
 </div>
-<p id="incomeNote" style="font-size:12px;color:#888">Live Blockchain वरून Calculate होते</p>
+</div>
+
+<div class="box green" style="margin-top:12px;min-height:110px">
+<h4>💵 Total Income</h4>
+<p id="totalIncome" style="font-size:26px;color:#00ff00">0.00 USDT</p>
+<small>Live From Blockchain</small>
+<button class="btn" onclick="loadIncome()" style="margin-top:10px;background:#111;color:#FFD700;border:1px solid #FFD700;padding:8px;font-size:13px">🔄 Refresh Income</button>
+</div>
+
 </div>
 
 <div class="card">
-<h3>Select Level</h3>
+<h3>🎯 Select Level</h3>
 <div id="levels"></div>
-<p>Upline: <input id="upline" placeholder="0x..." style="width:90%;padding:8px;border-radius:5px"></p>
+<input id="upline" placeholder="Upline 0x..." style="width:92%;padding:10px;border-radius:8px;border:1px solid #FFD700;background:#000;color:#fff;margin:8px 0">
 <button class="btn" onclick="approve()">1️⃣ Approve USDT</button>
 <button class="btn" onclick="join()">2️⃣ Join Level</button>
-<div id="refundArea" style="margin-top:15px"></div>
+<div id="refundArea"></div>
 </div>
 
 <div class="card">
-<h3>📊 My Active Levels</h3>
-<div id="myLevels">Connect Wallet First</div>
+<h3>🔗 My Referral Link</h3>
+<p id="refLink" style="word-break:break-all;font-size:12px;color:#FFD700">Connect First</p>
+<button class="btn" onclick="copyRef()">Copy Link</button>
 </div>
 
 <script>
 let web3, account, usdt, rocket;
-const USDT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955";
-const ROCKET_ADDRESS = "0xYOUR_CONTRACT_ADDRESS_HERE"; // <-- इथे तुझा Address टाक
-
-const USDT_ABI = [{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
-const ROCKET_ABI = [
-{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"},{"internalType":"address","name":"_upline","type":"address"}],"name":"join","outputs":[],"stateMutability":"nonpayable","type":"function"},
-{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"directCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"isActive","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
-{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"claimRefund","outputs":[],"stateMutability":"nonpayable","type":"function"},
-{"inputs":[],"name":"creator","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}
-];
-
-let selectedLevel=0;
-const pkgs=[2,5,10,20,50,100,200,500,1000,2000,3000,5000,7000,9000,10000];
-
+const USDT_ADDRESS="0x55d398326f99059fF775485246999027B3197955";
+const ROCKET_ADDRESS="0x332B3a9b2C6e5a0bE5D8f1a2b3c4d5e6f7a3daa";
+const USDT_ABI=[{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"}];
+const ROCKET_ABI=[{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"},{"internalType":"address","name":"_upline","type":"address"}],"name":"join","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"directCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"isActive","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"claimRefund","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"claimGlobalIncome","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"pendingGlobal","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
+let selectedLevel=0;const pkgs=[2,5,10,20,50,100,200,500,1000,2000,3000,5000,7000,9000,10000];
 window.onload=()=>{
  let div=document.getElementById("levels");
- pkgs.forEach((p,i)=>{div.innerHTML+=`<div class="level" id="l${i}" onclick="selectLevel(${i})">Level ${i+1} = ${p} USDT</div>`;});
- const urlParams=new URLSearchParams(window.location.search);
- if(urlParams.get('ref')) document.getElementById('upline').value=urlParams.get('ref');
+ pkgs.forEach((p,i)=>{div.innerHTML+=`<div class="level" id="l${i}" onclick="selectLevel(${i})"><b>Level ${i+1}</b> = ${p} USDT</div>`;});
+ let pr=new URLSearchParams(window.location.search);if(pr.get('ref')) document.getElementById('upline').value=pr.get('ref');
 }
-
-function selectLevel(i){
- selectedLevel=i;
- document.querySelectorAll('.level').forEach(e=>e.classList.remove('active'));
- document.getElementById('l'+i).classList.add('active');
- checkRefund();
- loadMyLevels();
-}
-
+function selectLevel(i){selectedLevel=i;document.querySelectorAll('.level').forEach(e=>e.classList.remove('active'));document.getElementById('l'+i).classList.add('active');}
 async function connect(){
- if(!window.ethereum) return alert("MetaMask Install करा");
- web3=new Web3(window.ethereum);
- await window.ethereum.request({method:'eth_requestAccounts'});
- let accounts=await web3.eth.getAccounts();account=accounts[0];
+ web3=new Web3(window.ethereum);await window.ethereum.request({method:'eth_requestAccounts'});
+ let acc=await web3.eth.getAccounts();account=acc[0];
  document.getElementById('wallet').innerText=account.slice(0,6)+"..."+account.slice(-4);
- usdt=new web3.eth.Contract(USDT_ABI,USDT_ADDRESS);
- rocket=new web3.eth.Contract(ROCKET_ABI,ROCKET_ADDRESS);
- let bal=await usdt.methods.balanceOf(account).call();
- document.getElementById('balance').innerText=web3.utils.fromWei(bal,'ether')+" USDT";
- let dc=await rocket.methods.directCount(account).call();
- document.getElementById('direct').innerText=dc;
- checkRefund(); loadMyLevels(); loadIncome();
+ document.getElementById('refLink').innerText=location.origin+location.pathname+"?ref="+account;
+ usdt=new web3.eth.Contract(USDT_ABI,USDT_ADDRESS);rocket=new web3.eth.Contract(ROCKET_ABI,ROCKET_ADDRESS);
+ let bal=await usdt.methods.balanceOf(account).call();document.getElementById('balance').innerText=Number(web3.utils.fromWei(bal,'ether')).toFixed(2);
+ let dc=await rocket.methods.directCount(account).call();document.getElementById('direct').innerText=dc;
+ loadIncome();
 }
-
-async function loadMyLevels(){
- if(!rocket||!account) return;
- let html="";
- for(let i=0;i<15;i++){
-  try{
-   let active=await rocket.methods.isActive(account,i).call();
-   if(active) html+=`<div class="level owned">✅ Level ${i+1} = ${pkgs[i]} USDT - Active</div>`;
-  }catch(e){}
- }
- document.getElementById('myLevels').innerHTML=html||"No Active Levels";
-}
-
 async function loadIncome(){
- // NOTE: Real Income Blockchain Events वरून येईल
- // इथे Demo Calculation - Actual साठी The Graph किंवा Event Scan लागेल
- // पण Frontend वर Direct = तुझ्या Referral ने Join केले त्याचा 20%
- // Global = इतरांच्या Join मधून तुला आलेला वाटा
- 
- // तात्पुरतं - LocalStorage किंवा API वरून दाखवू शकतो
- // तुझ्या Contract मध्ये Income Transfer Direct Wallet ला होतो, त्यामुळे
- // Dashboard ला History दाखवायला BscScan API वापरावं लागेल
- 
- document.getElementById('directIncome').innerText="Live From Events";
- document.getElementById('globalIncome').innerText="Live From Events";
- document.getElementById('totalIncome').innerText="Check Wallet";
- document.getElementById('incomeNote').innerText="Income Direct Wallet ला येतो - BscScan वर Check करा";
-}
-
-async function checkRefund(){
  if(!rocket||!account) return;
  try{
- let dc=await rocket.methods.directCount(account).call();
- let active=await rocket.methods.isActive(account,selectedLevel).call();
- let area=document.getElementById('refundArea');
- if(active&&dc==0){
-  area.innerHTML=`<p style="color:#ff3333">⚠️ 0 Direct - Global नाही!</p><button class="btn refund" onclick="claimRefund()">🔴 Claim Refund Level ${selectedLevel+1}</button>`;
- }else if(active&&dc>=1){
-  area.innerHTML=`<p style="color:#00ff00">✅ Eligible for Global Income! Direct: ${dc}</p>`;
- }else{area.innerHTML="";}
- }catch(e){}
+  let pg=await rocket.methods.pendingGlobal(account,selectedLevel).call();
+  document.getElementById('globalIncome').innerText=Number(web3.utils.fromWei(pg,'ether')).toFixed(2)+" USDT";
+ }catch(e){document.getElementById('globalIncome').innerText="0.00 USDT";}
 }
-
-async function approve(){
- let amount=web3.utils.toWei(pkgs[selectedLevel].toString(),'ether');
- await usdt.methods.approve(ROCKET_ADDRESS,amount).send({from:account});
- alert("Approved "+pkgs[selectedLevel]+" USDT");
-}
-async function join(){
- let upl=document.getElementById('upline').value||"0x0000000000000000000000000000000000000000";
- await rocket.methods.join(selectedLevel,upl).send({from:account});
- alert("Joined Level "+(selectedLevel+1));
- loadMyLevels(); checkRefund();
-}
-async function claimRefund(){
- await rocket.methods.claimRefund(selectedLevel).send({from:account});
- alert("Refund Claimed - Creator ला Contact करा");
-}
+function copyRef(){navigator.clipboard.writeText(document.getElementById('refLink').innerText);alert("Copied!");}
+async function approve(){let amt=web3.utils.toWei(pkgs[selectedLevel].toString(),'ether');await usdt.methods.approve(ROCKET_ADDRESS,amt).send({from:account});alert("Approved");}
+async function join(){let upl=document.getElementById('upline').value||"0x0000000000000000000000000000000000000000";await rocket.methods.join(selectedLevel,upl).send({from:account});alert("Joined Level "+(selectedLevel+1));}
+async function claimGlobal(){await rocket.methods.claimGlobalIncome(selectedLevel).send({from:account});alert("Global Claimed!");loadIncome();}
 </script>
 </body>
 </html>
