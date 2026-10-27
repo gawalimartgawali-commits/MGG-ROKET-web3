@@ -1,100 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MGG ROCKET - 3X Global Autopool</title>
 <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
 <style>
-body{font-family:Arial;background:#0b0f1a;color:#fff;margin:0;padding:15px}
-.card{background:#151a2a;border:1px solid #2a3350;border-radius:12px;padding:15px;margin:10px 0}
-.btn{background:#00ff88;color:#000;border:0;padding:10px 20px;border-radius:8px;font-weight:bold;cursor:pointer;margin:5px}
-.btn2{background:#ffaa00;color:#000}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+body{font-family:Arial;background:#0b0f1a;color:#fff;margin:0;padding:12px}
+.card{background:#151a2a;border:1px solid #2a3350;border-radius:16px;padding:16px;margin:12px 0}
+.btn{background:#00ff88;color:#000;border:0;padding:12px 22px;border-radius:10px;font-weight:900;cursor:pointer;margin:5px;width:100%}
+.btn2{background:#ffaa00;color:#000;padding:8px 14px;width:auto}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:600px){.grid{grid-template-columns:1fr}}
 h2{color:#00ff88}
 .wallet{color:#00ff88;font-weight:bold}
+.badge{background:#00ff8822;color:#00ff88;padding:4px 8px;border-radius:6px;font-size:12px}
 </style>
 </head>
 <body>
-
 <h1>🚀 MGG ROCKET</h1>
-<div class="card">
-<button class="btn" onclick="connect()">🔗 Connect Wallet</button>
-<p id="addr">Not Connected</p>
-<p>Upline: <span id="upl">None (20% Creator ला जाईल)</span></p>
-</div>
+<p style="color:#8a94b0">10% Creator | 20% Direct (नसेल तर Creator) | 70% Global | Per Package 3X Cap</p>
 
 <div class="card">
-<h2>💰 माझे Wallets (प्रत्येक Package वेगळे)</h2>
-<div id="wallets">Connect करा...</div>
+<button class="btn" id="connBtn" onclick="connect()">🔗 Connect Wallet</button>
+<p id="addr" style="word-break:break-all">Not Connected - BSC Mainnet निवड</p>
+<p>Upline: <span id="upl" style="color:#ffaa00"></span></p>
+<p>Referral Link:<br><span id="reflink" style="color:#00ff88;font-size:12px;word-break:break-all">Connect झाल्यावर येईल</span></p>
 </div>
 
-<div class="card">
-<h2>📦 Packages - Full Amount</h2>
-<div id="packages" class="grid"></div>
-</div>
+<div class="card"><h2>💰 माझे Wallets - सर्व Wallet बरोबर दिसतील</h2><div id="wallets">Connect करा...</div></div>
+<div class="card"><h2>📦 Packages - Full Amount</h2><div id="packages" class="grid"></div></div>
 
 <script>
-const CONTRACT_ADDRESS = "0x_TUZA_CONTRACT_ADDRESS_ITHE_TAK"; // <-- इथे तुझा Contract Address टाक
-const ABI = [{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"},{"internalType":"address","name":"_upline","type":"address"}],"name":"join","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"claimAppWallet","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"claimIdWallet","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"},{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"getUserLevelInfo","outputs":[{"internalType":"uint256","name":"paid","type":"uint256"},{"internalType":"uint256","name":"direct","type":"uint256"},{"internalType":"uint256","name":"globalInc","type":"uint256"},{"internalType":"uint256","name":"claimed","type":"uint256"},{"internalType":"uint256","name":"maxInc","type":"uint256"},{"internalType":"uint256","name":"remaining","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"packages","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
-
+const CONTRACT_ADDRESS = "0x843162bFc44b13dAAdB13652681b3902332f324D";
+const ABI = [{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"},{"internalType":"address","name":"_upline","type":"address"}],"name":"join","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"claimAppWallet","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"claimIdWallet","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"},{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"getUserLevelInfo","outputs":[{"internalType":"uint256","name":"paid","type":"uint256"},{"internalType":"uint256","name":"direct","type":"uint256"},{"internalType":"uint256","name":"globalInc","type":"uint256"},{"internalType":"uint256","name":"claimed","type":"uint256"},{"internalType":"uint256","name":"maxInc","type":"uint256"},{"internalType":"uint256","name":"remaining","type":"uint256"}],"stateMutability":"view","type":"function"}];
 const PKG = [2,5,10,20,50,100,200,500,1000,2000,3000,5000,7000,9000,10000];
 let web3, contract, user;
-let upline = new URLSearchParams(window.location.search).get('ref') || "0x0000000000000000000000000000000000000000";
+let upline = new URLSearchParams(window.location.search).get('ref');
+if(!upline || !upline.startsWith('0x')) upline = "0x0000000000000000000000000000000000000000";
+document.getElementById('upl').innerText = upline=="0x0000000000000000000000000000000000000000" ? "None (20% Creator - 0x8431...24D ला जाईल)" : upline;
 
-document.getElementById('upl').innerText = upline=="0x0000000000000000000000000000000000000000" ? "None (20% Creator ला)" : upline;
+function showPackagesStatic(){
+ let h=""; PKG.forEach((p,i)=>{ h+=`<div class="card" style="margin:0"><b>$${p} <span class="badge">L${i+1}</span></b><br><small style="color:#8a94b0">Max: $${p*3} | 10% Creator | 20% Direct | 70% Global</small><br><br><button class="btn" onclick="buy(${i})">Buy Full $${p}</button></div>`; });
+ document.getElementById('packages').innerHTML=h;
+}
+showPackagesStatic();
 
 async function connect(){
- if(!window.ethereum) return alert("Metamask Install कर");
+ if(!window.ethereum) return alert("Metamask/TrustWallet मध्ये उघड");
  web3 = new Web3(window.ethereum);
  await window.ethereum.request({method:"eth_requestAccounts"});
- const acc = await web3.eth.getAccounts();
- user = acc[0];
- document.getElementById('addr').innerText = user;
+ const acc = await web3.eth.getAccounts(); user = acc[0];
+ document.getElementById('addr').innerText=user;
+ document.getElementById('connBtn').innerText="✅ Connected - "+user.slice(0,6)+"..."+user.slice(-4);
+ document.getElementById('reflink').innerText=window.location.origin+"?ref="+user;
  contract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
- load();
+ loadWallets();
 }
-
-async function load(){
- let html = "";
- let pkgHtml = "";
- for(let i=0;i<15;i++){
-   try{
-     const info = await contract.methods.getUserLevelInfo(user, i).call();
-     const paid = web3.utils.fromWei(info.paid,'ether');
-     const direct = web3.utils.fromWei(info.direct,'ether');
-     const globalInc = web3.utils.fromWei(info.globalInc,'ether');
-     const claimed = web3.utils.fromWei(info.claimed,'ether');
-     const maxInc = web3.utils.fromWei(info.maxInc,'ether');
-     
-     if(paid>0){
-       html += `<div class="card">
-         <b>$${PKG[i]} Package</b><br>
-         Paid: $${paid} | Max 3X: $${maxInc}<br>
-         <span class="wallet">Direct (20%): $${direct}</span> <button class="btn btn2" onclick="claimDirect(${i})">Claim</button><br>
-         <span class="wallet">Global (70%): $${globalInc}</span> <button class="btn btn2" onclick="claimGlobal(${i})">Claim</button><br>
-         Claimed: $${claimed}
-       </div>`;
-     }
-     pkgHtml += `<div class="card">
-       <b>$${PKG[i]} - Level ${i+1}</b><br>
-       ${paid>0 ? '✅ Active' : '🔴 Not Active'}<br>
-       <button class="btn" onclick="buy(${i})" ${paid>0?'disabled':''}>Buy Full $${PKG[i]}</button>
-     </div>`;
-   }catch(e){console.log(e)}
- }
- document.getElementById('wallets').innerHTML = html || "अजून Package नाही";
- document.getElementById('packages').innerHTML = pkgHtml;
-}
-
-async function buy(level){
- const price = web3.utils.toWei(PKG[level].toString(),'ether');
- await contract.methods.join(level, upline).send({from:user, value:price});
- alert("Done! 🚀"); load();
-}
-async function claimDirect(level){ await contract.methods.claimAppWallet(level).send({from:user}); load(); }
-async function claimGlobal(level){ await contract.methods.claimIdWallet(level).send({from:user}); load(); }
-</script>
-</body>
-</html>
+async function loadWallets(){
+ let html=""; for(let i=0;i<15;i++){
+  try{ const info = await contract.methods.getUserLevelInfo(user, i).call(); const paid=web3.utils.fromWei(info.paid,'ether');
+   if(paid>0){ const direct=web3.utils.fromWei(info.direct,'ether'); const globalInc=web3.utils.fromWei(info.globalInc,'ether'); const claimed=web3.utils.fromWei(info.claimed,'ether'); const maxInc=web3.utils.fromWei(info.maxInc,'ether');
+    html+=`<div class="card" style="background:#1e253e"><b>$${PKG[i]} - L${i+1}</b> <span class="badge">Max $${maxInc}</span><br>Paid: $${paid} | Claimed: $${claimed}<br><span class="wallet">
