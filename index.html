@@ -1,122 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MGG ROCKET - Final</title>
-<script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
-<style>
-* {box-sizing:border-box}
-body{background:#000;color:#fff;font-family:Arial;text-align:center;padding:15px;margin:0;overflow-x:hidden}
-.header{color:#FFD700;font-size:32px;font-weight:bold;margin:10px}
-.card{background:#111;border:2px solid #FFD700;border-radius:15px;padding:18px;margin:14px auto;max-width:520px;width:100%;display:block;overflow:visible;min-height:auto}
-.btn{background:linear-gradient(45deg,#FFD700,#FFA500);color:#000;padding:13px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;width:92%;margin:6px;font-size:15px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
-.box{background:#1a1a1a;border:1px solid #444;border-radius:12px;padding:14px;min-height:110px;display:flex;flex-direction:column;justify-content:center}
-.box.gold{border-color:#FFD700}
-.box.green{border-color:#00ff00;border-width:2px}
-.box h4{margin:4px;color:#FFD700;font-size:13px}
-.box p{margin:6px;font-size:18px;font-weight:bold;color:#fff}
-.total-box{border:2px solid #00ff00!important;padding-bottom:20px}
-.level{border:1px solid #333;padding:11px;margin:6px 0;border-radius:10px;cursor:pointer;text-align:left}
-.level.active{border-color:#FFD700;background:#2a2210;color:#FFD700}
-.claim-btn{background:#00ff00!important;color:#000!important;padding:8px!important;font-size:13px!important;margin-top:8px!important;width:100%!important;border-radius:8px!important}
-.refund{background:#ff1a1a!important;color:#fff!important}
-small{color:#aaa;font-size:11px;display:block;margin-top:4px}
-#totalBox{grid-column:span 2;min-height:100px}
-</style>
-</head>
-<body>
+MGG
+MGGRocket FINAL
+ZERO LOCK • BSC
+BSCScan
+🚀 FINAL FIXED • No Lock Funds
+MGGRocket
+Zero Lock
+Plan
+BSC वर 100% पारदर्शक. कॉन्ट्रॅक्ट मध्ये एक रुपया पण लॉक नाही. 10% Creator, 20% Direct, 70% Global Pool.
 
-<div class="header">🚀 MGG ROCKET</div>
-<p>USDT BEP20 | System 0 | 1 Direct = Global</p>
+जॉईन करा - 2 USDT पासूनप्लॅन बघा
+✔️ Real Auto Upgrade✔️ Re-entry after 3X✔️ Deploy ~0.02 BNB
+15 लेव्हल - 3X Cap
+Level
+Price
+3X Cap
+L0
+2 USDT
+6 USDT
+L1
+5 USDT
+15 USDT
+L2
+10 USDT
+30 USDT
+L3
+20 USDT
+60 USDT
+L4
+50 USDT
+150 USDT
+L5
+100 USDT
+300 USDT
+L6
+200 USDT
+600 USDT
+L7
+500 USDT
+1500 USDT
+L8
+1000 USDT
+3000 USDT
+L9
+2000 USDT
+6000 USDT
+L10
+3000 USDT
+9000 USDT
+L11
+5000 USDT
+15000 USDT
+L12
+7000 USDT
+21000 USDT
+L13
+9000 USDT
+27000 USDT
+L14
+10000 USDT
+30000 USDT
+कसं काम करतं?
+🚀
+1. जॉईन
+Level + Upline + USDT Approve. Re-entry पण शक्य.
+⚖️
+2. वाटप 10/20/70
+10% Creator, 20% Direct Instant, 70% Global Pool. पहिल्या मेंबरसाठी पण हाच नियम.
+🌍
+3. ग्लोबल पात्रता
+1 Direct आवश्यक (directCount>=1). पात्र नसेल तर Pending.
+🤖
+4. क्लेम + Auto
+Claim बटणाने पैसे. Auto ON असेल तर पुढची लेव्हल ऑटो बाय.
+इन्कम कॅल्क्युलेटर
 
-<div class="card">
-<button class="btn" onclick="connect()">🔗 Connect Wallet</button>
-<p id="wallet">Not Connected</p>
-<div class="grid">
-<div class="box gold"><h4>Direct Count</h4><p id="direct">-</p></div>
-<div class="box gold"><h4>USDT Balance</h4><p id="balance">-</p></div>
-</div>
-</div>
+Level 5 - 100 USDT
+ 
+100
+10% Creator
+1000.00 USDT
+20% Direct
+2000.00 USDT
+70% Global Pool
+7000.00 USDT
+उदा. 100 लोकांनी 100 USDT लेव्हल घेतली तर 7000 USDT ग्लोबल पूल मध्ये. Contract Balance = फक्त Pending, Lock = 0
 
-<!-- FINAL INCOME DASHBOARD - FULL HEIGHT - NO CUT -->
-<div class="card total-box">
-<h3 style="color:#00ff00;margin:8px 0 12px 0">💰 MY INCOME DASHBOARD</h3>
-
-<div class="grid">
-<div class="box">
-<h4>💸 Direct Income</h4>
-<p id="directIncome" style="color:#00ff00">0.00 USDT</p>
-<small>20% From Referrals</small>
-</div>
-
-<div class="box">
-<h4>🌍 Global Income</h4>
-<p id="globalIncome" style="color:#00ff00">0.00 USDT</p>
-<small>70% Pool Share</small>
-<button class="claim-btn" onclick="claimGlobal()">✅ Claim Global</button>
-</div>
-</div>
-
-<div class="box green" style="margin-top:12px;min-height:110px">
-<h4>💵 Total Income</h4>
-<p id="totalIncome" style="font-size:26px;color:#00ff00">0.00 USDT</p>
-<small>Live From Blockchain</small>
-<button class="btn" onclick="loadIncome()" style="margin-top:10px;background:#111;color:#FFD700;border:1px solid #FFD700;padding:8px;font-size:13px">🔄 Refresh Income</button>
-</div>
-
-</div>
-
-<div class="card">
-<h3>🎯 Select Level</h3>
-<div id="levels"></div>
-<input id="upline" placeholder="Upline 0x..." style="width:92%;padding:10px;border-radius:8px;border:1px solid #FFD700;background:#000;color:#fff;margin:8px 0">
-<button class="btn" onclick="approve()">1️⃣ Approve USDT</button>
-<button class="btn" onclick="join()">2️⃣ Join Level</button>
-<div id="refundArea"></div>
-</div>
-
-<div class="card">
-<h3>🔗 My Referral Link</h3>
-<p id="refLink" style="word-break:break-all;font-size:12px;color:#FFD700">Connect First</p>
-<button class="btn" onclick="copyRef()">Copy Link</button>
-</div>
-
-<script>
-let web3, account, usdt, rocket;
-const USDT_ADDRESS="0x55d398326f99059fF775485246999027B3197955";
-const ROCKET_ADDRESS="0x332B3a9b2C6e5a0bE5D8f1a2b3c4d5e6f7a3daa";
-const USDT_ABI=[{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"}];
-const ROCKET_ABI=[{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"},{"internalType":"address","name":"_upline","type":"address"}],"name":"join","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"directCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"isActive","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"claimRefund","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"claimGlobalIncome","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"pendingGlobal","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
-let selectedLevel=0;const pkgs=[2,5,10,20,50,100,200,500,1000,2000,3000,5000,7000,9000,10000];
-window.onload=()=>{
- let div=document.getElementById("levels");
- pkgs.forEach((p,i)=>{div.innerHTML+=`<div class="level" id="l${i}" onclick="selectLevel(${i})"><b>Level ${i+1}</b> = ${p} USDT</div>`;});
- let pr=new URLSearchParams(window.location.search);if(pr.get('ref')) document.getElementById('upline').value=pr.get('ref');
-}
-function selectLevel(i){selectedLevel=i;document.querySelectorAll('.level').forEach(e=>e.classList.remove('active'));document.getElementById('l'+i).classList.add('active');}
-async function connect(){
- web3=new Web3(window.ethereum);await window.ethereum.request({method:'eth_requestAccounts'});
- let acc=await web3.eth.getAccounts();account=acc[0];
- document.getElementById('wallet').innerText=account.slice(0,6)+"..."+account.slice(-4);
- document.getElementById('refLink').innerText=location.origin+location.pathname+"?ref="+account;
- usdt=new web3.eth.Contract(USDT_ABI,USDT_ADDRESS);rocket=new web3.eth.Contract(ROCKET_ABI,ROCKET_ADDRESS);
- let bal=await usdt.methods.balanceOf(account).call();document.getElementById('balance').innerText=Number(web3.utils.fromWei(bal,'ether')).toFixed(2);
- let dc=await rocket.methods.directCount(account).call();document.getElementById('direct').innerText=dc;
- loadIncome();
-}
-async function loadIncome(){
- if(!rocket||!account) return;
- try{
-  let pg=await rocket.methods.pendingGlobal(account,selectedLevel).call();
-  document.getElementById('globalIncome').innerText=Number(web3.utils.fromWei(pg,'ether')).toFixed(2)+" USDT";
- }catch(e){document.getElementById('globalIncome').innerText="0.00 USDT";}
-}
-function copyRef(){navigator.clipboard.writeText(document.getElementById('refLink').innerText);alert("Copied!");}
-async function approve(){let amt=web3.utils.toWei(pkgs[selectedLevel].toString(),'ether');await usdt.methods.approve(ROCKET_ADDRESS,amt).send({from:account});alert("Approved");}
-async function join(){let upl=document.getElementById('upline').value||"0x0000000000000000000000000000000000000000";await rocket.methods.join(selectedLevel,upl).send({from:account});alert("Joined Level "+(selectedLevel+1));}
-async function claimGlobal(){await rocket.methods.claimGlobalIncome(selectedLevel).send({from:account});alert("Global Claimed!");loadIncome();}
-</script>
-</body>
-</html>
+क्रिएटरला काय फायदा? (तुला)
+10% प्रत्येक जॉईन
+कोणीही जॉईन झाला तरी 10% पक्का.
+20% फेल Direct
+Upline active नसेल तर 20% पण तुला.
+Global हिस्सा
+तू पण Global Pool मध्ये पात्र, pending मिळतं.
+Dust
+भागाकारात उरलेले सुट्टे पैसे तुला.
+कॉन्ट्रॅक्ट Info
+USDT BEP20:
+0x55d398326f99059fF775485246999027B3197955
+Creator:
+0x843162bFc44b13dAAdB13652681b3902332f324D
+Network: BSC • Gas: 0.05 Gwei (~$0.005) • BNB ~$751
+Deploy: ~0.02-0.05 BNB ($15-35)
+Flowchart
+🚀 Join (Level + Upline) → ♻️ Re-entry Check → ✅ Active
+⚖️ Distribution 10/20/70 (First member too)
+🌍 Eligible? directCount>=1 & 3X बाकी → ⏳ Pending
+💸 Claim → 🤖 Auto ON? → पुढची Level ऑटो बाय → 🏁 Re-entry
+FINAL: Contract Balance = Only Pending, Lock = 0
+MGGRocket © 2026 | 100% Decentralized
+USDT BEP20 • No Admin Key
