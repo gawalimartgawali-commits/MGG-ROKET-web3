@@ -3,15 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MGG ROCKET</title>
+<title>MGG ROCKET - 15 Level Income</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.8.1/ethers.umd.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box} body{background:#0a0e1a;color:#fff;font-family:system-ui;padding:12px}
-.card{background:#151c2f;border-radius:16px;padding:16px;margin-bottom:12px;border:1px solid #1e293b}
-.logo{color:#ff7a00;font-weight:900;font-size:22px} .btn{padding:12px;border-radius:12px;font-weight:800;border:none;cursor:pointer}
-.btn-orange{background:#ff7a00;color:#fff} .btn-green{background:#00ff88;color:#000;width:100%;margin-top:8px}
-input{width:100%;background:#000;border:1px solid #333;padding:14px;border-radius:10px;color:#fff;margin:8px 0}
-.pkgBtn{background:#1a233a;border:1px solid #ff7a00;color:#fff;padding:12px;border-radius:10px;font-weight:700;font-size:13px}
-#statusMsg{background:#000;padding:12px;border-radius:8px;font-size:13px;color:#00ff88;display:none;margin-top:8px;border:1px solid #ff7a00}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#070b18;color:#fff;font-family:system-ui,Arial;padding:12px;padding-bottom:80px}
+.card{background:#12182b;border:1px solid #1e2a44;border-radius:18px;padding:16px;margin-bottom:12px}
+.logo{color:#ff7a00;font-weight:900;font-size:22px;letter-spacing:1px}
+.btn{padding:12px 18px;border-radius:12px;font-weight:800;border:none;cursor:pointer}
+.btn-orange{background:#ff7a00;color:#fff}
+.btn-green{background:#00ff88;color:#000;width:100%;padding:14px;border-radius:12px;font-weight:900;margin-top:8px;border:none}
+input{width:100%;background:#070b18;border:1px solid #2a3a5a;padding:14px;border-radius:12px;color:#fff;margin-top:8px;font-size:13px}
+.pkgBtn{background:#1a2440;border:1px solid #ff7a00;color:#fff;padding:14px 6px;border-radius:12px;font-weight:800;font-size:14px;cursor:pointer}
+.pkgBtn:active{transform:scale(0.95);background:#ff7a00;color:#000}
+.refCard{background:linear-gradient(135deg,#ff7a0015,#ff7a0030);border:1px dashed #ff7a00}
+#statusMsg{display:none;background:#000;padding:12px;border-radius:10px;font-size:13px;margin-top:10px;border:1px solid #00ff88;white-space:pre-line}
 </style>
 </head>
 <body>
@@ -22,95 +28,149 @@ input{width:100%;background:#000;border:1px solid #333;padding:14px;border-radiu
 </div>
 
 <div class="card">
-<div style="color:#8892b0;font-size:11px">CONNECTED WALLET</div>
-<div id="walletAddr" style="color:#ff7a00;font-weight:700;margin:6px 0;font-size:14px">Not Connected</div>
-<div style="display:flex;justify-content:space-between;font-size:12px"><span>Network:</span><span id="netName">BNB Smart Chain</span></div>
+<div style="color:#8892b0;font-size:11px;letter-spacing:1px">CONNECTED WALLET</div>
+<div id="walletAddr" style="color:#ff7a00;font-weight:800;margin:8px 0;font-size:15px">Not Connected</div>
+<div style="display:flex;justify-content:space-between;font-size:13px;color:#8892b0"><span>Network:</span><span id="netName" style="color:#00ff88">BNB Smart Chain</span></div>
 <div id="statusMsg"></div>
 </div>
 
-<div class="card" style="border:2px solid #ff7a00">
-<div style="font-weight:900;font-size:15px">🎯 ACTIVATE PACKAGE - ALL 15 LEVELS</div>
-<input id="refInput" placeholder="Referral Auto" readonly style="font-size:12px;color:#888">
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px">
-<button onclick="buyPkg(2)" class="pkgBtn">$2 BUY</button><button onclick="buyPkg(5)" class="pkgBtn">$5 BUY</button><button onclick="buyPkg(10)" class="pkgBtn">$10 BUY</button>
-<button onclick="buyPkg(20)" class="pkgBtn">$20 BUY</button><button onclick="buyPkg(50)" class="pkgBtn">$50 BUY</button><button onclick="buyPkg(100)" class="pkgBtn">$100 BUY</button>
-<button onclick="buyPkg(200)" class="pkgBtn">$200 BUY</button><button onclick="buyPkg(500)" class="pkgBtn">$500 BUY</button><button onclick="buyPkg(1000)" class="pkgBtn">$1000 BUY</button>
-<button onclick="buyPkg(2000)" class="pkgBtn">$2000 BUY</button><button onclick="buyPkg(3000)" class="pkgBtn">$3000 BUY</button><button onclick="buyPkg(5000)" class="pkgBtn">$5000 BUY</button>
-<button onclick="buyPkg(7000)" class="pkgBtn">$7000 BUY</button><button onclick="buyPkg(9000)" class="pkgBtn">$9000 BUY</button><button onclick="buyPkg(10000)" class="pkgBtn" style="background:#ff7a00;color:#000">$10000 BUY</button>
+<div class="card" style="border:2px solid #ff7a00;box-shadow:0 0 20px #ff7a0033">
+<div style="font-weight:900;font-size:16px">🎯 ACTIVATE PACKAGE - ALL 15 LEVELS UNLOCKED</div>
+<div style="font-size:12px;color:#8892b0;margin-top:4px">एकदा कोणताही Package घेतला की सर्व 15 Levels चे Income चालू</div>
+<input id="refInput" readonly placeholder="Referral Link Auto Detect होईल">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px">
+<button onclick="buyPkg(2)" class="pkgBtn">$2</button>
+<button onclick="buyPkg(5)" class="pkgBtn">$5</button>
+<button onclick="buyPkg(10)" class="pkgBtn">$10</button>
+<button onclick="buyPkg(20)" class="pkgBtn">$20</button>
+<button onclick="buyPkg(50)" class="pkgBtn">$50</button>
+<button onclick="buyPkg(100)" class="pkgBtn">$100</button>
+<button onclick="buyPkg(200)" class="pkgBtn">$200</button>
+<button onclick="buyPkg(500)" class="pkgBtn">$500</button>
+<button onclick="buyPkg(1000)" class="pkgBtn">$1000</button>
+<button onclick="buyPkg(2000)" class="pkgBtn">$2000</button>
+<button onclick="buyPkg(3000)" class="pkgBtn">$3000</button>
+<button onclick="buyPkg(5000)" class="pkgBtn">$5000</button>
+<button onclick="buyPkg(7000)" class="pkgBtn">$7000</button>
+<button onclick="buyPkg(9000)" class="pkgBtn">$9000</button>
+<button onclick="buyPkg(10000)" class="pkgBtn" style="background:#ff7a00;color:#000">$10000</button>
 </div>
+</div>
+
+<div class="card refCard">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<span style="font-weight:900;font-size:15px">🔗 MY REFERRAL LINK</span>
+<span style="background:#ff7a00;color:#000;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:900" id="directCount">0 Direct</span>
+</div>
+<input id="myRefLink" readonly placeholder="Connect केल्यावर Link येईल इथे">
+<button onclick="copyRef()" style="background:#ff7a00;color:#000;width:100%;padding:13px;border-radius:12px;font-weight:900;border:none;margin-top:8px">COPY REFERRAL LINK</button>
+<div style="margin-top:14px;font-weight:800">👥 DIRECT TEAM</div>
+<div id="directList" style="background:#070b18;border-radius:12px;padding:12px;margin-top:8px;font-size:12px;color:#8892b0;border:1px solid #1e2a44">तुमच्या Link ने कोणी Join झालं की इथे दिसेल. अजून कोणी नाही.</div>
+</div>
+
+<div class="card" style="border:2px solid #00ff88">
+<div style="color:#8892b0;font-size:12px">USDT BALANCE (BEP20)</div>
+<div style="color:#00ff88;font-size:36px;font-weight:900" id="usdtBal">0.00 USDT</div>
+<div style="font-size:12px;color:#8892b0;margin-top:4px" id="bnbBal">BNB: 0.0000 (Gas साठी लागतो)</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<div class="card"><div style="color:#8892b0;font-size:11px">APP WALLET (20%)</div><div style="color:#60a5fa;font-size:26px;font-weight:900" id="appWallet">0.00</div><div style="font-size:11px;color:#8892b0">System Fee</div></div>
+<div class="card"><div style="color:#8892b0;font-size:11px">ID WALLET (70%)</div><div style="color:#c084fc;font-size:26px;font-weight:900" id="idWallet">0.00</div><div style="font-size:11px;color:#00ff88" id="liveCount">Live: 0 Users</div><button class="btn-green" onclick="claimID()">Claim ID Wallet</button></div>
+</div>
+
+<div class="card" style="border:2px solid #00ff88">
+<div style="color:#8892b0;font-size:12px">TOTAL INCOME (15 LEVELS)</div>
+<div style="color:#00ff88;font-size:36px;font-weight:900" id="totalIncome">0.00 USDT</div>
+<div style="font-size:11px;color:#8892b0">All Referral + Refund Income</div>
+</div>
+
+<div class="card" style="border:2px solid #ff3b3b;background:#ff00000a">
+<div style="font-weight:900;color:#ff5555;font-size:16px">💸 100% REFUND SYSTEM</div>
+<div style="background:#000;padding:12px;border-radius:10px;font-size:13px;margin-top:10px;border:1px solid #ff3b3b33">जर तुमचं Income तुमच्या Double Team पेक्षा कमी असेल तर तुम्हाला 100% Refund मिळेल!<br><br>Eligible: <span id="refundEligible" style="color:#ff3b3b;font-weight:900">$0.00</span></div>
+<button style="background:#ff3b3b;color:#fff;width:100%;padding:14px;border-radius:12px;font-weight:900;margin-top:10px;border:none" onclick="claimRefund()">100% REFUND CLAIM</button>
 </div>
 
 <script>
 let userAddress=null;
-const CREATOR="0x843162bFc44b13dAAdB13652681b3902332f324D";
+let providerEthers=null;
+const CREATOR_HIDDEN="0x843162bFc44b13dAAdB13652681b3902332f324D";
+const USDT_ADDRESS="0x55d398326f99059fF775485246999027B3197955";
+const USDT_ABI=["function balanceOf(address) view returns (uint256)","function decimals() view returns (uint8)","function allowance(address,address) view returns (uint256)","function approve(address,uint256) returns (bool)"];
+
 const params=new URLSearchParams(window.location.search);
-window.onload=()=>{ document.getElementById('refInput').value=params.get('ref')||''; checkWallet(); }
+let refFromLink=params.get('ref');
 
-function showMsg(t,err=false){
-  let m=document.getElementById('statusMsg');
-  m.style.display='block';
-  m.style.color=err?'#ff5555':'#00ff88';
-  m.style.borderColor=err?'#ff5555':'#00ff88';
-  m.innerText=t;
-}
+window.onload=()=>{
+ document.getElementById('refInput').value = refFromLink ? refFromLink : "Direct (Creator ला जाईल)";
+};
 
-async function checkWallet(){
-  // SafePal detection
-  const hasWallet = !!(window.ethereum || window.safepalProvider || window.safepal);
-  if(!hasWallet){
-    showMsg('⚠️ Wallet सापडला नाही! SafePal DApp Browser मध्येच उघडा आहे का बघा',true);
-    return;
-  }
+function showMsg(t,isErr=false){
+ let m=document.getElementById('statusMsg');
+ m.style.display='block';
+ m.style.color=isErr?'#ff5555':'#00ff88';
+ m.style.borderColor=isErr?'#ff5555':'#00ff88';
+ m.innerText=t;
 }
 
 async function connectWallet(){
-  showMsg('⏳ Connecting to SafePal... Approvel द्या');
-  let provider = window.ethereum || window.safepalProvider || window.safepal;
-  
-  if(!provider){
-    showMsg('❌ Provider नाही! SafePal -> DApps -> मध्ये ही लिंक उघडा: https://mgg-roket.vercel.app',true);
-    alert('SafePal App मध्ये:\n1) DApps वर जा\n2) वरती URL टाका\n3) Connect दाबा');
-    return;
-  }
+ let eth = window.safepalProvider || window.ethereum || window.safepal;
+ if(!eth){
+   showMsg('❌ Wallet नाही! SafePal -> Browser -> मध्ये https://mgg-roket.vercel.app उघडा',true);
+   return;
+ }
+ showMsg('⏳ SafePal ला Connect करतोय... Approve द्या');
+ try{
+   const accounts = await eth.request({method:'eth_requestAccounts'});
+   if(!accounts || accounts.length==0){ showMsg('❌ Account मिळाला नाही',true); return; }
+   userAddress = accounts[0];
 
-  try{
-    // SafePal साठी direct request
-    const accounts = await provider.request({method:'eth_requestAccounts'});
-    if(!accounts || accounts.length==0){ showMsg('❌ Account मिळाला नाही',true); return; }
-    
-    userAddress = accounts[0];
-    document.getElementById('walletAddr').innerText = userAddress.slice(0,6)+'...'+userAddress.slice(-4)+' ✅ Connected';
-    document.getElementById('connectBtn').innerText = 'Connected ✅';
-    document.getElementById('connectBtn').style.background = '#00ff88';
-    document.getElementById('connectBtn').style.color = '#000';
-    
-    // Switch to BSC
-    try{
-      await provider.request({method:'wallet_switchEthereumChain',params:[{chainId:'0x38'}]});
-      document.getElementById('netName').innerText='BNB Smart Chain ✅';
-    }catch(e){
-      // Try add chain
-      try{
-        await provider.request({method:'wallet_addEthereumChain',params:[{chainId:'0x38',chainName:'BNB Smart Chain',rpcUrls:['https://bsc-dataseed.binance.org/'],nativeCurrency:{name:'BNB',symbol:'BNB',decimals:18}}]});
-      }catch(e2){}
-    }
-    
-    showMsg('✅ Connected! Address: '+userAddress+'\nआता कोणताही Package BUY करू शकता');
-    
-  }catch(err){
-    console.error(err);
-    if(err.code==4001){
-      showMsg('❌ तुम्ही Reject केलं! परत Connect दाबा आणि Approve करा',true);
-    }else{
-      showMsg('❌ Error: '+err.message+' | Code: '+err.code,true);
-    }
-  }
+   try{ await eth.request({method:'wallet_switchEthereumChain',params:[{chainId:'0x38'}]}); }catch(e){
+     try{ await eth.request({method:'wallet_addEthereumChain',params:[{chainId:'0x38',chainName:'BNB Smart Chain',rpcUrls:['https://bsc-dataseed.binance.org/'],nativeCurrency:{name:'BNB',symbol:'BNB',decimals:18}}]}); }catch(e2){}
+   }
+
+   document.getElementById('walletAddr').innerText = userAddress.slice(0,6)+'...'+userAddress.slice(-4)+' ✅ Connected';
+   document.getElementById('connectBtn').innerText='Connected ✅';
+   document.getElementById('connectBtn').style.background='#00ff88';
+   document.getElementById('connectBtn').style.color='#000';
+   document.getElementById('netName').innerText='BNB Smart Chain ✅';
+   document.getElementById('myRefLink').value = window.location.origin + window.location.pathname + '?ref=' + userAddress;
+
+   showMsg('✅ Connected!\n'+userAddress+'\nBalance वाचतोय...');
+
+   try{
+     providerEthers = new ethers.BrowserProvider(eth);
+     const usdt = new ethers.Contract(USDT_ADDRESS,USDT_ABI,providerEthers);
+     const bal = await usdt.balanceOf(userAddress);
+     const dec = await usdt.decimals();
+     const bnbBal = await providerEthers.getBalance(userAddress);
+     document.getElementById('usdtBal').innerText = parseFloat(ethers.formatUnits(bal,dec)).toFixed(2)+' USDT';
+     document.getElementById('bnbBal').innerText = 'BNB: '+parseFloat(ethers.formatEther(bnbBal)).toFixed(4)+' (Gas)';
+     if(parseFloat(ethers.formatEther(bnbBal)) < 0.002){
+       showMsg('⚠️ BNB कमी आहे! Gas साठी 0.005 BNB तरी ठेवा. नाहीतर Transaction Fail होईल',true);
+     }
+   }catch(e){ console.log(e); showMsg('✅ Connected पण Balance वाचता आला नाही. BSC वर USDT आहे का बघा'); }
+
+ }catch(err){
+   if(err.code===4001){ showMsg('❌ तुम्ही Reject केलं! परत Connect दाबा',true); }
+   else{ showMsg('❌ Error: '+err.message,true); }
+ }
 }
 
-function buyPkg(a){
-  if(!userAddress){ showMsg('❌ आधी वर Connect Wallet दाबा!',true); return; }
-  showMsg('⏳ $'+a+' BUY - Contract Deploy झाल्यावर Real Payment होईल. आता Demo');
+async function buyPkg(amount){
+ if(!userAddress){ showMsg('❌ आधी वर Connect Wallet दाबा!',true); return; }
+ let ref = refFromLink ? refFromLink : CREATOR_HIDDEN;
+ showMsg('⏳ $'+amount+' BUY साठी तयार...\nReferrer: '+ref.slice(0,10)+'...\n\nContract Deploy झाल्यावर इथे Real USDT Payment होईल.\nआत्ता Demo आहे - पैसे जाणार नाहीत!\n\nContract Deploy करायचा का? मी Code देतो!');
 }
+
+function copyRef(){
+ if(!userAddress){ showMsg('❌ आधी Connect करा',true); return; }
+ let link = window.location.origin + window.location.pathname + '?ref=' + userAddress;
+ navigator.clipboard.writeText(link);
+ showMsg('✅ Referral Link Copy झाला!\n'+link+'\nआता WhatsApp / Telegram वर Share करा');
+}
+function claimID(){ showMsg(!userAddress?'❌ आधी Connect करा':'⏳ ID Wallet Claim - Contract Deploy नंतर Active होईल',!userAddress); }
+function claimRefund(){ showMsg(!userAddress?'❌ आधी Connect करा':'💸 Refund System - Contract Deploy नंतर',!userAddress); }
 </script>
 </body>
 </html>
