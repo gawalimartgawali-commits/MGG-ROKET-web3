@@ -1,71 +1,131 @@
-🚀 MGG ROCKET BEP20
-Level 1-15 • 3X • Zero Lock • BSC
-Creator BSCScan
-BSC Network | 15 Levels | 3X Income | Auto + Manual Upgrade
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MGG ROCKET - Working</title>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0a0a;color:#fff;font-family:system-ui;text-align:center;padding:16px}
+.gold{color:#facc15}
+.card{background:#151515;border:1px solid #333;border-radius:16px;padding:18px;margin:14px auto;max-width:600px}
+button{background:#facc15;color:#000;padding:12px 18px;border:none;border-radius:10px;font-weight:800;cursor:pointer;margin:6px;width:90%;max-width:300px}
+button:disabled{background:#555;color:#999}
+.level-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:500px){.level-grid{grid-template-columns:1fr}}
+.level{background:#1f1f1f;padding:12px;border-radius:10px;border:1px solid #2a2a2a;text-align:left;font-size:13px}
+.muted{color:#888;font-size:12px}
+.error{background:#3f1a1a;border:1px solid #7f1d1d;color:#fca5a5;padding:10px;border-radius:10px;margin:10px 0;font-size:12px}
+</style>
+</head>
+<body>
+<h1 class="gold">🚀 MGG ROCKET - TEST</h1>
+<p class="muted">जर हा दिसत असेल तर HTML चालतोय ✅</p>
 
-🔗 Connect Wallet
-Not Connected
+<div class="card">
+<button onclick="test()">1. HTML Test करा</button>
+<p id="testResult" class="muted"></p>
+</div>
 
-USDT Balance: 0
+<div class="card">
+<button onclick="connect()">2. Wallet Connect करा</button>
+<p id="wallet" class="muted">Not Connected</p>
+<p>USDT: <span id="usdtBal" class="gold">0</span></p>
+<p id="chain" class="muted"></p>
+<p id="error" class="error" style="display:none"></p>
+</div>
 
-Error: MetaMask नाहीये
+<div class="card">
+<h3 class="gold">15 LEVELS</h3>
+<div class="level-grid" id="levels"></div>
+</div>
 
-⚙️ Settings
-Auto Upgrade ON ✅ Auto Upgrade OFF ❌
-Auto check करण्यासाठी Connect करा
+<div class="card">
+<h3 class="gold">💰 Claim</h3>
+<div id="claims" class="muted">Wallet connect करा</div>
+</div>
 
-15 LEVELS - Level 1 to 15
-Code मध्ये 0-14 = Display 1-15 | Price 2 to 10000 USDT | 10/20/70 Distribution
+<script>
+const CONTRACT_ADDRESS = "0xTUMCHA_DEPLOY_ADDRESS_TAKA";
+const USDT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955";
+const ABI = [
+"function join(uint256 _level, address _upline) external",
+"function claimGlobalIncome(uint256 _level) external",
+"function setAutoUpgrade(bool _on) external",
+"function getPending(address,uint256) view returns(uint256)",
+"function isActive(address,uint256) view returns(bool)",
+"function autoUpgrade(address) view returns(bool)"
+];
+let signer, contract, usdtContract, userAddress;
+const prices = [2,5,10,20,50,100,200,500,1000,2000,3000,5000,7000,9000,10000];
 
-Level 1 = 2 USDT
-3X Cap: 6 USDT
-Buy Level 1
-Level 2 = 5 USDT
-3X Cap: 15 USDT
-Buy Level 2
-Level 3 = 10 USDT
-3X Cap: 30 USDT
-Buy Level 3
-Level 4 = 20 USDT
-3X Cap: 60 USDT
-Buy Level 4
-Level 5 = 50 USDT
-3X Cap: 150 USDT
-Buy Level 5
-Level 6 = 100 USDT
-3X Cap: 300 USDT
-Buy Level 6
-Level 7 = 200 USDT
-3X Cap: 600 USDT
-Buy Level 7
-Level 8 = 500 USDT
-3X Cap: 1500 USDT
-Buy Level 8
-Level 9 = 1000 USDT
-3X Cap: 3000 USDT
-Buy Level 9
-Level 10 = 2000 USDT
-3X Cap: 6000 USDT
-Buy Level 10
-Level 11 = 3000 USDT
-3X Cap: 9000 USDT
-Buy Level 11
-Level 12 = 5000 USDT
-3X Cap: 15000 USDT
-Buy Level 12
-Level 13 = 7000 USDT
-3X Cap: 21000 USDT
-Buy Level 13
-Level 14 = 9000 USDT
-3X Cap: 27000 USDT
-Buy Level 14
-Level 15 = 10000 USDT
-3X Cap: 30000 USDT
-Buy Level 15
-💰 Global Claim Pool
-Connect केल्यावर Pending दिसेल
-1 Direct Compulsory for Autopool
-USDT BEP20: 0x55d398326f99059fF775485246999027B3197955
-Creator: 0x843162bFc44b13dAAdB13652681b3902332f324D
-Distribution: 10% Creator, 20% Direct Instant, 70% Global Pool
-FINAL FIXED: First member ला पण 10/20/70 | Contract Balance = Only Pending | Lock = 0
+function test(){
+ document.getElementById("testResult").innerText = "✅ HTML + JS चालतोय! Level count: "+prices.length;
+ loadOffline();
+}
+function loadOffline(){
+ let html="";
+ for(let i=0;i<15;i++){
+  html+=`<div class="level"><b>Level ${i+1} = ${prices[i]} USDT</b><br><span class="muted">3X Cap: ${prices[i]*3} USDT</span><br><button onclick="alert('पहले CONTRACT_ADDRESS टाका!')" >Buy Level ${i+1}</button></div>`;
+ }
+ document.getElementById("levels").innerHTML=html;
+}
+async function connect(){
+ const errBox = document.getElementById("error");
+ errBox.style.display="none";
+ try{
+  if(!window.ethereum) throw new Error("MetaMask नाहीये");
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  await provider.send("eth_requestAccounts", []);
+  const net = await provider.getNetwork();
+  document.getElementById("chain").innerText = "Chain: "+net.chainId+" "+(Number(net.chainId)===56?"BSC ✅":"BSC नाही ❌");
+  if(Number(net.chainId)!==56){ try{ await window.ethereum.request({method:'wallet_switchEthereumChain', params:[{chainId:'0x38'}]}); }catch(e){} }
+  signer = await provider.getSigner();
+  userAddress = await signer.getAddress();
+  document.getElementById("wallet").innerText = userAddress.slice(0,6)+"..."+userAddress.slice(-4);
+  try{
+    usdtContract = new ethers.Contract(USDT_ADDRESS, ["function balanceOf(address) view returns(uint256)"], provider);
+    const bal = await usdtContract.balanceOf(userAddress);
+    document.getElementById("usdtBal").innerText = ethers.formatUnits(bal,18);
+  }catch(e){}
+  if(ethers.isAddress(CONTRACT_ADDRESS)){
+    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+    usdtContract = new ethers.Contract(USDT_ADDRESS, ["function balanceOf(address) view returns(uint256)","function approve(address,uint256) returns(bool)","function allowance(address,address) view returns(uint256)"], signer);
+    await loadWithContract();
+  }else{
+    document.getElementById("claims").innerText = "⚠️ CONTRACT_ADDRESS टाकलेला नाही. Demo Level दिसतायत.";
+    loadOffline();
+  }
+ }catch(e){
+  errBox.style.display="block";
+  errBox.innerText = "Error: "+(e.reason||e.message);
+ }
+}
+async function loadWithContract(){
+ let html="", claimHtml="";
+ for(let i=0;i<15;i++){
+  let active=false, pending=0n;
+  try{ active = await contract.isActive(userAddress,i); }catch{}
+  try{ pending = await contract.getPending(userAddress,i); }catch{}
+  html+=`<div class="level"><b>L${i+1} = ${prices[i]} USDT</b><br>${active?'✅ Active':'❌ Not Active'}<br>${!active?`<button onclick="joinLevel(${i})">Buy L${i+1}</button>`:'Joined'}</div>`;
+  if(pending>0) claimHtml+=`<p>L${i+1}: ${ethers.formatUnits(pending,18)} <button onclick="claimLevel(${i})">Claim</button></p>`;
+ }
+ document.getElementById("levels").innerHTML=html;
+ document.getElementById("claims").innerHTML=claimHtml||"No Pending";
+}
+async function joinLevel(lvl){
+ if(!ethers.isAddress(CONTRACT_ADDRESS)) return alert("पहले CONTRACT_ADDRESS टाका!");
+ try{
+  const price=ethers.parseUnits(prices[lvl].toString(),18);
+  const allowance=await usdtContract.allowance(userAddress, CONTRACT_ADDRESS);
+  if(allowance < price){ const tx=await usdtContract.approve(CONTRACT_ADDRESS, ethers.parseUnits("1000000000",18)); await tx.wait(); }
+  const upline=prompt("Upline:","0x843162bFc44b13dAAdB13652681b3902332f324D");
+  const tx=await contract.join(lvl,upline); await tx.wait(); alert("Joined!"); loadWithContract();
+ }catch(e){ alert(e.reason||e.message); }
+}
+async function claimLevel(lvl){ try{const tx=await contract.claimGlobalIncome(lvl); await tx.wait(); alert("Claimed"); loadWithContract();}catch(e){alert(e.reason||e.message);} }
+loadOffline();
+</script>
+</body>
+</html>
