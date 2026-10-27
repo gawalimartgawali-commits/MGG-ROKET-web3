@@ -1,111 +1,109 @@
-MGG
-MGGRocket FINAL
-ZERO LOCK • BSC
-BSCScan
-🚀 FINAL FIXED • No Lock Funds
-MGGRocket
-Zero Lock
-Plan
-BSC वर 100% पारदर्शक. कॉन्ट्रॅक्ट मध्ये एक रुपया पण लॉक नाही. 10% Creator, 20% Direct, 70% Global Pool.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MGG ROCKET - BEP20</title>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
+<style>
+body{background:#0a0a0a;color:#fff;font-family:Arial;text-align:center;padding:20px}
+.card{background:#1a1a1a;border:1px solid gold;border-radius:15px;padding:20px;margin:15px auto;max-width:500px}
+button{background:gold;color:#000;padding:12px 20px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;margin:5px;width:90%}
+button:hover{background:#ffd700}
+.gold{color:gold}
+.level-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.level{background:#222;padding:10px;border-radius:10px;border:1px solid #333}
+</style>
+</head>
+<body>
+<h1 class="gold">🚀 MGG ROCKET BEP20</h1>
+<p>BSC Network | 15 Levels | 3X Income | Auto + Manual Upgrade</p>
 
-जॉईन करा - 2 USDT पासूनप्लॅन बघा
-✔️ Real Auto Upgrade✔️ Re-entry after 3X✔️ Deploy ~0.02 BNB
-15 लेव्हल - 3X Cap
-Level
-Price
-3X Cap
-L0
-2 USDT
-6 USDT
-L1
-5 USDT
-15 USDT
-L2
-10 USDT
-30 USDT
-L3
-20 USDT
-60 USDT
-L4
-50 USDT
-150 USDT
-L5
-100 USDT
-300 USDT
-L6
-200 USDT
-600 USDT
-L7
-500 USDT
-1500 USDT
-L8
-1000 USDT
-3000 USDT
-L9
-2000 USDT
-6000 USDT
-L10
-3000 USDT
-9000 USDT
-L11
-5000 USDT
-15000 USDT
-L12
-7000 USDT
-21000 USDT
-L13
-9000 USDT
-27000 USDT
-L14
-10000 USDT
-30000 USDT
-कसं काम करतं?
-🚀
-1. जॉईन
-Level + Upline + USDT Approve. Re-entry पण शक्य.
-⚖️
-2. वाटप 10/20/70
-10% Creator, 20% Direct Instant, 70% Global Pool. पहिल्या मेंबरसाठी पण हाच नियम.
-🌍
-3. ग्लोबल पात्रता
-1 Direct आवश्यक (directCount>=1). पात्र नसेल तर Pending.
-🤖
-4. क्लेम + Auto
-Claim बटणाने पैसे. Auto ON असेल तर पुढची लेव्हल ऑटो बाय.
-इन्कम कॅल्क्युलेटर
+<div class="card">
+<button onclick="connect()">🔗 Connect Wallet</button>
+<p id="wallet">Not Connected</p>
+<p>USDT Balance: <span id="usdtBal">0</span></p>
+</div>
 
-Level 5 - 100 USDT
- 
-100
-10% Creator
-1000.00 USDT
-20% Direct
-2000.00 USDT
-70% Global Pool
-7000.00 USDT
-उदा. 100 लोकांनी 100 USDT लेव्हल घेतली तर 7000 USDT ग्लोबल पूल मध्ये. Contract Balance = फक्त Pending, Lock = 0
+<div class="card">
+<h3 class="gold">⚙️ Settings</h3>
+<button onclick="setAuto(true)">Auto Upgrade ON</button>
+<button onclick="setAuto(false)">Auto Upgrade OFF</button>
+<p id="autoStatus"></p>
+</div>
 
-क्रिएटरला काय फायदा? (तुला)
-10% प्रत्येक जॉईन
-कोणीही जॉईन झाला तरी 10% पक्का.
-20% फेल Direct
-Upline active नसेल तर 20% पण तुला.
-Global हिस्सा
-तू पण Global Pool मध्ये पात्र, pending मिळतं.
-Dust
-भागाकारात उरलेले सुट्टे पैसे तुला.
-कॉन्ट्रॅक्ट Info
-USDT BEP20:
-0x55d398326f99059fF775485246999027B3197955
-Creator:
-0x843162bFc44b13dAAdB13652681b3902332f324D
-Network: BSC • Gas: 0.05 Gwei (~$0.005) • BNB ~$751
-Deploy: ~0.02-0.05 BNB ($15-35)
-Flowchart
-🚀 Join (Level + Upline) → ♻️ Re-entry Check → ✅ Active
-⚖️ Distribution 10/20/70 (First member too)
-🌍 Eligible? directCount>=1 & 3X बाकी → ⏳ Pending
-💸 Claim → 🤖 Auto ON? → पुढची Level ऑटो बाय → 🏁 Re-entry
-FINAL: Contract Balance = Only Pending, Lock = 0
-MGGRocket © 2026 | 100% Decentralized
-USDT BEP20 • No Admin Key
+<div class="card">
+<h3 class="gold">15 LEVELS - Full Amount</h3>
+<div class="level-grid" id="levels"></div>
+</div>
+
+<div class="card">
+<h3 class="gold">💰 Global Claim</h3>
+<div id="claims"></div>
+</div>
+
+<script>
+const CONTRACT_ADDRESS = "0xTUMCHA_DEPLOY_ADDRESS_TAKA"; // इथे तुझा Address टाक
+const USDT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955";
+const ABI = [
+"function join(uint256 _level, address _upline) external",
+"function claimGlobalIncome(uint256 _level) external",
+"function setAutoUpgrade(bool _on) external",
+"function getPending(address,uint256) view returns(uint256)",
+"function packages(uint256) view returns(uint256)",
+"function isActive(address,uint256) view returns(bool)",
+"function autoUpgrade(address) view returns(bool)"
+];
+let signer, contract, usdtContract;
+const prices = [2,5,10,20,50,100,200,500,1000,2000,3000,5000,7000,9000,10000];
+
+async function connect(){
+if(!window.ethereum) return alert("MetaMask Install Kara");
+const provider = new ethers.BrowserProvider(window.ethereum);
+await provider.send("eth_requestAccounts", []);
+signer = await provider.getSigner();
+const addr = await signer.getAddress();
+document.getElementById("wallet").innerText = addr.slice(0,6)+"..."+addr.slice(-4);
+contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+usdtContract = new ethers.Contract(USDT_ADDRESS, ["function balanceOf(address) view returns(uint256)","function approve(address,uint256) returns(bool)","function allowance(address,address) view returns(uint256)"], signer);
+load();
+}
+
+async function load(){
+const user = await signer.getAddress();
+const bal = await usdtContract.balanceOf(user);
+document.getElementById("usdtBal").innerText = ethers.formatUnits(bal,18);
+let html="", claimHtml="";
+for(let i=0;i<15;i++){
+const active = await contract.isActive(user,i);
+const pending = await contract.getPending(user,i);
+html+=`<div class="level"><b>Level ${i+1}<br>${prices[i]} USDT</b><br>${active?'✅ Active':'❌ Not Active'}<br>
+${!active?`<button onclick="joinLevel(${i})">Buy Level ${i+1}</button>`:''}</div>`;
+if(pending>0) claimHtml+=`<p>Level ${i+1}: ${ethers.formatUnits(pending,18)} USDT <button onclick="claimLevel(${i})">Claim</button></p>`;
+}
+document.getElementById("levels").innerHTML=html;
+document.getElementById("claims").innerHTML=claimHtml||"No Pending Income<br>1 Direct Compulsory for Autopool";
+const auto = await contract.autoUpgrade(user);
+document.getElementById("autoStatus").innerText = "Auto Upgrade: "+(auto?"ON ✅":"OFF ❌");
+}
+
+async function joinLevel(lvl){
+try{
+const price = ethers.parseUnits(prices[lvl].toString(),18);
+const allowance = await usdtContract.allowance(await signer.getAddress(), CONTRACT_ADDRESS);
+if(allowance < price){ const tx1 = await usdtContract.approve(CONTRACT_ADDRESS, price); await tx1.wait(); alert("Approved"); }
+const upline = prompt("Upline Address Taka (Creator cha asel tar):","0x843162bFc44b13dAAdB13652681b3902332f324D");
+const tx = await contract.join(lvl, upline); await tx.wait(); alert("Joined Level "+(lvl+1)); load();
+}catch(e){ alert(e.reason||e.message); }
+}
+
+async function claimLevel(lvl){
+try{ const tx = await contract.claimGlobalIncome(lvl); await tx.wait(); alert("Claimed!"); load(); }catch(e){ alert(e.reason||e.message); }
+}
+
+async function setAuto(on){
+try{ const tx = await contract.setAutoUpgrade(on); await tx.wait(); alert("Auto "+(on?"ON":"OFF")); load(); }catch(e){ alert(e.message); }
+}
+</script>
+</body>
+</html>
