@@ -1,63 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MGG ROCKET - 3X Global Autopool</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MGG ROCKET - 3X Global Autopool - Full Amount</title>
 <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body{font-family:Arial;background:#0b0f1a;color:#fff;margin:0;padding:12px}
-.card{background:#151a2a;border:1px solid #2a3350;border-radius:16px;padding:16px;margin:12px 0}
-.btn{background:#00ff88;color:#000;border:0;padding:12px 22px;border-radius:10px;font-weight:900;cursor:pointer;margin:5px;width:100%}
-.btn2{background:#ffaa00;color:#000;padding:8px 14px;width:auto}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+*{box-sizing:border-box}
+body{font-family:'Poppins',Arial;background:#080b14;color:#fff;margin:0;padding:0}
+.header{background:linear-gradient(135deg,#0f1629 0%,#1a233f 100%);padding:20px;text-align:center;border-bottom:2px solid #00ff88}
+.header h1{font-family:'Orbitron',sans-serif;color:#00ff88;font-size:32px;margin:0;text-shadow:0 0 20px #00ff88}
+.header p{color:#8a94b0;margin:5px 0 0 0}
+.container{max-width:1100px;margin:0 auto;padding:15px}
+.card{background:linear-gradient(145deg,#151a2a,#1c233a);border:1px solid #2a3350;border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+.card h2{color:#00ff88;font-size:19px;margin:0 0 12px 0;border-left:4px solid #00ff88;padding-left:10px}
+.btn{background:linear-gradient(90deg,#00ff88,#00cc6a);color:#000;border:0;padding:14px 24px;border-radius:12px;font-weight:800;cursor:pointer;margin:6px 0;width:100%;font-size:15px;transition:0.3s}
+.btn:hover{transform:scale(1.02);box-shadow:0 0 20px #00ff88}
+.btn:disabled{background:#2a3350;color:#666;cursor:not-allowed;transform:none;box-shadow:none}
+.btn2{background:linear-gradient(90deg,#ffaa00,#ff8800);color:#000;padding:10px 18px;width:auto;border-radius:10px;font-weight:700;margin:4px}
+.btn3{background:linear-gradient(90deg,#00aaff,#0066ff);color:#fff;padding:10px 18px;width:auto;border-radius:10px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.grid{grid-template-columns:1fr}}
-h2{color:#00ff88}
-.wallet{color:#00ff88;font-weight:bold}
-.badge{background:#00ff8822;color:#00ff88;padding:4px 8px;border-radius:6px;font-size:12px}
+.pkg-card{background:linear-gradient(145deg,#1a2035,#232d4a);border:1px solid #2a3350;border-radius:16px;padding:16px;position:relative;overflow:hidden}
+.pkg-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,#00ff88,#00aaff)}
+.pkg-card.active{border-color:#00ff88;box-shadow:0 0 15px rgba(0,255,136,0.2)}
+.wallet{color:#00ff88;font-weight:700;font-size:17px}
+.badge{background:rgba(0,255,136,0.15);color:#00ff88;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid #00ff88}
+.badge-orange{background:rgba(255,170,0,0.15);color:#ffaa00;border-color:#ffaa00}
+.info-row{display:flex;justify-content:space-between;margin:6px 0;font-size:13px}
+.info-row span:first-child{color:#8a94b0}
+.info-row span:last-child{color:#fff;font-weight:600}
+.divider{height:1px;background:#2a3350;margin:10px 0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center}
+.stat-box{background:#0f1424;padding:12px;border-radius:12px;border:1px solid #2a3350}
+.stat-box b{color:#00ff88;font-size:18px;display:block}
+.stat-box small{color:#8a94b0;font-size:11px}
+.footer{text-align:center;color:#8a94b0;padding:30px;font-size:12px}
 </style>
 </head>
 <body>
+<div class="header">
 <h1>🚀 MGG ROCKET</h1>
-<p style="color:#8a94b0">10% Creator | 20% Direct (नसेल तर Creator) | 70% Global | Per Package 3X Cap</p>
-
-<div class="card">
-<button class="btn" id="connBtn" onclick="connect()">🔗 Connect Wallet</button>
-<p id="addr" style="word-break:break-all">Not Connected - BSC Mainnet निवड</p>
-<p>Upline: <span id="upl" style="color:#ffaa00"></span></p>
-<p>Referral Link:<br><span id="reflink" style="color:#00ff88;font-size:12px;word-break:break-all">Connect झाल्यावर येईल</span></p>
+<p>15 Level Global Autopool | 10% Creator | 20% Direct | 70% Global | Per Package 3X Cap | Full Amount</p>
+<p style="font-size:11px;color:#00ff88">Creator: 0x843162bFc44b13dAAdB13652681b3902332f324D</p>
 </div>
 
-<div class="card"><h2>💰 माझे Wallets - सर्व Wallet बरोबर दिसतील</h2><div id="wallets">Connect करा...</div></div>
-<div class="card"><h2>📦 Packages - Full Amount</h2><div id="packages" class="grid"></div></div>
+<div class="container">
+
+<div class="card">
+<h2>🔗 Wallet Connection - BSC Mainnet</h2>
+<div class="stats">
+<div class="stat-box"><b id="s1">15</b><small>Total Packages</small></div>
+<div class="stat-box"><b id="s2">$32,887</b><small>Full Investment</small></div>
+<div class="stat-box"><b id="s3">$98,661</b><small>Max 3X Income</small></div>
+<div class="stat-box"><b id="s4">100%</b><small>Decentralized</small></div>
+</div>
+<div style="margin-top:15px">
+<button class="btn" id="connBtn" onclick="connect()">🔗 Connect Wallet - BSC Mainnet निवड</button>
+<p id="addr" style="word-break:break-all;background:#0f1424;padding:10px;border-radius:10px;border:1px dashed #2a3350">Not Connected</p>
+<p style="font-size:13px">Upline Address: <br><span id="upl" style="color:#ffaa00;word-break:break-all;font-weight:600"></span></p>
+<p style="font-size:12px">My Referral Link: <br><span id="reflink" style="color:#00ff88;word-break:break-all;background:#0f1424;padding:8px;border-radius:8px;display:block;margin-top:5px">Connect झाल्यावर येईल - कॉपी करून शेअर कर</span></p>
+</div>
+</div>
+
+<div class="card">
+<h2>💰 माझे सर्व Wallets - प्रत्येक Package वेगळे - बरोबर दिसतील</h2>
+<p style="color:#8a94b0;font-size:12px">प्रत्येक Level चं Direct Wallet (20%) आणि Global Wallet (70%) वेगळं आहे. 3X झाल्यावर Auto Stop.</p>
+<div id="wallets" style="margin-top:12px">Connect करा - सर्व Wallet इथे बरोबर दिसतील...</div>
+</div>
+
+<div class="card">
+<h2>📦 15 Packages - प्रत्येक Full Amount - प्रत्येकाचं Income वेगळं</h2>
+<p style="color:#8a94b0;font-size:12px">कोणतंही Package लावलं तर Full Amount भरायचा. Upgrade System नाही. प्रत्येक Package वर 3X वेगळं मिळेल.</p>
+<div id="packages" class="grid" style="margin-top:12px"></div>
+</div>
+
+<div class="card">
+<h2>📜 Rules - नियम</h2>
+<div style="font-size:13px;line-height:1.8;color:#c0c8e0">
+1. पहिला Member आला तर 100% Creator ला - 0x8431...24D ला<br>
+2. दुसऱ्या पासून: 10% Creator | 20% Direct Upline ला | 70% Global Pool<br>
+3. Upline नसेल तर 20% पण Creator ला जाईल - कोणतंही पैसे अडकणार नाही<br>
+4. प्रत्येक Package चं Income वेगळं - 3X Cap प्रत्येक Level वर वेगळा<br>
+5. Global 70% - त्या Level चे Active Members ज्यांचा 3X बाकी आहे त्यांना वाटला जाईल<br>
+6. Full Amount System - $500 लावायचा असेल तर Full $500
+</div>
+</div>
+
+<div class="footer">MGG ROCKET - 100% Decentralized | BSC Mainnet | Creator: 0x8431...24D | 2026</div>
+
+</div>
 
 <script>
-const CONTRACT_ADDRESS = "0x843162bFc44b13dAAdB13652681b3902332f324D";
-const ABI = [{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"},{"internalType":"address","name":"_upline","type":"address"}],"name":"join","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"claimAppWallet","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"claimIdWallet","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"},{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"getUserLevelInfo","outputs":[{"internalType":"uint256","name":"paid","type":"uint256"},{"internalType":"uint256","name":"direct","type":"uint256"},{"internalType":"uint256","name":"globalInc","type":"uint256"},{"internalType":"uint256","name":"claimed","type":"uint256"},{"internalType":"uint256","name":"maxInc","type":"uint256"},{"internalType":"uint256","name":"remaining","type":"uint256"}],"stateMutability":"view","type":"function"}];
+// ============= CONFIG =============
+const CONTRACT_ADDRESS = "0x843162bFc44b13dAAdB13652681b3902332f324D"; // तुझा Address - Contract Deploy केल्यावर Real Contract Address टाक
+const ABI = [
+{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"},{"internalType":"address","name":"_upline","type":"address"}],"name":"join","outputs":[],"stateMutability":"payable","type":"function"},
+{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"claimAppWallet","outputs":[],"stateMutability":"nonpayable","type":"function"},
+{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"claimIdWallet","outputs":[],"stateMutability":"nonpayable","type":"function"},
+{"inputs":[{"internalType":"address","name":"_user","type":"address"},{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"getUserLevelInfo","outputs":[{"internalType":"uint256","name":"paid","type":"uint256"},{"internalType":"uint256","name":"direct","type":"uint256"},{"internalType":"uint256","name":"globalInc","type":"uint256"},{"internalType":"uint256","name":"claimed","type":"uint256"},{"internalType":"uint256","name":"maxInc","type":"uint256"},{"internalType":"uint256","name":"remaining","type":"uint256"}],"stateMutability":"view","type":"function"}
+];
 const PKG = [2,5,10,20,50,100,200,500,1000,2000,3000,5000,7000,9000,10000];
 let web3, contract, user;
 let upline = new URLSearchParams(window.location.search).get('ref');
-if(!upline || !upline.startsWith('0x')) upline = "0x0000000000000000000000000000000000000000";
-document.getElementById('upl').innerText = upline=="0x0000000000000000000000000000000000000000" ? "None (20% Creator - 0x8431...24D ला जाईल)" : upline;
+if(!upline || !upline.startsWith('0x') || upline.length!=42) upline = "0x0000000000000000000000000000000000000000";
+document.getElementById('upl').innerText = upline=="0x0000000000000000000000000000000000000000" ? "None - 20% Creator (0x8431...24D) ला जाईल" : upline;
 
+// Show Packages Before Connect
 function showPackagesStatic(){
- let h=""; PKG.forEach((p,i)=>{ h+=`<div class="card" style="margin:0"><b>$${p} <span class="badge">L${i+1}</span></b><br><small style="color:#8a94b0">Max: $${p*3} | 10% Creator | 20% Direct | 70% Global</small><br><br><button class="btn" onclick="buy(${i})">Buy Full $${p}</button></div>`; });
- document.getElementById('packages').innerHTML=h;
+ let html=""; 
+ PKG.forEach((p,i)=>{
+  html+=`<div class="pkg-card">
+   <div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:18px">$${p}</b><span class="badge">LEVEL ${i+1}</span></div>
+   <div class="divider"></div>
+   <div class="info-row"><span>Package Price</span><span>Full $${p}</span></div>
+   <div class="info-row"><span>Max Income (3X)</span><span style="color:#00ff88">$${p*3}</span></div>
+   <div class="info-row"><span>Distribution</span><span style="font-size:11px">10% | 20% | 70%</span></div>
+   <div class="divider"></div>
+   <div style="font-size:11px;color:#8a94b0;margin-bottom:10px">पहिला Member: 100% Creator | नंतर: 20% Direct, 70% Global</div>
+   <button class="btn" onclick="buy(${i})" id="buyBtn${i}">Buy Full $${p} - L${i+1}</button>
+   <div id="status${i}" style="text-align:center;margin-top:6px;font-size:11px;color:#8a94b0">Not Active</div>
+  </div>`;
+ });
+ document.getElementById('packages').innerHTML=html;
 }
 showPackagesStatic();
 
 async function connect(){
- if(!window.ethereum) return alert("Metamask/TrustWallet मध्ये उघड");
+ if(!window.ethereum){ alert("Metamask / TrustWallet / SafePal मध्ये उघडा!"); return; }
  web3 = new Web3(window.ethereum);
  await window.ethereum.request({method:"eth_requestAccounts"});
  const acc = await web3.eth.getAccounts(); user = acc[0];
- document.getElementById('addr').innerText=user;
- document.getElementById('connBtn').innerText="✅ Connected - "+user.slice(0,6)+"..."+user.slice(-4);
- document.getElementById('reflink').innerText=window.location.origin+"?ref="+user;
- contract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
- loadWallets();
+ document.getElementById('addr').innerText = "✅ Connected: " + user;
+ document.getElementById('connBtn').innerText = "✅ Connected - " + user.slice(0,6) + "..." + user.slice(-4);
+ document.getElementById('reflink').innerText = window.location.origin + window.location.pathname + "?ref=" + user;
+ try{
+  contract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
+  loadWallets();
+ }catch(e){
+  document.getElementById('wallets').innerHTML = "<p style='color:#ff5555'>Contract अजून Deploy नाही! Remix वर Deploy करून Address टाक!</p>";
+ }
 }
+
 async function loadWallets(){
- let html=""; for(let i=0;i<15;i++){
-  try{ const info = await contract.methods.getUserLevelInfo(user, i).call(); const paid=web3.utils.fromWei(info.paid,'ether');
-   if(paid>0){ const direct=web3.utils.fromWei(info.direct,'ether'); const globalInc=web3.utils.fromWei(info.globalInc,'ether'); const claimed=web3.utils.fromWei(info.claimed,'ether'); const maxInc=web3.utils.fromWei(info.maxInc,'ether');
-    html+=`<div class="card" style="background:#1e253e"><b>$${PKG[i]} - L${i+1}</b> <span class="badge">Max $${maxInc}</span><br>Paid: $${paid} | Claimed: $${claimed}<br><span class="wallet">
+ let html=""; let activeCount=0;
+ for(let i=0;i<15;i++){
+  try{
+   const info = await contract.methods.getUserLevelInfo(user, i).call();
+   const paid = parseFloat(web3.utils.fromWei(info.paid,'ether'));
+   const direct = parseFloat(web3.utils.fromWei(info.direct,'ether'));
+   const globalInc = parseFloat(web3.utils.fromWei(info.globalInc,'ether'));
+   const claimed = parseFloat(web3.utils.fromWei(info.claimed,'ether'));
+   const maxInc = parseFloat(web3.utils.fromWei(info.maxInc,'ether'));
+   const remaining = parseFloat(web3.utils.fromWei(info.remaining,'ether'));
+   if(paid>0){
+    activeCount++;
+    document.getElementById('status'+i).innerHTML = "<span style='color:#00ff88'>✅ Active - Paid: $"+paid+"</span>";
+    document.getElementById('buyBtn'+i).disabled=true;
+    document.getElementById('buyBtn'+i).innerText="✅ Active - $"+paid;
+    html+=`<div class="pkg-card active" style="border-color:#00ff88">
+     <div style="display:flex;justify-content:space-between"><b>$${PKG[i]} - Level ${i+1}</b><span class="badge">Max $${maxInc}</span></div>
+     <div class="divider"></div>
+     <div class="info-row"><span>Paid</span><span>$${paid}</span></div>
+     <div class="info-row"><span>Claimed</span><span>$${claimed}</span></div>
+     <div class="info-row"><span>Remaining 3X Cap</span><span style="color:#ffaa00">$${remaining}</span></div>
+     <div class="divider"></div>
+     <div class="info-row"><span class="wallet">Direct Wallet (20%)</span><span class="wallet">$${direct.toFixed(4)}</span></div>
+     <button class="btn btn2" onclick="claimDirect(${i})" ${direct==0?'disabled':''}>Claim Direct $${direct.toFixed(4)}</button>
+     <div class="info-row" style="margin-top:8px"><span class="wallet">Global Wallet (70%)</span><span class="wallet">$${globalInc.toFixed(4)}</span></div>
+     <button class="btn btn2" onclick="claimGlobal(${i})" ${globalInc==0?'disabled':''}>Claim Global $${globalInc.toFixed(4)}</button>
+    </div>`;
+   }
+  }catch(e){ console.log("Level",i,e.message); }
+ }
+ if(activeCount==0){ html = "<p style='color:#8a94b0'>अजून कोणतंही Package Active नाही! खालून कोणतंही Package Full Amount ने Buy कर! प्रत्येकाचे Wallet वेगळे येतील!</p>"; }
+ else { html = "<div class='grid'>"+html+"</div><p style='margin-top:12px;color:#00ff88'>✅ "+activeCount+" Packages Active - सर्व Wallet बरोबर दिसत आहेत!</p>"; }
+ document.getElementById('wallets').innerHTML=html;
+}
+
+async function buy(level){
+ if(!user){ alert("आधी Connect Wallet कर!"); return; }
+ const price = web3.utils.toWei(PKG[level].toString(),'ether');
+ try{
+  document.getElementById('buyBtn'+level).innerText="⏳ Processing...";
+  await contract.methods.join(level, upline).send({from:user, value:price});
+  alert("🚀 SUCCESS! $"+PKG[level]+" Package Join झालं! Full Amount: $"+PKG[level]);
+  loadWallets();
+ }catch(e){ alert("Error: "+e.message); document.getElementById('buyBtn'+level).innerText="Buy Full $"+PKG[level]; }
+}
+async function claimDirect(level){ if(!user) return; try{ await contract.methods.claimAppWallet(level).send({from:user}); alert("✅ Direct Wallet Claimed! L"+(level+1)); loadWallets(); }catch(e){ alert(e.message); } }
+async function claimGlobal(level){ if(!user) return; try{ await contract.methods.claimIdWallet(level).send({from:user}); alert("✅ Global Wallet Claimed! L"+(level+1)); loadWallets(); }catch(e){ alert(e.message); } }
+</script>
+</body>
+</html>
