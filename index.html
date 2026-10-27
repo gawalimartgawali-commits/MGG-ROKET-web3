@@ -1,105 +1,95 @@
 <!DOCTYPE html>
-<html lang="mr">
+<html>
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MGG ROCKET - App Wallet Direct</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MGG ROCKET - USDT BEP20</title>
 <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
 <style>
-body{background:#0b0f1a;color:#fff;font-family:Arial;padding:12px;margin:0}
-.card{background:#151a2a;border:1px solid #2a3350;border-radius:16px;padding:18px;margin:14px 0}
-.btn{background:#00ff88;color:#000;border:0;padding:14px;width:100%;border-radius:10px;font-weight:900;cursor:pointer;font-size:16px}
-.btn2{background:#ffaa00;color:#000;padding:12px;width:100%;border-radius:10px;font-weight:900;margin-top:8px;border:0;cursor:pointer}
-.pkg{background:#1c233a;border:1px solid #2a3350;border-radius:12px;padding:14px;margin:10px 0}
-.wallet-box{background:#0e1322;border:1px solid #2a3350;border-radius:10px;padding:14px;margin:10px 0;display:flex;justify-content:space-between;align-items:center}
-.green{color:#00ff88;font-weight:900;font-size:18px}
-.gray{color:#8a94b0;font-size:11px}
+body{background:#000;color:#fff;font-family:Arial;text-align:center;padding:20px}
+.card{background:#111;border:2px solid #FFD700;border-radius:15px;padding:20px;margin:15px auto;max-width:500px}
+.btn{background:linear-gradient(45deg,#FFD700,#FFA500);color:#000;padding:12px 25px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;margin:5px;width:90%;font-size:16px}
+.level{border:1px solid #333;padding:10px;margin:5px;border-radius:8px;cursor:pointer}
+.level.active{border-color:#FFD700;background:#222}
+.refund{background:#ff3333;color:#fff}
 </style>
 </head>
 <body>
-<h1 style="color:#00ff88">🚀 MGG ROCKET</h1>
-<p style="color:#8a94b0;font-size:12px">10% Creator | 20% App Wallet Direct | 70% Global Claim</p>
+<h1 style="color:#FFD700">🚀 MGG ROCKET</h1>
+<p>USDT BEP20 | System 0 | 1 Direct = Global</p>
 
 <div class="card">
-<button class="btn" id="cBtn" onclick="connect()">🔗 Connect Wallet</button>
-<p id="addr" style="font-size:12px;margin-top:10px;word-break:break-all">Not Connected - BSC Mainnet</p>
-<p style="margin-top:12px">My Referral Link:</p>
-<p id="refLink" style="background:#0e1322;padding:10px;border-radius:8px;color:#00ff88;font-size:12px;word-break:break-all">Connect झाल्यावर येईल</p>
-<button class="btn2" onclick="copyLink()">📋 Copy Referral Link</button>
+<button class="btn" onclick="connect()">Connect Wallet</button>
+<p id="wallet">Not Connected</p>
+<p id="direct">Direct Count: -</p>
+<p id="balance">USDT Balance: -</p>
 </div>
 
 <div class="card">
-<h3 style="color:#00ff88">💰 माझे Wallets</h3>
-
-<div class="wallet-box">
-<div><div>App Wallet - Direct (20%)</div><div class="gray">Direct Income - App Wallet ला Direct येईल - Claim नाही</div></div>
-<div class="green" id="directBal">$0.00</div>
+<h3>Select Level</h3>
+<div id="levels"></div>
+<p>Upline: <input id="upline" placeholder="0x..." style="width:90%;padding:8px"></p>
+<button class="btn" onclick="approve()">1 Approve USDT</button>
+<button class="btn" onclick="join()">2 Join Level</button>
 </div>
 
-<div class="wallet-box">
-<div><div>Global Wallet (70%)</div><div class="gray">Global Pool Income</div></div>
-<div style="text-align:right"><div class="green" id="globalBal">$0.00</div><button class="btn" style="padding:8px 16px;width:auto;margin-top:6px;font-size:13px" onclick="claimGlobal()">💸 Claim Global</button></div>
+<div class="card">
+<h3>Global Rule</h3>
+<div id="refundArea"></div>
 </div>
-
-<div class="wallet-box"><div>Total Claimed</div><div class="green" id="claimedBal">$0.00</div></div>
-<p id="walletStatus" style="font-size:11px;color:#8a94b0;text-align:center;margin-top:8px">Connect केल्यावर Balance येईल</p>
-</div>
-
-<div class="card"><h3>📦 Packages - Full Amount</h3><div id="pkgs"></div></div>
 
 <script>
-const CONTRACT_ADDRESS = "0x843162bFc44b13dAAdB13652681b3902332f324D"; // इथे Remix वरून मिळालेला नवीन Contract Address टाक
-const ABI = [{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"},{"internalType":"address","name":"_upline","type":"address"}],"name":"join","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"claimIdWallet","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"},{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"getUserLevelInfo","outputs":[{"internalType":"uint256","name":"paid","type":"uint256"},{"internalType":"uint256","name":"direct","type":"uint256"},{"internalType":"uint256","name":"globalInc","type":"uint256"},{"internalType":"uint256","name":"claimed","type":"uint256"},{"internalType":"uint256","name":"maxInc","type":"uint256"},{"internalType":"uint256","name":"remaining","type":"uint256"}],"stateMutability":"view","type":"function"}];
-const PRICES = [2,5,10,20,50,100,200,500,1000,2000,3000,5000,7000,9000,10000];
-let web3, contract, user;
-let upline = new URLSearchParams(location.search).get('ref') || "0x0000000000000000000000000000000000000000";
-
-function loadPkgs(){
- let h="";
- PRICES.forEach((p,i)=>{
-  h+=`<div class="pkg"><div style="display:flex;justify-content:space-between"><b>$${p} - L${i+1}</b><span style="color:#00ff88">Max $${p*3}</span></div><small>10% Creator | 20% App Wallet Direct | 70% Global</small><br><button class="btn" style="margin-top:8px" onclick="buy(${i})">Buy Full $${p}</button></div>`;
- });
- document.getElementById('pkgs').innerHTML=h;
+let web3, account, usdt, rocket;
+const USDT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955";
+const ROCKET_ADDRESS = "PUT_YOUR_ADDRESS_HERE";
+const USDT_ABI = [{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
+const ROCKET_ABI = [{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"},{"internalType":"address","name":"_upline","type":"address"}],"name":"join","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"directCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"isActive","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_level","type":"uint256"}],"name":"claimRefund","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"packages","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
+let selectedLevel=0;
+const pkgs=[2,5,10,20,50,100,200,500,1000,2000,3000,5000,7000,9000,10000];
+window.onload=()=>{
+ let div=document.getElementById("levels");
+ pkgs.forEach((p,i)=>{div.innerHTML+=`<div class="level" id="l${i}" onclick="selectLevel(${i})">Level ${i+1} = ${p} USDT</div>`;});
+ const urlParams=new URLSearchParams(window.location.search);
+ if(urlParams.get('ref')) document.getElementById('upline').value=urlParams.get('ref');
 }
-loadPkgs();
-
+function selectLevel(i){selectedLevel=i;document.querySelectorAll('.level').forEach(e=>e.classList.remove('active'));document.getElementById('l'+i).classList.add('active');checkRefund();}
 async function connect(){
- if(!window.ethereum) return alert("Metamask मध्ये उघड");
- web3 = new Web3(window.ethereum);
- await window.ethereum.request({method:"eth_requestAccounts"});
- const a = await web3.eth.getAccounts(); user=a[0];
- document.getElementById('addr').innerText="✅ "+user;
- document.getElementById('cBtn').innerText="✅ "+user.slice(0,6)+"..."+user.slice(-4);
- document.getElementById('refLink').innerText=location.origin+"?ref="+user;
- contract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
- loadWallets();
+ web3=new Web3(window.ethereum);
+ await window.ethereum.request({method:'eth_requestAccounts'});
+ let accounts=await web3.eth.getAccounts();account=accounts[0];
+ document.getElementById('wallet').innerText=account.slice(0,6)+"..."+account.slice(-4);
+ usdt=new web3.eth.Contract(USDT_ABI,USDT_ADDRESS);
+ rocket=new web3.eth.Contract(ROCKET_ABI,ROCKET_ADDRESS);
+ let bal=await usdt.methods.balanceOf(account).call();
+ document.getElementById('balance').innerText="USDT Balance: "+web3.utils.fromWei(bal,'ether');
+ let dc=await rocket.methods.directCount(account).call();
+ document.getElementById('direct').innerText="Direct Count: "+dc;
+ checkRefund();
 }
-async function loadWallets(){
- let d=0,g=0,c=0;
- for(let i=0;i<15;i++){
-  try{
-   const info = await contract.methods.getUserLevelInfo(user, i).call();
-   d+=parseFloat(web3.utils.fromWei(info.direct,'ether'));
-   g+=parseFloat(web3.utils.fromWei(info.globalInc,'ether'));
-   c+=parseFloat(web3.utils.fromWei(info.claimed,'ether'));
-  }catch(e){}
- }
- document.getElementById('directBal').innerText="$"+d.toFixed(4);
- document.getElementById('globalBal').innerText="$"+g.toFixed(4);
- document.getElementById('claimedBal').innerText="$"+c.toFixed(4);
+async function checkRefund(){
+ if(!rocket||!account) return;
+ try{
+ let dc=await rocket.methods.directCount(account).call();
+ let active=await rocket.methods.isActive(account,selectedLevel).call();
+ let area=document.getElementById('refundArea');
+ if(active&&dc==0){area.innerHTML=`<p style="color:#ff3333">0 Direct - No Global!</p><button class="btn refund" onclick="claimRefund()">Claim Refund Level ${selectedLevel+1}</button>`;}
+ else if(active&&dc>=1){area.innerHTML=`<p style="color:#00ff00">Eligible for Global! Direct: ${dc}</p>`;}
+ else{area.innerHTML=`<p>Join First</p>`;}
+ }catch(e){}
 }
-function copyLink(){ navigator.clipboard.writeText(document.getElementById('refLink').innerText); alert("Copied!"); }
-async function buy(lvl){
- if(!user) return alert("Connect कर!");
- const val = web3.utils.toWei(PRICES[lvl].toString(),'ether');
- try{ await contract.methods.join(lvl, upline).send({from:user, value:val}); alert("Success! $"+PRICES[lvl]+" - 20% App Wallet ला गेलं!"); loadWallets(); }
- catch(e){ alert(e.message); }
+async function approve(){
+ let amount=web3.utils.toWei(pkgs[selectedLevel].toString(),'ether');
+ await usdt.methods.approve(ROCKET_ADDRESS,amount).send({from:account});
+ alert("Approved "+pkgs[selectedLevel]+" USDT");
 }
-async function claimGlobal(){
- if(!user) return;
- for(let i=0;i<15;i++){
-  try{ const info = await contract.methods.getUserLevelInfo(user, i).call(); if(parseFloat(web3.utils.fromWei(info.globalInc,'ether'))>0) await contract.methods.claimIdWallet(i).send({from:user}); }catch(e){}
- }
- alert("Global Claimed!"); loadWallets();
+async function join(){
+ let upl=document.getElementById('upline').value||"0x0000000000000000000000000000000000000000";
+ await rocket.methods.join(selectedLevel,upl).send({from:account});
+ alert("Joined Level "+(selectedLevel+1));checkRefund();
+}
+async function claimRefund(){
+ await rocket.methods.claimRefund(selectedLevel).send({from:account});
+ alert("Refund Claimed - Contact Creator");
 }
 </script>
 </body>
