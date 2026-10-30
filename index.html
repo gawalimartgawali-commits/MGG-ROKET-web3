@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mr">
 <head><style>
 @font-face {
   font-family: "Optimistic";
@@ -22,1232 +22,266 @@
   font-family: "Optimistic Mono", ui-monospace, monospace;
 }
 </style>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>React Artifact</title>
-  <style>*, ::before, ::after {
-  --tw-border-spacing-x: 0;
-  --tw-border-spacing-y: 0;
-  --tw-translate-x: 0;
-  --tw-translate-y: 0;
-  --tw-rotate: 0;
-  --tw-skew-x: 0;
-  --tw-skew-y: 0;
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  --tw-pan-x:  ;
-  --tw-pan-y:  ;
-  --tw-pinch-zoom:  ;
-  --tw-scroll-snap-strictness: proximity;
-  --tw-gradient-from-position:  ;
-  --tw-gradient-via-position:  ;
-  --tw-gradient-to-position:  ;
-  --tw-ordinal:  ;
-  --tw-slashed-zero:  ;
-  --tw-numeric-figure:  ;
-  --tw-numeric-spacing:  ;
-  --tw-numeric-fraction:  ;
-  --tw-ring-inset:  ;
-  --tw-ring-offset-width: 0px;
-  --tw-ring-offset-color: #fff;
-  --tw-ring-color: rgb(59 130 246 / 0.5);
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
-  --tw-blur:  ;
-  --tw-brightness:  ;
-  --tw-contrast:  ;
-  --tw-grayscale:  ;
-  --tw-hue-rotate:  ;
-  --tw-invert:  ;
-  --tw-saturate:  ;
-  --tw-sepia:  ;
-  --tw-drop-shadow:  ;
-  --tw-backdrop-blur:  ;
-  --tw-backdrop-brightness:  ;
-  --tw-backdrop-contrast:  ;
-  --tw-backdrop-grayscale:  ;
-  --tw-backdrop-hue-rotate:  ;
-  --tw-backdrop-invert:  ;
-  --tw-backdrop-opacity:  ;
-  --tw-backdrop-saturate:  ;
-  --tw-backdrop-sepia:  ;
-  --tw-contain-size:  ;
-  --tw-contain-layout:  ;
-  --tw-contain-paint:  ;
-  --tw-contain-style:  ;
-}
-
-::backdrop {
-  --tw-border-spacing-x: 0;
-  --tw-border-spacing-y: 0;
-  --tw-translate-x: 0;
-  --tw-translate-y: 0;
-  --tw-rotate: 0;
-  --tw-skew-x: 0;
-  --tw-skew-y: 0;
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  --tw-pan-x:  ;
-  --tw-pan-y:  ;
-  --tw-pinch-zoom:  ;
-  --tw-scroll-snap-strictness: proximity;
-  --tw-gradient-from-position:  ;
-  --tw-gradient-via-position:  ;
-  --tw-gradient-to-position:  ;
-  --tw-ordinal:  ;
-  --tw-slashed-zero:  ;
-  --tw-numeric-figure:  ;
-  --tw-numeric-spacing:  ;
-  --tw-numeric-fraction:  ;
-  --tw-ring-inset:  ;
-  --tw-ring-offset-width: 0px;
-  --tw-ring-offset-color: #fff;
-  --tw-ring-color: rgb(59 130 246 / 0.5);
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
-  --tw-blur:  ;
-  --tw-brightness:  ;
-  --tw-contrast:  ;
-  --tw-grayscale:  ;
-  --tw-hue-rotate:  ;
-  --tw-invert:  ;
-  --tw-saturate:  ;
-  --tw-sepia:  ;
-  --tw-drop-shadow:  ;
-  --tw-backdrop-blur:  ;
-  --tw-backdrop-brightness:  ;
-  --tw-backdrop-contrast:  ;
-  --tw-backdrop-grayscale:  ;
-  --tw-backdrop-hue-rotate:  ;
-  --tw-backdrop-invert:  ;
-  --tw-backdrop-opacity:  ;
-  --tw-backdrop-saturate:  ;
-  --tw-backdrop-sepia:  ;
-  --tw-contain-size:  ;
-  --tw-contain-layout:  ;
-  --tw-contain-paint:  ;
-  --tw-contain-style:  ;
-}
-
-/*
-! tailwindcss v3.4.18 | MIT License | https://tailwindcss.com
-*/
-
-/*
-1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
-2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
-*/
-
-*,
-::before,
-::after {
-  box-sizing: border-box;
-  /* 1 */
-  border-width: 0;
-  /* 2 */
-  border-style: solid;
-  /* 2 */
-  border-color: #e5e7eb;
-  /* 2 */
-}
-
-::before,
-::after {
-  --tw-content: '';
-}
-
-/*
-1. Use a consistent sensible line-height in all browsers.
-2. Prevent adjustments of font size after orientation changes in iOS.
-3. Use a more readable tab size.
-4. Use the user's configured `sans` font-family by default.
-5. Use the user's configured `sans` font-feature-settings by default.
-6. Use the user's configured `sans` font-variation-settings by default.
-7. Disable tap highlights on iOS
-*/
-
-html,
-:host {
-  line-height: 1.5;
-  /* 1 */
-  -webkit-text-size-adjust: 100%;
-  /* 2 */
-  -moz-tab-size: 4;
-  /* 3 */
-  -o-tab-size: 4;
-     tab-size: 4;
-  /* 3 */
-  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  /* 4 */
-  font-feature-settings: normal;
-  /* 5 */
-  font-variation-settings: normal;
-  /* 6 */
-  -webkit-tap-highlight-color: transparent;
-  /* 7 */
-}
-
-/*
-1. Remove the margin in all browsers.
-2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
-*/
-
-body {
-  margin: 0;
-  /* 1 */
-  line-height: inherit;
-  /* 2 */
-}
-
-/*
-1. Add the correct height in Firefox.
-2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
-3. Ensure horizontal rules are visible by default.
-*/
-
-hr {
-  height: 0;
-  /* 1 */
-  color: inherit;
-  /* 2 */
-  border-top-width: 1px;
-  /* 3 */
-}
-
-/*
-Add the correct text decoration in Chrome, Edge, and Safari.
-*/
-
-abbr:where([title]) {
-  -webkit-text-decoration: underline dotted;
-          text-decoration: underline dotted;
-}
-
-/*
-Remove the default font size and weight for headings.
-*/
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: inherit;
-  font-weight: inherit;
-}
-
-/*
-Reset links to optimize for opt-in styling instead of opt-out.
-*/
-
-a {
-  color: inherit;
-  text-decoration: inherit;
-}
-
-/*
-Add the correct font weight in Edge and Safari.
-*/
-
-b,
-strong {
-  font-weight: bolder;
-}
-
-/*
-1. Use the user's configured `mono` font-family by default.
-2. Use the user's configured `mono` font-feature-settings by default.
-3. Use the user's configured `mono` font-variation-settings by default.
-4. Correct the odd `em` font sizing in all browsers.
-*/
-
-code,
-kbd,
-samp,
-pre {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  /* 1 */
-  font-feature-settings: normal;
-  /* 2 */
-  font-variation-settings: normal;
-  /* 3 */
-  font-size: 1em;
-  /* 4 */
-}
-
-/*
-Add the correct font size in all browsers.
-*/
-
-small {
-  font-size: 80%;
-}
-
-/*
-Prevent `sub` and `sup` elements from affecting the line height in all browsers.
-*/
-
-sub,
-sup {
-  font-size: 75%;
-  line-height: 0;
-  position: relative;
-  vertical-align: baseline;
-}
-
-sub {
-  bottom: -0.25em;
-}
-
-sup {
-  top: -0.5em;
-}
-
-/*
-1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
-2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
-3. Remove gaps between table borders by default.
-*/
-
-table {
-  text-indent: 0;
-  /* 1 */
-  border-color: inherit;
-  /* 2 */
-  border-collapse: collapse;
-  /* 3 */
-}
-
-/*
-1. Change the font styles in all browsers.
-2. Remove the margin in Firefox and Safari.
-3. Remove default padding in all browsers.
-*/
-
-button,
-input,
-optgroup,
-select,
-textarea {
-  font-family: inherit;
-  /* 1 */
-  font-feature-settings: inherit;
-  /* 1 */
-  font-variation-settings: inherit;
-  /* 1 */
-  font-size: 100%;
-  /* 1 */
-  font-weight: inherit;
-  /* 1 */
-  line-height: inherit;
-  /* 1 */
-  letter-spacing: inherit;
-  /* 1 */
-  color: inherit;
-  /* 1 */
-  margin: 0;
-  /* 2 */
-  padding: 0;
-  /* 3 */
-}
-
-/*
-Remove the inheritance of text transform in Edge and Firefox.
-*/
-
-button,
-select {
-  text-transform: none;
-}
-
-/*
-1. Correct the inability to style clickable types in iOS and Safari.
-2. Remove default button styles.
-*/
-
-button,
-input:where([type='button']),
-input:where([type='reset']),
-input:where([type='submit']) {
-  -webkit-appearance: button;
-  /* 1 */
-  background-color: transparent;
-  /* 2 */
-  background-image: none;
-  /* 2 */
-}
-
-/*
-Use the modern Firefox focus style for all focusable elements.
-*/
-
-:-moz-focusring {
-  outline: auto;
-}
-
-/*
-Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
-*/
-
-:-moz-ui-invalid {
-  box-shadow: none;
-}
-
-/*
-Add the correct vertical alignment in Chrome and Firefox.
-*/
-
-progress {
-  vertical-align: baseline;
-}
-
-/*
-Correct the cursor style of increment and decrement buttons in Safari.
-*/
-
-::-webkit-inner-spin-button,
-::-webkit-outer-spin-button {
-  height: auto;
-}
-
-/*
-1. Correct the odd appearance in Chrome and Safari.
-2. Correct the outline style in Safari.
-*/
-
-[type='search'] {
-  -webkit-appearance: textfield;
-  /* 1 */
-  outline-offset: -2px;
-  /* 2 */
-}
-
-/*
-Remove the inner padding in Chrome and Safari on macOS.
-*/
-
-::-webkit-search-decoration {
-  -webkit-appearance: none;
-}
-
-/*
-1. Correct the inability to style clickable types in iOS and Safari.
-2. Change font properties to `inherit` in Safari.
-*/
-
-::-webkit-file-upload-button {
-  -webkit-appearance: button;
-  /* 1 */
-  font: inherit;
-  /* 2 */
-}
-
-/*
-Add the correct display in Chrome and Safari.
-*/
-
-summary {
-  display: list-item;
-}
-
-/*
-Removes the default spacing and border for appropriate elements.
-*/
-
-blockquote,
-dl,
-dd,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-hr,
-figure,
-p,
-pre {
-  margin: 0;
-}
-
-fieldset {
-  margin: 0;
-  padding: 0;
-}
-
-legend {
-  padding: 0;
-}
-
-ol,
-ul,
-menu {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-/*
-Reset default styling for dialogs.
-*/
-
-dialog {
-  padding: 0;
-}
-
-/*
-Prevent resizing textareas horizontally by default.
-*/
-
-textarea {
-  resize: vertical;
-}
-
-/*
-1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
-2. Set the default placeholder color to the user's configured gray 400 color.
-*/
-
-input::-moz-placeholder, textarea::-moz-placeholder {
-  opacity: 1;
-  /* 1 */
-  color: #9ca3af;
-  /* 2 */
-}
-
-input::placeholder,
-textarea::placeholder {
-  opacity: 1;
-  /* 1 */
-  color: #9ca3af;
-  /* 2 */
-}
-
-/*
-Set the default cursor for buttons.
-*/
-
-button,
-[role="button"] {
-  cursor: pointer;
-}
-
-/*
-Make sure disabled buttons don't get the pointer cursor.
-*/
-
-:disabled {
-  cursor: default;
-}
-
-/*
-1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
-2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
-   This can trigger a poorly considered lint error in some tools but is included by design.
-*/
-
-img,
-svg,
-video,
-canvas,
-audio,
-iframe,
-embed,
-object {
-  display: block;
-  /* 1 */
-  vertical-align: middle;
-  /* 2 */
-}
-
-/*
-Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
-*/
-
-img,
-video {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Make elements with the HTML hidden attribute stay hidden by default */
-
-[hidden]:where(:not([hidden="until-found"])) {
-  display: none;
-}
-
-.pointer-events-none {
-  pointer-events: none;
-}
-
-.absolute {
-  position: absolute;
-}
-
-.relative {
-  position: relative;
-}
-
-.sticky {
-  position: sticky;
-}
-
-.inset-0 {
-  inset: 0px;
-}
-
-.-right-10 {
-  right: -2.5rem;
-}
-
-.-right-6 {
-  right: -1.5rem;
-}
-
-.-top-10 {
-  top: -2.5rem;
-}
-
-.-top-6 {
-  top: -1.5rem;
-}
-
-.bottom-2 {
-  bottom: 0.5rem;
-}
-
-.left-2\.5 {
-  left: 0.625rem;
-}
-
-.right-2 {
-  right: 0.5rem;
-}
-
-.right-3 {
-  right: 0.75rem;
-}
-
-.top-0 {
-  top: 0px;
-}
-
-.top-1\/2 {
-  top: 50%;
-}
-
-.top-2 {
-  top: 0.5rem;
-}
-
-.z-10 {
-  z-index: 10;
-}
-
-.z-20 {
-  z-index: 20;
-}
-
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.mb-3 {
-  margin-bottom: 0.75rem;
-}
-
-.mb-5 {
-  margin-bottom: 1.25rem;
-}
-
-.ml-1 {
-  margin-left: 0.25rem;
-}
-
-.ml-2 {
-  margin-left: 0.5rem;
-}
-
-.ml-3 {
-  margin-left: 0.75rem;
-}
-
-.ml-auto {
-  margin-left: auto;
-}
-
-.mt-0\.5 {
-  margin-top: 0.125rem;
-}
-
-.mt-1 {
-  margin-top: 0.25rem;
-}
-
-.mt-1\.5 {
-  margin-top: 0.375rem;
-}
-
-.mt-2 {
-  margin-top: 0.5rem;
-}
-
-.mt-3 {
-  margin-top: 0.75rem;
-}
-
-.mt-4 {
-  margin-top: 1rem;
-}
-
-.mt-5 {
-  margin-top: 1.25rem;
-}
-
-.mt-6 {
-  margin-top: 1.5rem;
-}
-
-.mt-8 {
-  margin-top: 2rem;
-}
-
-.block {
-  display: block;
-}
-
-.inline-block {
-  display: inline-block;
-}
-
-.flex {
-  display: flex;
-}
-
-.inline-flex {
-  display: inline-flex;
-}
-
-.table {
-  display: table;
-}
-
-.grid {
-  display: grid;
-}
-
-.inline-grid {
-  display: inline-grid;
-}
-
-.hidden {
-  display: none;
-}
-
-.h-1 {
-  height: 0.25rem;
-}
-
-.h-10 {
-  height: 2.5rem;
-}
-
-.h-2 {
-  height: 0.5rem;
-}
-
-.h-24 {
-  height: 6rem;
-}
-
-.h-32 {
-  height: 8rem;
-}
-
-.h-7 {
-  height: 1.75rem;
-}
-
-.h-8 {
-  height: 2rem;
-}
-
-.h-9 {
-  height: 2.25rem;
-}
-
-.h-full {
-  height: 100%;
-}
-
-.max-h-\[460px\] {
-  max-height: 460px;
-}
-
-.min-h-screen {
-  min-height: 100vh;
-}
-
-.w-10 {
-  width: 2.5rem;
-}
-
-.w-2 {
-  width: 0.5rem;
-}
-
-.w-24 {
-  width: 6rem;
-}
-
-.w-32 {
-  width: 8rem;
-}
-
-.w-7 {
-  width: 1.75rem;
-}
-
-.w-8 {
-  width: 2rem;
-}
-
-.w-9 {
-  width: 2.25rem;
-}
-
-.w-\[180px\] {
-  width: 180px;
-}
-
-.w-\[70px\] {
-  width: 70px;
-}
-
-.w-full {
-  width: 100%;
-}
-
-.max-w-\[1480px\] {
-  max-width: 1480px;
-}
-
-.max-w-\[150px\] {
-  max-width: 150px;
-}
-
-.flex-1 {
-  flex: 1 1 0%;
-}
-
-.shrink-0 {
-  flex-shrink: 0;
-}
-
-.border-collapse {
-  border-collapse: collapse;
-}
-
-.-translate-y-1\/2 {
-  --tw-translate-y: -50%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-@keyframes pulse {
-  50% {
-    opacity: .5;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MGG ROKET - USDT + MGG Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.10.0/dist/ethers.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:#0a0a0f;color:#fff;min-height:100vh}
+.header{background:linear-gradient(135deg,#ff6a00,#ee0979);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:20}
+.btn{padding:10px 18px;background:#fff;color:#000;font-weight:800;border:none;border-radius:10px;cursor:pointer}
+.btn2{padding:10px 18px;background:linear-gradient(135deg,#ff6a00,#ee0979);border:none;border-radius:10px;color:#fff;font-weight:800;cursor:pointer}
+.container{max-width:1300px;margin:auto;padding:16px}
+.card{background:#15151f;border:1px solid #2a2a3a;border-radius:16px;padding:18px;margin:12px 0}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin:14px 0}
+.stat{background:linear-gradient(135deg,#1a1a2a,#15151f);border:1px solid #333;border-radius:14px;padding:14px;text-align:center}
+.stat h4{font-size:11px;opacity:0.7;letter-spacing:1px}
+.stat h2{margin:6px 0;font-size:18px}
+.stat span{font-size:11px;opacity:0.8}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.level-card{background:#1a1a2a;border:1px solid #333;border-radius:16px;padding:16px;position:relative;transition:0.2s}
+.level-card:hover{border-color:#ff6a00;transform:translateY(-2px)}
+.level-card.active{border-color:#ff6a00;box-shadow:0 0 18px rgba(255,106,0,0.25)}
+.badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;margin:2px}
+.b-orange{background:#ff6a00}.b-green{background:#00c853}.b-blue{background:#2962ff}.b-purple{background:#7c4dff}.b-usdt{background:#26a17b}.b-mgg{background:#ff6a00}
+.buy-btn{width:100%;margin-top:12px;padding:12px;background:#fff;color:#000;font-weight:800;border:none;border-radius:10px;cursor:pointer}
+.buy-btn:hover{background:#ff6a00;color:#fff}
+.income-box{background:#0f0f1a;border-radius:10px;padding:12px;margin-top:10px;font-size:12px;line-height:1.8}
+.income-row{display:flex;justify-content:space-between;border-bottom:1px dashed #333;padding:5px 0;gap:8px}
+.income-row:last-child{border:none}
+input{width:100%;padding:12px;background:#0f0f1a;border:1px solid #333;border-radius:10px;color:#fff;margin-top:10px}
+.progress{height:8px;background:#222;border-radius:10px;overflow:hidden;margin-top:6px}
+.progress-bar{height:100%;background:linear-gradient(90deg,#ff6a00,#ee0979)}
+table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}
+th,td{padding:8px;border-bottom:1px solid #2a2a3a;text-align:left}
+th{opacity:0.6;font-size:11px}
+.small{font-size:11px;opacity:0.7}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🚀 MGG ROKET - opBNB</h1>
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+<span id="walletAddr" style="font-size:12px;opacity:0.9"></span>
+<button class="btn" onclick="connectWallet()">Connect Wallet</button>
+</div>
+</div>
+
+<div class="container">
+
+<div class="card">
+<h3>🔗 Referrer + Live Income (USDT + MGG)</h3>
+<input id="refInput" placeholder="Referrer Address 0x... (Auto ?ref= ने येईल)">
+<p id="status" style="font-size:12px;margin-top:8px;opacity:0.8">Wallet Connect कर - opBNB Chain (BEP20 MGG)</p>
+
+<div class="stat-grid">
+<div class="stat"><h4>👥 DIRECT TEAM</h4><h2 id="myDirects">-</h2><span id="teamListCount">0 Team</span></div>
+<div class="stat"><h4>🌍 GLOBAL POOL</h4><h2 id="globalMGG">0 MGG</h2><span id="globalUSDT" style="color:#26a17b">~0 USDT</span></div>
+<div class="stat"><h4>💸 DIRECT (USDT)</h4><h2 id="directUSDT" style="color:#26a17b">0 USDT</h2><span id="directMGG">~0 MGG</span></div>
+<div class="stat"><h4>🏆 AWARD (MGG)</h4><h2 id="awardMGG">0 MGG</h2><span id="awardUSDT" style="color:#26a17b">~0 USDT</span></div>
+<div class="stat"><h4>💵 TOTAL USDT</h4><h2 id="totalUSDT" style="color:#26a17b">0 USDT</h2><span>MGG वेगळा</span></div>
+<div class="stat"><h4>🪙 TOTAL MGG</h4><h2 id="totalMGG" style="color:#ff6a00">0 MGG</h2><span id="totalMGG_USDT">~0 USDT</span></div>
+</div>
+
+<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+<button class="btn2" onclick="copyRefLink()">📋 My Referral Link Copy</button>
+<button class="btn" onclick="loadTeam()">👥 Team Load कर</button>
+</div>
+<p style="font-size:11px;margin-top:8px;opacity:0.6">MGG Price: <b id="mggPriceLabel">1 MGG = 0.01 USDT</b> | USDT opBNB: 0x7e4A... | Rate बदलण्यासाठी खाली Calculator वापरा</p>
+</div>
+
+<div class="card">
+<h3>💱 MGG ↔ USDT Calculator</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
+<div><label class="small">MGG टाक</label><input id="mggCalc" type="number" placeholder="1000" oninput="calcMGGtoUSDT()"><p id="mggToUsdtOut" class="small" style="margin-top:6px">0 USDT</p></div>
+<div><label class="small">USDT टाक</label><input id="usdtCalc" type="number" placeholder="10" oninput="calcUSDTtoMGG()"><p id="usdtToMggOut" class="small" style="margin-top:6px">0 MGG</p></div>
+</div>
+<div style="margin-top:10px"><label class="small">MGG Price (USDT)</label><input id="priceInput" value="0.01" type="number" step="0.001" oninput="updatePrice()"></div>
+</div>
+
+<div id="levelsGrid" class="grid"></div>
+
+<div class="card">
+<h3>👥 My Direct Team - USDT + MGG Income</h3>
+<p class="small">Contract मध्ये getDirects() असेल तर खरा Team येईल, नसेल तर Demo दिसेल. opBNBScan वर बघू शकता.</p>
+<table id="teamTable"><thead><tr><th>#</th><th>Wallet</th><th>Level</th><th>तुझं Income (USDT + MGG)</th><th>Action</th></tr></thead><tbody><tr><td colspan="5" style="text-align:center;opacity:0.5;padding:20px">Wallet Connect करून Team Load कर</td></tr></tbody></table>
+</div>
+
+<div class="card">
+<h3>🏆 Award Status - MGG मध्ये</h3>
+<table id="awardTable"><thead><tr><th>Level</th><th>Target Direct</th><th>Award (MGG)</th><th>Award (USDT)</th><th>Status</th></tr></thead><tbody></tbody></table>
+</div>
+
+</div>
+
+<script>
+const CONTRACT_ADDRESS = "0xYOUR_CONTRACT_ADDRESS_HERE";
+const MGG_TOKEN = "0xYOUR_MGG_TOKEN_ADDRESS_HERE";
+const USDT_TOKEN = "0x7e4A8391C4EB4a93D2EaC1e77d07E89585B29A1A"; // USDT opBNB
+const ABI = [
+  "function register(address,uint256) external payable",
+  "function buyLevel(uint256) external payable",
+  "function users(address) view returns (address,uint256,bool)",
+  "function getUser(address) view returns (uint256,bool,uint256[15])",
+  "function getDirects(address) view returns (address[])",
+  "function getIncomeBreakdown(address) view returns (uint256,uint256,uint256,uint256)",
+  "function directTeam(address,uint256) view returns (address)"
+];
+
+const levels=[2,5,10,20,50,100,200,500,1000,2000,5000,10000,20000,50000,100000];
+const names=["Starter","Explorer","Warrior","Achiever","Builder","Leader","Champion","Director","Diamond","Royal Diamond","Crown","Ambassador","Royal","King","MGG-LEGEND"];
+const targets=[1,0,0,0,5,0,10,0,0,20,30,40,50,60,70];
+const awardsMGG=[0,0,0,0,1000,0,2000,0,0,5000,10000,20000,50000,100000,200000]; // MGG rewards
+
+let provider,signer,contract,userAddress,myEarned=[],MGG_PRICE=0.01;
+
+function updatePrice(){ MGG_PRICE = parseFloat(document.getElementById("priceInput").value)||0.01; document.getElementById("mggPriceLabel").innerText=`1 MGG = ${MGG_PRICE} USDT`; renderLevels(); }
+function calcMGGtoUSDT(){ let m=parseFloat(document.getElementById("mggCalc").value)||0; document.getElementById("mggToUsdtOut").innerText=`${(m*MGG_PRICE).toFixed(2)} USDT`; }
+function calcUSDTtoMGG(){ let u=parseFloat(document.getElementById("usdtCalc").value)||0; document.getElementById("usdtToMggOut").innerText=`${MGG_PRICE>0?(u/MGG_PRICE).toFixed(0):0} MGG`; }
+
+(function(){
+  const urlParams = new URLSearchParams(window.location.search);
+  const ref = urlParams.get('ref');
+  if(ref && ref.startsWith('0x')) document.getElementById("refInput").value=ref;
+})();
+
+async function connectWallet(){
+ if(!window.ethereum){alert("MetaMask Install करा");return;}
+ provider=new ethers.BrowserProvider(window.ethereum);
+ await provider.send("eth_requestAccounts",[]);
+ try{await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:"0xcc"}]});}catch(e){await window.ethereum.request({method:"wallet_addEthereumChain",params:[{chainId:"0xcc",chainName:"opBNB Mainnet",rpcUrls:["https://opbnb-mainnet-rpc.bnbchain.org"],nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18},blockExplorerUrls:["https://opbnbscan.com"]}]})}
+ signer=await provider.getSigner(); userAddress=await signer.getAddress();
+ document.getElementById("walletAddr").innerText=userAddress.slice(0,6)+"..."+userAddress.slice(-4);
+ contract=new ethers.Contract(CONTRACT_ADDRESS,ABI,signer);
+ document.getElementById("status").innerText="✅ Connected - Fetching USDT + MGG Income...";
+ try{
+  const data=await contract.getUser(userAddress);
+  document.getElementById("myDirects").innerText=data[0].toString();
+  document.getElementById("teamListCount").innerText=data[0].toString()+" Team";
+  myEarned=data[2];
+  let totalMGG=0; myEarned.forEach(v=>totalMGG+=Number(v)/1e18);
+  // For demo: split 60% global, 20% direct, 20% award logic
+  let globalMGG = totalMGG*0.6;
+  let directUSDT = totalMGG*0.2*MGG_PRICE; // demo conversion
+  let awardMGG = totalMGG*0.2;
+
+  // Try real breakdown if exists
+  try{
+    const br = await contract.getIncomeBreakdown(userAddress);
+    globalMGG = Number(br[0])/1e18;
+    directUSDT = Number(br[1])/1e18;
+    awardMGG = Number(br[2])/1e18;
+  }catch(e){}
+
+  document.getElementById("globalMGG").innerText=globalMGG.toFixed(0)+" MGG";
+  document.getElementById("globalUSDT").innerText="~"+(globalMGG*MGG_PRICE).toFixed(2)+" USDT";
+  document.getElementById("directUSDT").innerText=directUSDT.toFixed(2)+" USDT";
+  document.getElementById("directMGG").innerText="~"+(MGG_PRICE>0?directUSDT/MGG_PRICE:0).toFixed(0)+" MGG";
+  document.getElementById("awardMGG").innerText=awardMGG.toFixed(0)+" MGG";
+  document.getElementById("awardUSDT").innerText="~"+(awardMGG*MGG_PRICE).toFixed(2)+" USDT";
+  document.getElementById("totalMGG").innerText=totalMGG.toFixed(0)+" MGG";
+  document.getElementById("totalMGG_USDT").innerText="~"+(totalMGG*MGG_PRICE).toFixed(2)+" USDT";
+  document.getElementById("totalUSDT").innerText=(directUSDT + (globalMGG+awardMGG)*MGG_PRICE*0.1).toFixed(2)+" USDT"; // direct mainly USDT
+
+  renderLevels();
+  renderAwards();
+ }catch(e){console.log(e); document.getElementById("status").innerText="⚠️ Contract Address टाका किंवा opBNB वर Deploy करा: "+e.message.slice(0,80)}
+ renderLevels();
+}
+
+function renderLevels(){
+ const grid=document.getElementById("levelsGrid"); grid.innerHTML="";
+ levels.forEach((amt,i)=>{
+  const global3xMGG = awardsMGG[i]>0? awardsMGG[i]*3 : amt*300; // demo MGG cap
+  const directUSDT = amt*0.2;
+  const awardMGGv = awardsMGG[i];
+  const earned = myEarned[i]? Number(myEarned[i])/1e18 : 0;
+  const earnedUSDT = earned*MGG_PRICE;
+  const progress = global3xMGG>0? Math.min(100,(earned/global3xMGG)*100) : 0;
+  const div=document.createElement("div"); div.className="level-card "+([4,6,9].includes(i)?"active":"");
+  div.innerHTML=`
+   <div style="display:flex;justify-content:space-between;flex-wrap:wrap">
+    <span class="badge b-orange">#${i+1} ${names[i]} - ${amt}$</span>
+    ${targets[i]>0?`<span class="badge b-blue">${targets[i]}D => ${awardMGGv} MGG</span>`:`<span class="badge b-green">3x Pool</span>`}
+   </div>
+   <h2 style="margin:10px 0">${amt}$ Package</h2>
+   <div class="income-box">
+    <div class="income-row"><span>🌍 Global Pool - <b class="b-mgg" style="padding:2px 6px;border-radius:10px">MGG</b></span><b>${global3xMGG} MGG (~${(global3xMGG*MGG_PRICE).toFixed(0)} USDT)</b></div>
+    <div class="income-row"><span>💸 Direct - <b class="b-usdt" style="padding:2px 6px;border-radius:10px">USDT</b></span><b>${directUSDT} USDT (~${(directUSDT/MGG_PRICE).toFixed(0)} MGG)</b></div>
+    ${awardMGGv>0?`<div class="income-row"><span>🏆 Award - <b class="b-mgg" style="padding:2px 6px;border-radius:10px">MGG</b></span><b>${awardMGGv} MGG (~${(awardMGGv*MGG_PRICE).toFixed(2)} USDT)</b></div>`:`<div class="income-row"><span>🏆 Award</span><b>-</b></div>`}
+    <div class="income-row" style="background:rgba(255,106,0,0.1);padding:6px;border-radius:6px;margin-top:6px"><span>✅ तुझं Earn (MGG + USDT)</span><b style="color:#ff6a00">${earned.toFixed(0)} MGG (~${earnedUSDT.toFixed(2)} USDT)</b></div>
+    <div class="progress"><div class="progress-bar" style="width:${progress}%"></div></div>
+    <div class="income-row"><span>📊 Progress</span><b>${progress.toFixed(1)}% (Cap ${global3xMGG} MGG)</b></div>
+   </div>
+   <button class="buy-btn" onclick="buyLevel(${i})">${earned>0?"🔁 Retopup Buy":"Buy"} ${amt}$ (BNB)</button>
+   <p style="font-size:10px;opacity:0.5;margin-top:6px">Direct USDT मध्ये | Global+Award MGG मध्ये | Capping 3x MGG</p>
+  `;
+  grid.appendChild(div);
+ });
+}
+
+function renderAwards(){
+ const tbody=document.querySelector("#awardTable tbody"); tbody.innerHTML="";
+ awardsMGG.forEach((a,i)=>{
+  if(a===0) return;
+  const need=targets[i];
+  const unlocked = myEarned[i] && Number(myEarned[i])>0 ? true : false;
+  const tr=document.createElement("tr");
+  tr.innerHTML=`<td>#${i+1} ${names[i]}</td><td>${need} Direct</td><td>${a} MGG</td><td>${(a*MGG_PRICE).toFixed(2)} USDT</td><td>${unlocked?'<span class="badge b-green">Unlocked</span>':'<span class="badge b-orange">Locked</span>'}</td>`;
+  tbody.appendChild(tr);
+ });
+}
+
+async function loadTeam(){
+ if(!contract){alert("पहिले Wallet Connect कर");return;}
+ const tbody=document.querySelector("#teamTable tbody");
+ tbody.innerHTML="<tr><td colspan=5 style='text-align:center'>Loading Team...</td></tr>";
+ try{
+  const team = await contract.getDirects(userAddress);
+  if(team.length===0) throw "No team";
+  tbody.innerHTML="";
+  team.forEach((addr,i)=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${i+1}</td><td>${addr.slice(0,6)}...${addr.slice(-4)}</td><td>Level ${i%15+1}</td><td>2.5 USDT + 250 MGG (Demo)</td><td><a href="https://opbnbscan.com/address/${addr}" target="_blank" style="color:#ff6a00">Scan</a></td>`;
+    tbody.appendChild(tr);
+  });
+ }catch(e){
+  tbody.innerHTML="";
+  const count = parseInt(document.getElementById("myDirects").innerText)||3;
+  for(let i=0;i<Math.max(1,count);i++){
+    const fake="0x"+Math.random().toString(16).slice(2,10)+"..."+Math.random().toString(16).slice(2,6);
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${i+1}</td><td>${fake} (Demo)</td><td>Level ${[50,100,200][i%3]}$</td><td>${(levels[i%5]*0.2).toFixed(1)} USDT + ${(levels[i%5]*20).toFixed(0)} MGG</td><td><span class="small">Demo - Real साठी getDirects() लागेल</span></td>`;
+    tbody.appendChild(tr);
   }
-}
-
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin {
-  animation: spin 1s linear infinite;
-}
-
-.cursor-not-allowed {
-  cursor: not-allowed;
-}
-
-.grid-cols-1 {
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-
-.grid-cols-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.grid-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.flex-col {
-  flex-direction: column;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
-.place-items-center {
-  place-items: center;
-}
-
-.items-start {
-  align-items: flex-start;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
-.justify-between {
-  justify-content: space-between;
-}
-
-.gap-1 {
-  gap: 0.25rem;
-}
-
-.gap-1\.5 {
-  gap: 0.375rem;
-}
-
-.gap-2 {
-  gap: 0.5rem;
-}
-
-.gap-3 {
-  gap: 0.75rem;
-}
-
-.gap-4 {
-  gap: 1rem;
-}
-
-.space-y-0 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0px * var(--tw-space-y-reverse));
-}
-
-.space-y-2\.5 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.625rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.625rem * var(--tw-space-y-reverse));
-}
-
-.space-y-4 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
-}
-
-.overflow-auto {
-  overflow: auto;
-}
-
-.overflow-hidden {
-  overflow: hidden;
-}
-
-.truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.rounded {
-  border-radius: 0.25rem;
-}
-
-.rounded-\[16px\] {
-  border-radius: 16px;
-}
-
-.rounded-\[17px\] {
-  border-radius: 17px;
-}
-
-.rounded-\[18px\] {
-  border-radius: 18px;
-}
-
-.rounded-\[20px\] {
-  border-radius: 20px;
-}
-
-.rounded-full {
-  border-radius: 9999px;
-}
-
-.rounded-lg {
-  border-radius: 0.5rem;
-}
-
-.rounded-md {
-  border-radius: 0.375rem;
-}
-
-.rounded-xl {
-  border-radius: 0.75rem;
-}
-
-.border {
-  border-width: 1px;
-}
-
-.border-b {
-  border-bottom-width: 1px;
-}
-
-.border-t {
-  border-top-width: 1px;
-}
-
-.border-dashed {
-  border-style: dashed;
-}
-
-.border-\[\#00c853\]\/20 {
-  border-color: rgb(0 200 83 / 0.2);
-}
-
-.border-\[\#00c853\]\/30 {
-  border-color: rgb(0 200 83 / 0.3);
-}
-
-.border-\[\#00e676\]\/30 {
-  border-color: rgb(0 230 118 / 0.3);
-}
-
-.border-\[\#1e1e2f\] {
-  --tw-border-opacity: 1;
-  border-color: rgb(30 30 47 / var(--tw-border-opacity, 1));
-}
-
-.border-\[\#2962ff\]\/20 {
-  border-color: rgb(41 98 255 / 0.2);
-}
-
-.border-\[\#2a2a3a\] {
-  --tw-border-opacity: 1;
-  border-color: rgb(42 42 58 / var(--tw-border-opacity, 1));
-}
-
-.border-\[\#2a2a3a\]\/80 {
-  border-color: rgb(42 42 58 / 0.8);
-}
-
-.border-\[\#6a2a4a\]\/50 {
-  border-color: rgb(106 42 74 / 0.5);
-}
-
-.border-\[\#ff6a00\]\/20 {
-  border-color: rgb(255 106 0 / 0.2);
-}
-
-.border-\[\#ff6a00\]\/30 {
-  border-color: rgb(255 106 0 / 0.3);
-}
-
-.border-\[\#ff6a00\]\/40 {
-  border-color: rgb(255 106 0 / 0.4);
-}
-
-.border-\[\#ff6a00\]\/50 {
-  border-color: rgb(255 106 0 / 0.5);
-}
-
-.border-\[\#ffab00\]\/20 {
-  border-color: rgb(255 171 0 / 0.2);
-}
-
-.border-\[rgba\(255\2c 106\2c 0\2c 0\.15\)\] {
-  border-color: rgba(255,106,0,0.15);
-}
-
-.border-amber-500\/20 {
-  border-color: rgb(245 158 11 / 0.2);
-}
-
-.border-amber-500\/30 {
-  border-color: rgb(245 158 11 / 0.3);
-}
-
-.border-emerald-500\/20 {
-  border-color: rgb(16 185 129 / 0.2);
-}
-
-.border-emerald-500\/30 {
-  border-color: rgb(16 185 129 / 0.3);
-}
-
-.border-orange-500\/20 {
-  border-color: rgb(249 115 22 / 0.2);
-}
-
-.border-orange-500\/30 {
-  border-color: rgb(249 115 22 / 0.3);
-}
-
-.border-red-500\/20 {
-  border-color: rgb(239 68 68 / 0.2);
-}
-
-.border-red-500\/50 {
-  border-color: rgb(239 68 68 / 0.5);
-}
-
-.border-white\/10 {
-  border-color: rgb(255 255 255 / 0.1);
-}
-
-.border-white\/20 {
-  border-color: rgb(255 255 255 / 0.2);
-}
-
-.border-white\/5 {
-  border-color: rgb(255 255 255 / 0.05);
-}
-
-.bg-\[\#00c853\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 200 83 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#00c853\]\/15 {
-  background-color: rgb(0 200 83 / 0.15);
-}
-
-.bg-\[\#00c853\]\/20 {
-  background-color: rgb(0 200 83 / 0.2);
-}
-
-.bg-\[\#00e676\]\/15 {
-  background-color: rgb(0 230 118 / 0.15);
-}
-
-.bg-\[\#0a0a0f\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(10 10 15 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#0f0f1a\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(15 15 26 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#15151f\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(21 21 31 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#1a1a2a\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(26 26 42 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#2962ff\]\/10 {
-  background-color: rgb(41 98 255 / 0.1);
-}
-
-.bg-\[\#2962ff\]\/15 {
-  background-color: rgb(41 98 255 / 0.15);
-}
-
-.bg-\[\#ff6a00\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 106 0 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#ff6a00\]\/15 {
-  background-color: rgb(255 106 0 / 0.15);
-}
-
-.bg-\[\#ff6a00\]\/20 {
-  background-color: rgb(255 106 0 / 0.2);
-}
-
-.bg-\[\#ffab00\]\/15 {
-  background-color: rgb(255 171 0 / 0.15);
-}
-
-.bg-\[\#ffab00\]\/20 {
-  background-color: rgb(255 171 0 / 0.2);
-}
-
-.bg-\[rgba\(255\2c 106\2c 0\2c 0\.08\)\] {
-  background-color: rgba(255,106,0,0.08);
-}
-
-.bg-amber-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(251 191 36 / var(--tw-bg-opacity, 1));
-}
-
-.bg-amber-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(245 158 11 / var(--tw-bg-opacity, 1));
-}
-
-.bg-amber-500\/10 {
-  background-color: rgb(245 158 11 / 0.1);
-}
-
-.bg-amber-500\/15 {
-  background-color: rgb(245 158 11 / 0.15);
-}
-
-.bg-amber-500\/20 {
-  background-color: rgb(245 158 11 / 0.2);
-}
-
-.bg-amber-500\/\[0\.06\] {
-  background-color: rgb(245 158 11 / 0.06);
-}
-
-.bg-black\/20 {
-  background-color: rgb(0 0 0 / 0.2);
-}
-
-.bg-black\/25 {
-  background-color: rgb(0 0 0 / 0.25);
-}
-
-.bg-black\/40 {
-  background-color: rgb(0 0 0 / 0.4);
-}
-
-.bg-black\/50 {
-  background-color: rgb(0 0 0 / 0.5);
-}
-
-.bg-emerald-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(52 211 153 / var(--tw-bg-opacity, 1));
-}
-
-.bg-emerald-500\/10 {
-  background-color: rgb(16 185 129 / 0.1);
-}
-
-.bg-emerald-500\/1
+ }
+}
+
+async function buyLevel(id){
+ if(!signer){alert("Connect Wallet");return;}
+ if(CONTRACT_ADDRESS.includes("YOUR_CONTRACT")){alert("Contract Address टाक - opBNB वर Deploy केलेला");return;}
+ const ref=document.getElementById("refInput").value.trim();
+ try{
+  document.getElementById("status").innerText="⏳ Buying "+levels[id]+"$... (BNB + MGG Reward)";
+  const u=await contract.users(userAddress);
+  // value: demo 0.0005 BNB per 10$ - तुम्ही price feed ने बदलू शकता
+  const value = ethers.parseEther((levels[id]*0.00005).toString());
+  let tx;
+  if(!u[2]) tx=await contract.register(ref||ethers.ZeroAddress,id,{value});
+  else tx=await contract.buyLevel(id,{value});
+  await tx.wait();
+  document.getElementById("status").innerText="✅ "+levels[id]+"$ Buy Success! USDT Direct + MGG Global सुरू!";
+  connectWallet();
+ }catch(e){document.getElementById("status").innerText="❌ "+e.message.slice(0,120);}
+}
+
+function copyRefLink(){
+ if(!userAddress){alert("Wallet Connect कर");return;}
+ const link = window.location.origin+window.location.pathname+"?ref="+userAddress;
+ navigator.clipboard.writeText(link); alert("Referral Link Copy झाली: "+link);
+}
+
+renderLevels(); renderAwards();
+</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductI
