@@ -1,115 +1,139 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MGG ROKET - Income Dashboard</title>
+<title>MGG ROKET - 1000 Crore - opBNB</title>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.10.0/dist/ethers.umd.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
-body{background:#0a0a0f;color:#fff}
-.header{background:linear-gradient(135deg,#ff6a00,#ee0979);padding:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:10}
-.btn{padding:12px 20px;background:linear-gradient(135deg,#ff6a00,#ee0979);border:none;border-radius:10px;color:#fff;font-weight:800;cursor:pointer}
-.container{max-width:1300px;margin:auto;padding:20px}
-.card{background:#15151f;border:1px solid #2a2a3a;border-radius:16px;padding:20px;margin:12px 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
-.level-card{background:#1a1a2a;border:1px solid #333;border-radius:16px;padding:18px;position:relative}
-.level-card.active{border-color:#ff6a00;box-shadow:0 0 15px rgba(255,106,0,0.2)}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{background:#05050a;color:#fff}
+.header{background:linear-gradient(135deg,#ff6a00,#ee0979);padding:18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20;flex-wrap:wrap}
+.btn{padding:10px 18px;background:#fff;color:#000;font-weight:800;border:none;border-radius:10px;cursor:pointer}
+.container{max-width:1350px;margin:auto;padding:16px}
+.card{background:#11111a;border:1px solid #2a2a3a;border-radius:16px;padding:18px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.level-card{background:linear-gradient(145deg,#1a1a2a,#15151f);border:1px solid #333;border-radius:18px;padding:16px;position:relative;overflow:hidden}
+.level-card.active{border-color:#ff6a00;box-shadow:0 0 20px rgba(255,106,0,0.25)}
 .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;margin:2px}
 .b-orange{background:#ff6a00}.b-green{background:#00c853}.b-blue{background:#2962ff}.b-purple{background:#7c4dff}
-.buy-btn{width:100%;margin-top:12px;padding:12px;background:#fff;color:#000;font-weight:800;border:none;border-radius:10px;cursor:pointer}
-.income-box{background:#0f0f1a;border-radius:10px;padding:12px;margin-top:10px;font-size:12px;line-height:1.8}
-.income-row{display:flex;justify-content:space-between;border-bottom:1px dashed #333;padding:4px 0}
-.income-row:last-child{border:none}
-input{width:100%;padding:12px;background:#0f0f1a;border:1px solid #333;border-radius:10px;color:#fff;margin-top:10px}
+.buy-btn{width:100%;margin-top:12px;padding:13px;background:linear-gradient(135deg,#ff6a00,#ee0979);border:none;border-radius:12px;color:#fff;font-weight:800;cursor:pointer;font-size:14px}
+.income{background:#0a0a12;border-radius:12px;padding:12px;margin-top:10px;font-size:12px}
+.row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed #222}
+.row:last-child{border:none}
+.supply-bar{background:#1a1a2a;border-radius:20px;height:10px;overflow:hidden;margin-top:8px}
+.supply-fill{height:100%;background:linear-gradient(90deg,#ff6a00,#ee0979)}
+input{width:100%;padding:12px;background:#0a0a12;border:1px solid #333;border-radius:10px;color:#fff;margin-top:8px}
 </style>
 </head>
 <body>
 <div class="header">
-<h1>🚀 MGG ROKET - Income Dashboard</h1>
-<div><span id="walletAddr" style="font-size:12px"></span>
-<button class="btn" onclick="connectWallet()">Connect Wallet</button></div>
+<div><h1>🚀 MGG ROKET | 1000 Crore | opBNB</h1><p style="font-size:11px;opacity:0.8">1 MGG = $0.01 | 60% Global Autopool | 3x Cap Lock | Auto Retopup</p></div>
+<div><span id="addr" style="font-size:11px"></span> <button class="btn" onclick="connect()">Connect Wallet</button></div>
 </div>
 
 <div class="container">
+
 <div class="card">
-<h3>🔗 Referrer + Live Income</h3>
-<input id="refInput" placeholder="Referrer Address 0x...">
-<p id="status" style="font-size:12px;margin-top:8px;opacity:0.8">Wallet Connect कर - opBNB</p>
-<p style="font-size:13px;margin-top:10px">Directs: <b id="myDirects">-</b> | Global Unlock: <b id="hasOne">-</b> | Total Earned: <b id="totalEarned">-</b></p>
+<h3>🪙 MGG Token Distribution - 1000 Crore (10 Billion)</h3>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px;font-size:12px">
+<div>🌍 Global 60% = 600 Cr</div>
+<div>💸 Direct 20% = 200 Cr</div>
+<div>🏆 Award 10% = 100 Cr</div>
+<div>💧 Liquidity 5% = 50 Cr</div>
+<div>👑 Team 3% = 30 Cr</div>
+<div>🎁 Airdrop 2% = 20 Cr</div>
+</div>
+<div class="supply-bar"><div class="supply-fill" style="width:60%"></div></div>
+<p style="font-size:11px;opacity:0.6;margin-top:6px">Total Supply: 10,000,000,000 MGG | Rate: 100 MGG = 1$ | opBNB Chain</p>
 </div>
 
-<div class="grid" id="levelsGrid"></div>
+<div class="card">
+<h3>🔗 Referrer & Live Stats</h3>
+<input id="ref" placeholder="Referrer Address 0x... (पहिला असेल तर Admin टाक)">
+<p id="status" style="font-size:12px;margin-top:8px">Connect Wallet कर - opBNB Mainnet वर Auto Switch होईल</p>
+<div style="display:flex;gap:15px;margin-top:10px;font-size:13px;flex-wrap:wrap">
+<span>Directs: <b id="directs">-</b></span>
+<span>Global Active: <b id="hasOne">-</b></span>
+<span>Total MGG Earned: <b id="earned" style="color:#ff6a00">-</b></span>
+</div>
+</div>
+
+<div class="grid" id="grid"></div>
+
 </div>
 
 <script>
-const CONTRACT_ADDRESS = "0xYOUR_CONTRACT_ADDRESS_HERE";
+const CONTRACT = "0xYOUR_CONTRACT_ADDRESS_HERE";
 const ABI = ["function register(address,uint256) external","function buyLevel(uint256) external","function users(address) view returns (address,uint256,bool)","function getUser(address) view returns (uint256,bool,uint256[15])"];
 const levels=[2,5,10,20,50,100,200,500,1000,2000,5000,10000,20000,50000,100000];
 const names=["Starter","Explorer","Warrior","Achiever","Builder","Leader","Champion","Director","Diamond","Royal Diamond","Crown","Ambassador","Royal","King","MGG-LEGEND"];
 const targets=[1,0,0,0,5,0,10,0,0,20,30,40,50,60,70];
 const awards=[0,0,0,0,100,0,200,0,0,500,1000,2000,5000,10000,20000];
-let provider,signer,contract,userAddress,myEarned=[];
+const RATE=100; // 1$ = 100 MGG
+let provider,signer,contract,user,earned=[];
 
-async function connectWallet(){
+async function connect(){
  if(!window.ethereum){alert("MetaMask Install");return;}
  provider=new ethers.BrowserProvider(window.ethereum);
  await provider.send("eth_requestAccounts",[]);
  try{await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:"0xcc"}]});}catch(e){await window.ethereum.request({method:"wallet_addEthereumChain",params:[{chainId:"0xcc",chainName:"opBNB Mainnet",rpcUrls:["https://opbnb-mainnet-rpc.bnbchain.org"],nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18},blockExplorerUrls:["https://opbnbscan.com"]}]})}
- signer=await provider.getSigner(); userAddress=await signer.getAddress();
- document.getElementById("walletAddr").innerText=userAddress.slice(0,6)+"..."+userAddress.slice(-4);
- contract=new ethers.Contract(CONTRACT_ADDRESS,ABI,signer);
- document.getElementById("status").innerText="✅ Connected - Fetching Income...";
+ signer=await provider.getSigner(); user=await signer.getAddress();
+ document.getElementById("addr").innerText=user.slice(0,6)+"..."+user.slice(-4);
+ contract=new ethers.Contract(CONTRACT,ABI,signer);
+ document.getElementById("status").innerText="✅ Connected - Fetching MGG Income...";
  try{
-  const data=await contract.getUser(userAddress);
-  document.getElementById("myDirects").innerText=data[0].toString();
-  document.getElementById("hasOne").innerText=data[1]?"YES":"NO";
-  myEarned=data[2]; let total=0; myEarned.forEach(v=>total+=Number(v)/1e18); document.getElementById("totalEarned").innerText=total+"$";
+  const d=await contract.getUser(user);
+  document.getElementById("directs").innerText=d[0].toString();
+  document.getElementById("hasOne").innerText=d[1]?"YES - 600 Cr Pool Active":"NO - 1 Direct करा";
+  earned=d[2]; let total=0; earned.forEach(v=>total+=Number(v)/1e18); document.getElementById("earned").innerText=total.toFixed(2)+" MGG";
  }catch(e){console.log(e)}
- renderLevels();
+ render();
 }
 
-function renderLevels(){
- const grid=document.getElementById("levelsGrid"); grid.innerHTML="";
+function render(){
+ const g=document.getElementById("grid"); g.innerHTML="";
  levels.forEach((amt,i)=>{
-  const global3x=amt*3; const direct20=amt*0.2; const award=awards[i];
-  const earned=myEarned[i]? (Number(myEarned[i])/1e18).toFixed(2):"0";
-  const div=document.createElement("div"); div.className="level-card "+([4,6,9].includes(i)?"active":"");
-  div.innerHTML=`
+  const globalMGG=amt*3*RATE; const directMGG=amt*0.2*RATE; const awardMGG=awards[i]*RATE;
+  const my=earned[i]? (Number(earned[i])/1e18).toFixed(0):"0";
+  const pct=globalMGG>0? (my/globalMGG*100).toFixed(1):0;
+  const d=document.createElement("div"); d.className="level-card "+([4,6,9].includes(i)?"active":"");
+  d.innerHTML=`
    <div style="display:flex;justify-content:space-between;flex-wrap:wrap">
-    <span class="badge b-orange">#${i+1} ${names[i]} - ${amt}$</span>
-    ${targets[i]>0?`<span class="badge b-blue">${targets[i]}D => ${award}$ Award</span>`:`<span class="badge b-green">3x Pool</span>`}
+    <span class="badge b-orange">#${i+1} ${names[i]}</span>
+    <span class="badge b-purple">${amt}$ = ${globalMGG.toLocaleString()} MGG</span>
    </div>
    <h2 style="margin:10px 0">${amt}$ Package</h2>
-   <div class="income-box">
-    <div class="income-row"><span>🌍 Global Pool (60%) - 3x</span><b>${global3x}$</b></div>
-    <div class="income-row"><span>💸 Direct Income (20%)</span><b>${direct20}$ per Direct</b></div>
-    ${award>0?`<div class="income-row"><span>🏆 Award (10%)</span><b>${award}$ on ${targets[i]} Direct</b></div>`:`<div class="income-row"><span>🏆 Award</span><b>-</b></div>`}
-    <div class="income-row"><span>🔁 Auto Retopup</span><b>${global3x}$ वर Auto Re-Entry</b></div>
-    <div class="income-row" style="background:rgba(255,106,0,0.1);padding:6px;border-radius:6px;margin-top:6px"><span>✅ तुझं Earn या Level वर</span><b style="color:#ff6a00">${earned}$ / ${global3x}$</b></div>
-    <div class="income-row"><span>📊 Progress</span><b>${global3x>0?((earned/global3x)*100).toFixed(1):0}%</b></div>
+   <div class="income">
+    <div class="row"><span>🌍 Global Pool (60%) 3x</span><b>${globalMGG.toLocaleString()} MGG</b></div>
+    <div class="row"><span>💸 Direct (20%)</span><b>${directMGG.toLocaleString()} MGG / Direct</b></div>
+    ${awards[i]>0?`<div class="row"><span>🏆 Award (${targets[i]}D)</span><b>${awardMGG.toLocaleString()} MGG</b></div>`:`<div class="row"><span>🏆 Award</span><b>-</b></div>`}
+    <div class="row"><span>🔁 Auto Retopup</span><b>${globalMGG.toLocaleString()} वर Auto</b></div>
+    <div class="row" style="background:rgba(255,106,0,0.12);padding:8px;border-radius:8px;margin-top:6px"><span>✅ तुझं Earn</span><b style="color:#ff6a00">${my} / ${globalMGG.toLocaleString()} MGG</b></div>
+    <div class="row"><span>📊 Progress</span><b>${pct}%</b></div>
+    <div class="supply-bar"><div class="supply-fill" style="width:${pct}%"></div></div>
    </div>
-   <button class="buy-btn" onclick="buyLevel(${i})">${earned>0?"🔁 Retopup Buy":"Buy"} ${amt}$</button>
-   <p style="font-size:10px;opacity:0.5;margin-top:6px">1 Direct नंतर Global Fix | Same Level Only | Capping Lock 3x</p>
+   <button class="buy-btn" onclick="buy(${i})">${my>0?"🔁 Retopup":"Buy"} ${amt}$ - ${globalMGG.toLocaleString()} MGG</button>
+   <p style="font-size:10px;opacity:0.5;margin-top:6px">1 Direct नंतर 600 Cr Pool Active | Same Level Only | opBNB</p>
   `;
-  grid.appendChild(div);
+  g.appendChild(d);
  });
 }
 
-async function buyLevel(id){
+async function buy(id){
  if(!signer){alert("Connect Wallet");return;}
- if(CONTRACT_ADDRESS.includes("YOUR_CONTRACT")){alert("Contract Address टाक");return;}
- const ref=document.getElementById("refInput").value.trim();
+ if(CONTRACT.includes("YOUR_CONTRACT")){alert("आधी Contract Deploy करून Address टाक - मग Live Buy होईल");return;}
+ const ref=document.getElementById("ref").value.trim();
  try{
-  document.getElementById("status").innerText="⏳ Buying "+levels[id]+"$...";
-  const u=await contract.users(userAddress);
+  document.getElementById("status").innerText="⏳ Buying "+levels[id]+"$ = "+(levels[id]*3*RATE).toLocaleString()+" MGG...";
+  const u=await contract.users(user);
   let tx=!u[2]?await contract.register(ref,id):await contract.buyLevel(id);
   await tx.wait();
-  document.getElementById("status").innerText="✅ "+levels[id]+"$ Buy Success! Income सुरू!";
-  connectWallet();
- }catch(e){document.getElementById("status").innerText="❌ "+e.message.slice(0,120);}
+  document.getElementById("status").innerText="✅ Success! "+levels[id]+"$ Package - "+(levels[id]*3*RATE).toLocaleString()+" MGG Global सुरू!";
+  connect();
+ }catch(e){document.getElementById("status").innerText="❌ "+e.message.slice(0,150);}
 }
-renderLevels();
+render();
 </script>
 </body>
 </html>
