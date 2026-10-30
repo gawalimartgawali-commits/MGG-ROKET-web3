@@ -3,129 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MGG ROCKET - Working</title>
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
+<title>MGG ROKET - Single Leg Autopool</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0a0a0a;color:#fff;font-family:system-ui;text-align:center;padding:16px}
-.gold{color:#facc15}
-.card{background:#151515;border:1px solid #333;border-radius:16px;padding:18px;margin:14px auto;max-width:600px}
-button{background:#facc15;color:#000;padding:12px 18px;border:none;border-radius:10px;font-weight:800;cursor:pointer;margin:6px;width:90%;max-width:300px}
-button:disabled{background:#555;color:#999}
-.level-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:500px){.level-grid{grid-template-columns:1fr}}
-.level{background:#1f1f1f;padding:12px;border-radius:10px;border:1px solid #2a2a2a;text-align:left;font-size:13px}
-.muted{color:#888;font-size:12px}
-.error{background:#3f1a1a;border:1px solid #7f1d1d;color:#fca5a5;padding:10px;border-radius:10px;margin:10px 0;font-size:12px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{background:#0a0a0f;color:#fff}
+.header{background:linear-gradient(135deg,#ff6a00,#ee0979);padding:20px;text-align:center}
+.container{max-width:1100px;margin:auto;padding:20px}
+.card{background:#15151f;border:1px solid #2a2a3a;border-radius:16px;padding:20px;margin:15px 0}
+.badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;margin:5px}
+.b-green{background:#00c853}.b-orange{background:#ff6a00}.b-blue{background:#2962ff}
+table{width:100%;border-collapse:collapse;margin-top:15px;font-size:13px}
+th{background:#1f1f2f;padding:12px;text-align:left;color:#ff6a00}
+td{padding:10px;border-bottom:1px solid #222}
+.highlight{background:rgba(255,106,0,0.15);border:1px solid #ff6a00}
+.rule-box{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+@media(max-width:700px){.rule-box{grid-template-columns:1fr} table{font-size:11px}}
+.btn{width:100%;padding:16px;background:linear-gradient(135deg,#ff6a00,#ee0979);border:none;border-radius:12px;color:#fff;font-weight:800;font-size:16px;cursor:pointer}
 </style>
 </head>
 <body>
-<h1 class="gold">🚀 MGG ROCKET - TEST</h1>
-<p class="muted">जर हा दिसत असेल तर HTML चालतोय ✅</p>
-
-<div class="card">
-<button onclick="test()">1. HTML Test करा</button>
-<p id="testResult" class="muted"></p>
+<div class="header">
+<h1>🚀 MGG ROKET - SINGLE LEG GLOBAL AUTOPOOL</h1>
+<p>60% Global Pool | 3x Cap Lock | Auto Retopup | Award on Target</p>
 </div>
-
+<div class="container">
 <div class="card">
-<button onclick="connect()">2. Wallet Connect करा</button>
-<p id="wallet" class="muted">Not Connected</p>
-<p>USDT: <span id="usdtBal" class="gold">0</span></p>
-<p id="chain" class="muted"></p>
-<p id="error" class="error" style="display:none"></p>
+<h2>📌 Final Lock Rules</h2>
+<div class="rule-box">
+<div class="card" style="background:#11111a">
+<h3>🌍 Global Pool (60%) - 3x</h3>
+<p>✅ 1 Direct Compulsory<br>✅ Same Level<br>✅ 3x Capping Lock<br>✅ Auto Retopup Lifetime<br>✅ 1 Direct नंतर Global Fix</p>
 </div>
-
+<div class="card" style="background:#11111a">
+<h3>🏆 Award (10%) - Target वर</h3>
+<p>✅ Direct केल्यावरच<br>✅ Builder 50$ = 5 Direct = 100$<br>✅ Champion 200$ = 10 Direct = 200$<br>✅ Royal 2000$ = 20 Direct = 500$</p>
+</div>
+</div>
+</div>
 <div class="card">
-<h3 class="gold">15 LEVELS</h3>
-<div class="level-grid" id="levels"></div>
+<h2>📊 15 Level Plan</h2>
+<table>
+<tr><th>No</th><th>Amount</th><th>Name</th><th>Direct For Award</th><th>Award</th><th>Global 60% (3x)</th></tr>
+<tr><td>1</td><td>2$</td><td>Starter</td><td>1 Direct (Compulsory)</td><td>-</td><td><b>6$</b></td></tr>
+<tr><td>2</td><td>5$</td><td>Explorer</td><td>+</td><td>-</td><td><b>15$</b></td></tr>
+<tr><td>3</td><td>10$</td><td>Warrior</td><td>+</td><td>-</td><td><b>30$</b></td></tr>
+<tr><td>4</td><td>20$</td><td>Achiever</td><td>+</td><td>-</td><td><b>60$</b></td></tr>
+<tr class="highlight"><td>5</td><td>50$</td><td>Builder</td><td>5 Direct</td><td>100$</td><td><b>150$ Auto Retopup</b></td></tr>
+<tr><td>6</td><td>100$</td><td>Leader</td><td>-</td><td>-</td><td><b>300$</b></td></tr>
+<tr class="highlight"><td>7</td><td>200$</td><td>Champion</td><td>10 Direct</td><td>200$</td><td><b>600$</b></td></tr>
+<tr><td>8</td><td>500$</td><td>Director</td><td>-</td><td>-</td><td><b>1500$</b></td></tr>
+<tr><td>9</td><td>1000$</td><td>Diamond</td><td>-</td><td>-</td><td><b>3000$</b></td></tr>
+<tr class="highlight"><td>10</td><td>2000$</td><td>Royal Diamond</td><td>20 Direct</td><td>500$</td><td><b>6000$</b></td></tr>
+<tr><td>11</td><td>5000$</td><td>Crown</td><td>30 Direct</td><td>1000$</td><td><b>15000$</b></td></tr>
+<tr><td>12</td><td>10000$</td><td>Ambassador</td><td>40 Direct</td><td>2000$</td><td><b>30000$</b></td></tr>
+<tr><td>13</td><td>20000$</td><td>Royal</td><td>50 Direct</td><td>5000$</td><td><b>60000$</b></td></tr>
+<tr><td>14</td><td>50000$</td><td>King</td><td>60 Direct</td><td>10000$</td><td><b>150000$</b></td></tr>
+<tr><td>15</td><td>100000$</td><td>MGG-LEGEND</td><td>70 Direct</td><td>20000$</td><td><b>300000$</b></td></tr>
+</table>
 </div>
-
 <div class="card">
-<h3 class="gold">💰 Claim</h3>
-<div id="claims" class="muted">Wallet connect करा</div>
+<h3>💡 50$ Builder Example</h3>
+<p>1 Direct केला → 150$ Global Fix (Auto Retopup Lifetime)<br>5 Direct केले → 150$ Global + 100$ Award = 250$<br>Direct नाही तर Award नाही, पण Global येणारच!</p>
+<button class="btn">🚀 Deploy on opBNB - Ready</button>
 </div>
-
-<script>
-const CONTRACT_ADDRESS = "0xTUMCHA_DEPLOY_ADDRESS_TAKA";
-const USDT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955";
-const ABI = [
-"function join(uint256 _level, address _upline) external",
-"function claimGlobalIncome(uint256 _level) external",
-"function setAutoUpgrade(bool _on) external",
-"function getPending(address,uint256) view returns(uint256)",
-"function isActive(address,uint256) view returns(bool)",
-"function autoUpgrade(address) view returns(bool)"
-];
-let signer, contract, usdtContract, userAddress;
-const prices = [2,5,10,20,50,100,200,500,1000,2000,3000,5000,7000,9000,10000];
-
-function test(){
- document.getElementById("testResult").innerText = "✅ HTML + JS चालतोय! Level count: "+prices.length;
- loadOffline();
-}
-function loadOffline(){
- let html="";
- for(let i=0;i<15;i++){
-  html+=`<div class="level"><b>Level ${i+1} = ${prices[i]} USDT</b><br><span class="muted">3X Cap: ${prices[i]*3} USDT</span><br><button onclick="alert('पहले CONTRACT_ADDRESS टाका!')" >Buy Level ${i+1}</button></div>`;
- }
- document.getElementById("levels").innerHTML=html;
-}
-async function connect(){
- const errBox = document.getElementById("error");
- errBox.style.display="none";
- try{
-  if(!window.ethereum) throw new Error("MetaMask नाहीये");
-  const provider = new ethers.BrowserProvider(window.ethereum);
-  await provider.send("eth_requestAccounts", []);
-  const net = await provider.getNetwork();
-  document.getElementById("chain").innerText = "Chain: "+net.chainId+" "+(Number(net.chainId)===56?"BSC ✅":"BSC नाही ❌");
-  if(Number(net.chainId)!==56){ try{ await window.ethereum.request({method:'wallet_switchEthereumChain', params:[{chainId:'0x38'}]}); }catch(e){} }
-  signer = await provider.getSigner();
-  userAddress = await signer.getAddress();
-  document.getElementById("wallet").innerText = userAddress.slice(0,6)+"..."+userAddress.slice(-4);
-  try{
-    usdtContract = new ethers.Contract(USDT_ADDRESS, ["function balanceOf(address) view returns(uint256)"], provider);
-    const bal = await usdtContract.balanceOf(userAddress);
-    document.getElementById("usdtBal").innerText = ethers.formatUnits(bal,18);
-  }catch(e){}
-  if(ethers.isAddress(CONTRACT_ADDRESS)){
-    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-    usdtContract = new ethers.Contract(USDT_ADDRESS, ["function balanceOf(address) view returns(uint256)","function approve(address,uint256) returns(bool)","function allowance(address,address) view returns(uint256)"], signer);
-    await loadWithContract();
-  }else{
-    document.getElementById("claims").innerText = "⚠️ CONTRACT_ADDRESS टाकलेला नाही. Demo Level दिसतायत.";
-    loadOffline();
-  }
- }catch(e){
-  errBox.style.display="block";
-  errBox.innerText = "Error: "+(e.reason||e.message);
- }
-}
-async function loadWithContract(){
- let html="", claimHtml="";
- for(let i=0;i<15;i++){
-  let active=false, pending=0n;
-  try{ active = await contract.isActive(userAddress,i); }catch{}
-  try{ pending = await contract.getPending(userAddress,i); }catch{}
-  html+=`<div class="level"><b>L${i+1} = ${prices[i]} USDT</b><br>${active?'✅ Active':'❌ Not Active'}<br>${!active?`<button onclick="joinLevel(${i})">Buy L${i+1}</button>`:'Joined'}</div>`;
-  if(pending>0) claimHtml+=`<p>L${i+1}: ${ethers.formatUnits(pending,18)} <button onclick="claimLevel(${i})">Claim</button></p>`;
- }
- document.getElementById("levels").innerHTML=html;
- document.getElementById("claims").innerHTML=claimHtml||"No Pending";
-}
-async function joinLevel(lvl){
- if(!ethers.isAddress(CONTRACT_ADDRESS)) return alert("पहले CONTRACT_ADDRESS टाका!");
- try{
-  const price=ethers.parseUnits(prices[lvl].toString(),18);
-  const allowance=await usdtContract.allowance(userAddress, CONTRACT_ADDRESS);
-  if(allowance < price){ const tx=await usdtContract.approve(CONTRACT_ADDRESS, ethers.parseUnits("1000000000",18)); await tx.wait(); }
-  const upline=prompt("Upline:","0x843162bFc44b13dAAdB13652681b3902332f324D");
-  const tx=await contract.join(lvl,upline); await tx.wait(); alert("Joined!"); loadWithContract();
- }catch(e){ alert(e.reason||e.message); }
-}
-async function claimLevel(lvl){ try{const tx=await contract.claimGlobalIncome(lvl); await tx.wait(); alert("Claimed"); loadWithContract();}catch(e){alert(e.reason||e.message);} }
-loadOffline();
-</script>
+</div>
 </body>
 </html>
