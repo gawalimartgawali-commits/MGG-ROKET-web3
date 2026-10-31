@@ -1,226 +1,128 @@
 <!DOCTYPE html>
-<html lang="mr">
-<head><style>
-@font-face {
-  font-family: "Optimistic";
-  font-style: normal;
-  font-weight: 400 600;
-  font-display: swap;
-  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Optimistic Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
-}
-:where(html) {
-  font-family: "Optimistic", system-ui, sans-serif;
-}
-:where(code, pre, kbd, samp) {
-  font-family: "Optimistic Mono", ui-monospace, monospace;
-}
-</style>
+<html lang="en">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MGG ROKET - Token Joining (1000 Cr)</title>
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.10.0/dist/ethers.umd.min.js"></script>
+<title>MGG LEGEND - Global Autopool 3x - opBNB</title>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.0/dist/ethers.umd.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
-body{background:#0a0a0f;color:#fff}
-.header{background:linear-gradient(135deg,#ff6a00,#ee0979);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:10}
-.btn{padding:10px 16px;background:#fff;color:#000;font-weight:800;border:none;border-radius:10px;cursor:pointer}
-.btn2{padding:10px 16px;background:linear-gradient(135deg,#ff6a00,#ee0979);border:none;border-radius:10px;color:#fff;font-weight:800;cursor:pointer}
-.container{max-width:1300px;margin:auto;padding:16px}
-.card{background:#15151f;border:1px solid #2a2a3a;border-radius:16px;padding:18px;margin:12px 0}
-.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.stat{background:#1a1a2a;border:1px solid #333;border-radius:12px;padding:12px;text-align:center}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
-.level-card{background:#1a1a2a;border:1px solid #333;border-radius:16px;padding:16px}
-.badge{display:inline-block;padding:3px 8px;border-radius:12px;font-size:10px;font-weight:700;margin:2px}
-.b-orange{background:#ff6a00}.b-green{background:#00c853}.b-mgg{background:#ff6a00}
-.income-box{background:#0f0f1a;border-radius:10px;padding:10px;margin-top:10px;font-size:12px}
-.income-row{display:flex;justify-content:space-between;border-bottom:1px dashed #333;padding:4px 0}
-input{width:100%;padding:10px;background:#0f0f1a;border:1px solid #333;border-radius:10px;color:#fff;margin-top:8px}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@400;700&display=swap');
+body{margin:0;background:radial-gradient(circle at top, #1a1a00, #000 60%);color:#fff;font-family:'Inter',sans-serif}
+.header{text-align:center;padding:40px 15px;border-bottom:1px solid #FFD70030}
+.header h1{font-family:'Orbitron';color:#FFD700;font-size:32px;letter-spacing:2px;margin:0}
+.header p{opacity:0.7;margin-top:8px}
+.container{max-width:1200px;margin:auto;padding:20px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:25px}
+.stat{background:#111;border:1px solid #FFD70040;border-radius:12px;padding:15px;text-align:center}
+.stat b{color:#FFD700;display:block;font-size:20px}
+.badge{display:inline-block;background:#FFD700;color:#000;font-weight:900;padding:6px 14px;border-radius:20px;font-size:12px;margin:5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{background:linear-gradient(145deg,#111,#0a0a0a);border:1px solid #222;border-radius:16px;padding:18px;transition:0.3s}
+.card:hover{border-color:#FFD700;transform:translateY(-3px);box-shadow:0 10px 30px #FFD70020}
+.card h3{font-family:'Orbitron';color:#FFD700;margin:0}
+.price{font-size:13px;opacity:0.8;margin:8px 0}
+.dist{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;background:#00000080;padding:8px;border-radius:8px;margin-top:10px}
+.dist span{color:#FFD700;font-weight:700}
+.btn{width:100%;padding:13px;background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;font-weight:900;border:none;border-radius:10px;margin-top:12px;cursor:pointer;font-family:'Orbitron';letter-spacing:1px}
+.btn2{padding:14px 28px;background:#FFD700;color:#000;font-weight:900;border:none;border-radius:30px;cursor:pointer;font-family:'Orbitron'}
+input{width:100%;padding:12px;background:#000;color:#fff;border:1px solid #FFD70050;border-radius:10px;margin-top:10px}
 </style>
 </head>
 <body>
+
 <div class="header">
-<h1>🚀 MGG ROKET - Token Joining</h1>
-<div><span id="walletAddr" style="font-size:11px"></span> <button class="btn" onclick="connectWallet()">Connect Wallet</button></div>
+<h1>MGG LEGEND GLOBAL</h1>
+<p>Decentralized Autopool 3x Smart Contract on opBNB Chain</p>
+<div>
+<span class="badge">20% DIRECT</span>
+<span class="badge">60% AUTOPOOL 3x</span>
+<span class="badge">10% AWARD</span>
+<span class="badge">10% CREATOR</span>
+<span class="badge">CONTRACT ZERO BALANCE</span>
 </div>
+</div>
+
 <div class="container">
-<div class="card">
-<h3>🔗 MGG Token ने Joining - 1000 Crore Supply</h3>
-<input id="refInput" placeholder="Referrer 0x... (?ref= auto)">
-<p id="status" style="font-size:12px;margin-top:8px">पहिले MGG Token घ्या, मग Approve करून Join करा - opBNB</p>
-<div class="stat-grid" style="margin-top:12px">
-<div class="stat"><h4 style="font-size:10px;opacity:0.6">MGG BALANCE</h4><h2 id="mggBal">-</h2></div>
-<div class="stat"><h4 style="font-size:10px;opacity:0.6">DIRECT TEAM</h4><h2 id="myDirects">-</h2></div>
-<div class="stat"><h4 style="font-size:10px;opacity:0.6">TOTAL EARNED MGG</h4><h2 id="totalMGG" style="color:#ff6a00">0 MGG</h2></div>
-<div class="stat"><h4 style="font-size:10px;opacity:0.6">DIRECT MGG</h4><h2 id="directMGG">0</h2></div>
-</div>
-<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-<button class="btn2" onclick="approveMGG()">1️⃣ Approve MGG</button>
-<button class="btn" onclick="copyRefLink()">📋 Referral Link</button>
-</div>
-</div>
-<div id="levelsGrid" class="grid"></div>
-
-<div class="card">
-<h3>🏆 Award Income - MGG मध्ये (1000 Crore)</h3>
-<p style="font-size:11px;opacity:0.6">Target Direct पूर्ण झाला की Award Unlock होईल - Safe Multisig मधून वाटला जाईल</p>
-<div class="stat-grid" style="margin-top:12px">
-<div class="stat"><h4 style="font-size:10px;opacity:0.6">AWARD EARNED</h4><h2 id="awardMGG" style="color:#ff6a00">0 MGG</h2><span id="awardUSDT" style="font-size:10px">~0 USDT</span></div>
-<div class="stat"><h4 style="font-size:10px;opacity:0.6">NEXT AWARD</h4><h2 id="nextAward">-</h2><span id="nextAwardNeed" style="font-size:10px"></span></div>
-</div>
-<table id="awardTable" style="width:100%;border-collapse:collapse;margin-top:12px;font-size:12px">
-<thead><tr><th style="padding:8px;border-bottom:1px solid #333;text-align:left">Level</th><th style="padding:8px;border-bottom:1px solid #333">Target</th><th style="padding:8px;border-bottom:1px solid #333">Award MGG</th><th style="padding:8px;border-bottom:1px solid #333">USDT Value</th><th style="padding:8px;border-bottom:1px solid #333">Status</th></tr></thead>
-<tbody></tbody>
-</table>
+<div class="stats">
+<div class="stat"><b>15</b>Packages</div>
+<div class="stat"><b>3x</b>Autopool</div>
+<div class="stat"><b>opBNB</b>Network</div>
+<div class="stat"><b id="accText">Not Connected</b>Wallet</div>
 </div>
 
-<div class="card">
-<h3>👥 My Team + Award Progress</h3>
-<table id="teamTable" style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr><th style="padding:8px;border-bottom:1px solid #333">#</th><th style="padding:8px;border-bottom:1px solid #333">Wallet</th><th style="padding:8px;border-bottom:1px solid #333">Level</th><th style="padding:8px;border-bottom:1px solid #333">Award साठी Count</th></tr></thead><tbody><tr><td colspan=4 style="text-align:center;opacity:0.5;padding:15px">Wallet Connect करा</td></tr></tbody></table>
+<button class="btn2" onclick="connect()">CONNECT WALLET - opBNB</button>
+
+<div style="margin:20px 0">
+<label style="color:#FFD700;font-weight:700">UPLINE ADDRESS (Referral)</label>
+<input id="upline" value="0x843162bFc44b13dAAdB13652681b3902332f324D">
+<div style="margin-top:10px;font-size:11px;opacity:0.6;word-break:break-all">
+TOKEN: 0x7bAFE03A292fEf5bF3c60ae2c924a9956ff1B39D | CREATOR: 0x843162bFc44b13dAAdB13652681b3902332f324D<br>
+CONTRACT: <span id="cAddr">DEPLOY_AND_PASTE_HERE</span>
+</div>
 </div>
 
+<div class="grid" id="packages"></div>
 </div>
+
 <script>
-const CONTRACT_ADDRESS = "0xYOUR_ROKET_CONTRACT_HERE";
-const MGG_TOKEN = "0xYOUR_MGG_TOKEN_1000CR_HERE";
-const ABI = ["function register(address,uint256) external","function buyLevel(uint256) external","function users(address) view returns (address,uint256,bool)","function getUser(address) view returns (uint256,bool,uint256[15])","function levelsMGG(uint256) view returns (uint256)","function getDirects(address) view returns (address[])"];
-const ERC20_ABI = ["function balanceOf(address) view returns (uint256)","function approve(address,uint256) returns (bool)","function allowance(address,address) view returns (uint256)"];
-const levelsMGG=[1000,2500,5000,10000,25000,50000,100000,250000,500000,1000000,2500000,5000000,10000000,25000000,50000000];
-const targets=[1,0,0,0,5,0,10,0,0,20,30,40,50,60,70];
-const awardsMGG=[0,0,0,0,10000,0,20000,0,0,50000,100000,200000,500000,1000000,2000000];
-const MGG_PRICE = 0.0001; // 1 MGG = $0.0001 for 1000 Cr supply
-const names=["Starter","Explorer","Warrior","Achiever","Builder","Leader","Champion","Director","Diamond","Royal Diamond","Crown","Ambassador","Royal","King","MGG-LEGEND"];
-let provider,signer,contract,mggContract,userAddress,myEarned=[];
+const MGG_TOKEN = "0x7bAFE03A292fEf5bF3c60ae2c924a9956ff1B39D";
+const CONTRACT_ADDRESS = "DEPLOY_AND_PASTE_HERE"; // Paste your deployed contract here
+const CHAIN_ID_HEX = "0xcc";
 
-async function connectWallet(){
- if(!window.ethereum){alert("MetaMask Install");return;}
- try{
-  provider=new ethers.BrowserProvider(window.ethereum, 204); // opBNB chainId to disable ENS
- }catch(e){
-  provider=new ethers.BrowserProvider(window.ethereum);
- }
- await provider.send("eth_requestAccounts",[]);
- try{await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:"0xcc"}]});}catch(e){await window.ethereum.request({method:"wallet_addEthereumChain",params:[{chainId:"0xcc",chainName:"opBNB Mainnet",rpcUrls:["https://opbnb-mainnet-rpc.bnbchain.org"],nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18},blockExplorerUrls:["https://opbnbscan.com"]}]})}
- try{
-  signer=await provider.getSigner(); 
-  userAddress=await signer.getAddress();
- }catch(e){
-  // ENS error ignore - get address directly from window.ethereum
-  const accounts = await window.ethereum.request({method:"eth_accounts"});
-  userAddress = accounts[0];
-  signer=await provider.getSigner();
- }
- document.getElementById("walletAddr").innerText=userAddress.slice(0,6)+"..."+userAddress.slice(-4);
- try{
-  contract=new ethers.Contract(CONTRACT_ADDRESS,ABI,signer);
-  mggContract=new ethers.Contract(MGG_TOKEN,ERC20_ABI,signer);
-  const bal=await mggContract.balanceOf(userAddress);
-  document.getElementById("mggBal").innerText=(Number(bal)/1e18).toFixed(0)+" MGG";
-  document.getElementById("status").innerText="✅ Connected - MGG Balance: "+(Number(bal)/1e18).toFixed(0);
- }catch(e){
-  document.getElementById("status").innerText="⚠️ Balance read error - Contract address अजून टाकला नाही का? "+e.message.slice(0,80);
- }
- try{
-  const data=await contract.getUser(userAddress);
-  document.getElementById("myDirects").innerText=data[0].toString();
-  myEarned=data[2]; let total=0; myEarned.forEach(v=>total+=Number(v)/1e18);
-  document.getElementById("totalMGG").innerText=total.toFixed(0)+" MGG";
- }catch(e){}
- renderLevels();
+const packages = [
+  {mgg:1000, usd:2}, {mgg:2000, usd:4}, {mgg:5000, usd:10}, {mgg:10000, usd:20}, {mgg:20000, usd:40},
+  {mgg:50000, usd:100}, {mgg:100000, usd:200}, {mgg:200000, usd:400}, {mgg:500000, usd:1000}, {mgg:1000000, usd:2000},
+  {mgg:2000000, usd:4000}, {mgg:5000000, usd:10000}, {mgg:10000000, usd:20000}, {mgg:20000000, usd:40000}, {mgg:50000000, usd:100000},
+];
+
+const ERC20_ABI = ["function approve(address,uint256) returns (bool)"];
+const CONTRACT_ABI = ["function join(uint8,address) external"];
+
+function render(){
+  document.getElementById("cAddr").innerText = CONTRACT_ADDRESS;
+  document.getElementById("packages").innerHTML = packages.map((p,i)=>`
+    <div class="card">
+      <h3>LEGEND ${i+1}</h3>
+      <div class="price">PACKAGE: ${p.mgg.toLocaleString()} MGG ~ $${p.usd}<br>INCOME: ${(p.mgg*3).toLocaleString()} MGG (3x)</div>
+      <div class="dist">
+        <div>Direct: <span>${(p.mgg*0.2).toLocaleString()}</span></div>
+        <div>Autopool: <span>${(p.mgg*0.6).toLocaleString()}</span></div>
+        <div>Award: <span>${(p.mgg*0.1).toLocaleString()}</span></div>
+        <div>Creator: <span>${(p.mgg*0.1).toLocaleString()}</span></div>
+      </div>
+      <button class="btn" onclick="joinPkg(${i})">ACTIVATE LEVEL ${i+1}</button>
+    </div>
+  `).join("");
 }
-function renderAwards(){
- const tbody=document.querySelector("#awardTable tbody");
- if(!tbody) return;
- tbody.innerHTML="";
- let awardEarned=0;
- let directs = parseInt(document.getElementById("myDirects")?.innerText)||0;
- awardsMGG.forEach((amt,i)=>{
-  if(amt===0) return;
-  let unlocked = directs >= targets[i];
-  if(unlocked) awardEarned+=amt;
-  let tr=document.createElement("tr");
-  tr.innerHTML=`<td style="padding:8px;border-bottom:1px solid #2a2a3a">#${i+1} ${names[i]}</td><td style="padding:8px;border-bottom:1px solid #2a2a3a">${targets[i]} Direct</td><td style="padding:8px;border-bottom:1px solid #2a2a3a">${amt.toLocaleString()} MGG</td><td style="padding:8px;border-bottom:1px solid #2a2a3a">${(amt*MGG_PRICE).toFixed(2)} USDT</td><td style="padding:8px;border-bottom:1px solid #2a2a3a">${unlocked?'<span style="background:#00c853;padding:3px 8px;border-radius:10px;font-size:10px">Unlocked ✅</span>':'<span style="background:#ff6a00;padding:3px 8px;border-radius:10px;font-size:10px">Locked 🔒</span>'}</td>`;
-  tbody.appendChild(tr);
- });
- const awardEl=document.getElementById("awardMGG");
- if(awardEl) awardEl.innerText=awardEarned.toLocaleString()+" MGG";
- const awardUsdtEl=document.getElementById("awardUSDT");
- if(awardUsdtEl) awardUsdtEl.innerText="~"+(awardEarned*MGG_PRICE).toFixed(2)+" USDT";
- // Next award
- let next=null;
- for(let i=0;i<targets.length;i++){ if(awardsMGG[i]>0 && directs < targets[i]){ next={level:i, need:targets[i]-directs, amt:awardsMGG[i]}; break; } }
- if(next){
-   document.getElementById("nextAward").innerText=next.amt.toLocaleString()+" MGG";
-   document.getElementById("nextAwardNeed").innerText=`${next.need} Direct बाकी - Level #${next.level+1}`;
- } else {
-   document.getElementById("nextAward").innerText="All Unlocked!";
- }
+render();
+
+async function connect(){
+  if(!window.ethereum){ alert("Please install Metamask"); return; }
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  await provider.send("eth_requestAccounts", []);
+  const signer = await provider.getSigner();
+  const addr = await signer.getAddress();
+  document.getElementById("accText").innerText = addr.slice(0,6)+"..."+addr.slice(-4);
+  try{ await window.ethereum.request({method:"wallet_switchEthereumChain", params:[{chainId:CHAIN_ID_HEX}]}); }
+  catch(e){ await window.ethereum.request({method:"wallet_addEthereumChain", params:[{chainId:CHAIN_ID_HEX, chainName:"opBNB Mainnet", rpcUrls:["https://opbnb-mainnet-rpc.bnbchain.org"], nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18}, blockExplorerUrls:["https://opbnb.bscscan.com"]}]}) }
 }
 
-function renderLevels(){
- const grid=document.getElementById("levelsGrid"); grid.innerHTML="";
- levelsMGG.forEach((amt,i)=>{
-  const earned=myEarned[i]? (Number(myEarned[i])/1e18).toFixed(0):"0";
-  const div=document.createElement("div"); div.className="level-card";
-  let awardRow = "";
-  if(awardsMGG[i] > 0){
-    awardRow = `<div class="income-row" style="background:rgba(255,106,0,0.15);border-radius:6px;padding:6px"><span>🏆 Award Income (${targets[i]} Direct)</span><b style="color:#ff6a00">${awardsMGG[i].toLocaleString()} MGG</b></div>`;
-  }
-  div.innerHTML=`
-   <span class="badge b-orange">#${i+1} ${names[i]}</span> ${awardsMGG[i]>0?'<span class="badge b-green" style="background:#ff6a00">Award</span>':''}
-   <h2 style="margin:8px 0">${amt.toLocaleString()} MGG Package</h2>
-   <div class="income-box">
-    <div class="income-row"><span>💸 Direct (20%)</span><b>${(amt*0.2).toLocaleString()} MGG</b></div>
-    <div class="income-row"><span>🌍 Global Pool (60%)</span><b>${(amt*3).toLocaleString()} MGG Cap</b></div>
-    ${awardRow}
-    <div class="income-row"><span>✅ Earn</span><b style="color:#ff6a00">${earned} MGG</b></div>
-   </div>
-   <button class="btn2" style="width:100%;margin-top:10px" onclick="buyLevel(${i})">${earned>0?"Retopup":"Buy"} ${amt.toLocaleString()} MGG</button>
-   <p style="font-size:10px;opacity:0.5;margin-top:6px">Approve आधी करा | Token वर Joining</p>
-  `;
-  grid.appendChild(div);
- });
- renderAwards();
+async function joinPkg(level){
+  try{
+    if(CONTRACT_ADDRESS.includes("DEPLOY")){ alert("Please Deploy Contract and Paste Address in HTML First!"); return; }
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const token = new ethers.Contract(MGG_TOKEN, ERC20_ABI, signer);
+    const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+    const amount = ethers.parseUnits(packages[level].mgg.toString(), 18);
+    const upline = document.getElementById("upline").value;
+    const tx1 = await token.approve(CONTRACT_ADDRESS, amount);
+    await tx1.wait();
+    const tx2 = await contract.join(level, upline);
+    await tx2.wait();
+    alert("LEGEND "+(level+1)+" Activated Successfully! 3x Autopool Started.");
+  }catch(err){ alert(err.reason || err.message); }
 }
-async function approveMGG(){
- if(!mggContract){alert("Connect Wallet");return;}
- try{
-  document.getElementById("status").innerText="⏳ Approving MGG...";
-  const tx=await mggContract.approve(CONTRACT_ADDRESS, ethers.parseUnits("100000000",18));
-  await tx.wait();
-  document.getElementById("status").innerText="✅ MGG Approved! आता Buy करू शकता";
- }catch(e){document.getElementById("status").innerText="❌ "+e.message.slice(0,100);}
-}
-async function buyLevel(id){
- if(!signer){alert("Connect Wallet");return;}
- const rawRef=document.getElementById("refInput").value.trim().replace(/[^0-9a-zA-Zx]/g,'').slice(0,42);
- const ref = ethers.isAddress(rawRef) ? rawRef : "0x0000000000000000000000000000000000000000";
- if(rawRef && !ethers.isAddress(rawRef)){ document.getElementById("status").innerText="⚠️ Referrer Address चुकीचा आहे, 0x पासून पूर्ण 42 अक्षर टाका"; return; }
- try{
-  document.getElementById("status").innerText="⏳ Buying Level "+(id+1)+" with "+levelsMGG[id].toLocaleString()+" MGG...";
-  const u=await contract.users(userAddress);
-  let tx;
-  if(!u[2]) tx=await contract.register(ref||"0x0000000000000000000000000000000000000000",id);
-  else tx=await contract.buyLevel(id);
-  await tx.wait();
-  document.getElementById("status").innerText="✅ Buy Success!";
-  connectWallet();
- }catch(e){document.getElementById("status").innerText="❌ "+e.message.slice(0,120);}
-}
-function copyRefLink(){
- if(!userAddress){alert("Connect Wallet");return;}
- const link=window.location.origin+window.location.pathname+"?ref="+userAddress;
- navigator.clipboard.writeText(link); alert(link);
-}
-(function(){const p=new URLSearchParams(window.location.search);let r=p.get('ref');if(r){ r=r.replace(/[^0-9a-zA-Zx]/g,'').slice(0,42); if(ethers.isAddress(r)) document.getElementById("refInput").value=r; }})();
-renderLevels();
 </script>
-<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
+</body>
 </html>
