@@ -2,98 +2,116 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MGG LEGEND - Dual Joining opBNB + MGG</title>
+<title>MGG LEGEND - Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.0/dist/ethers.umd.min.js"></script>
 <style>
-body{margin:0;background:#000;color:#fff;font-family:sans-serif}
-.h{text-align:center;padding:20px;background:#0f0f00;border-bottom:2px solid #FFD700}
-.h h1{color:#FFD700;margin:0;letter-spacing:1px}
-.box-wrap{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:15px}
-@media(min-width:700px){.box-wrap{grid-template-columns:repeat(4,1fr)}}
-.box{background:#111;border:1px solid #333;border-radius:12px;padding:12px;text-align:center}
-.box b{color:#FFD700;display:block}
-.btn{padding:10px 18px;background:#FFD700;color:#000;font-weight:900;border:none;border-radius:20px;cursor:pointer;margin:2px}
-.card{background:#111;border:1px solid #222;border-radius:12px;padding:12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;padding:15px}
-input{width:96%;padding:10px;background:#000;color:#fff;border:1px solid #FFD70066;border-radius:8px}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@400;700&display=swap');
+body{margin:0;background:#000;color:#fff;font-family:Inter}
+.header{text-align:center;padding:25px;background:radial-gradient(circle at top,#222200,#000)}
+.header h1{font-family:Orbitron;color:#FFD700;margin:0;letter-spacing:2px}
+.badge{background:#FFD700;color:#000;padding:5px 12px;border-radius:20px;font-weight:900;font-size:11px;margin:3px;display:inline-block}
+.container{max-width:1100px;margin:auto;padding:15px}
+.dash{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
+@media(min-width:700px){.dash{grid-template-columns:1fr 1fr 1fr 1fr}}
+.box{background:#111;border:1px solid #333;border-radius:14px;padding:14px;text-align:center}
+.box b{color:#FFD700;font-size:18px;display:block}
+.box small{opacity:0.6;font-size:11px}
+.btn{padding:12px 20px;background:#FFD700;color:#000;font-weight:900;border:none;border-radius:25px;cursor:pointer;font-family:Orbitron}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:20px}
+.card{background:#111;border:1px solid #222;border-radius:14px;padding:14px}
+.card:hover{border-color:#FFD700}
+input{width:100%;padding:10px;background:#000;color:#fff;border:1px solid #444;border-radius:8px}
+.team-list{background:#0a0a0a;border:1px solid #333;border-radius:10px;padding:10px;max-height:150px;overflow:auto;font-size:12px;margin-top:8px}
 </style>
 </head>
 <body>
-<div class="h">
-<h1>MGG LEGEND GLOBAL - opBNB</h1>
-<p>DUAL JOINING: MGG Token + opBNB | 20% Direct in BNB | 80% in MGG | Zero Balance</p>
+<div class="header">
+<h1>MGG LEGEND GLOBAL</h1>
+<p>Decentralized Autopool 3x - opBNB Chain</p>
+<span class="badge">20% DIRECT</span><span class="badge">60% AUTOPOOL 3x</span><span class="badge">10% AWARD</span><span class="badge">10% CREATOR</span>
 </div>
 
-<div style="padding:15px">
+<div class="container">
 <button class="btn" onclick="connect()">CONNECT WALLET - opBNB</button>
-<p id="w" style="font-size:11px;opacity:0.6">Not Connected | Token: 0x7bAFE...B39D | Creator: 0x8431...324D</p>
+<p id="wallet" style="font-size:12px;opacity:0.7;margin-top:8px">Not Connected</p>
 
-<div class="box-wrap">
-<div class="box"><b id="team">0</b><small>Direct Team</small></div>
-<div class="box"><b id="directBNB">0 BNB</b><small>Direct Income Wallet (opBNB 20%)</small></div>
-<div class="box"><b id="autoMGG">0 MGG</b><small>Autopool Income (MGG 60% 3x)</small></div>
-<div class="box"><b id="awardMGG">0 MGG</b><small>Award Income (MGG 10%)</small></div>
+<!-- DASHBOARD - तुझी मागणी -->
+<div class="dash">
+<div class="box"><b id="directTeam">0</b><small>Direct Team</small></div>
+<div class="box"><b id="directIncome">0 MGG</b><small>Direct Income Wallet (20%)</small></div>
+<div class="box"><b id="autopoolIncome">0 MGG</b><small>Autopool Income Wallet (60% 3x)</small></div>
+<div class="box"><b id="awardIncome">0 MGG</b><small>Award Income Wallet (10%)</small></div>
 </div>
 
-<input id="upline" value="0x843162bFc44b13dAAdB13652681b3902332f324D" placeholder="Upline Address">
-<div class="grid" id="pkgs"></div>
+<div style="background:#111;border:1px solid #FFD70040;border-radius:12px;padding:12px">
+<label style="color:#FFD700;font-weight:700;font-size:12px">UPLINE / REFERRAL ADDRESS</label>
+<input id="upline" value="0x843162bFc44b13dAAdB13652681b3902332f324D">
+<div id="teamList" class="team-list">Direct Team List will show here after connect...</div>
+</div>
+
+<div class="grid" id="packages"></div>
 </div>
 
 <script>
 const MGG_TOKEN = "0x7bAFE03A292fEf5bF3c60ae2c924a9956ff1B39D";
-const CONTRACT_ADDRESS = "0xYOUR_CONTRACT_ADDRESS"; // Deploy नंतर टाक
-const packagesMGG = [1000,2000,5000,10000,20000,50000,100000,200000,500000,1000000,2000000,5000000,10000000,20000000,50000000];
-const packagesBNB = [0.0001,0.0002,0.0005,0.001,0.002,0.005,0.01,0.02,0.05,0.1,0.2,0.5,1,2,5]; // तू Rate बदलू शकतोस
-
+const CONTRACT_ADDRESS = "0xYOUR_DEPLOYED_CONTRACT"; // <-- इथे तुझा Contract टाक
+const CHAIN_ID_HEX = "0xcc";
+const packages = [{mgg:1000},{mgg:2000},{mgg:5000},{mgg:10000},{mgg:20000},{mgg:50000},{mgg:100000},{mgg:200000},{mgg:500000},{mgg:1000000},{mgg:2000000},{mgg:5000000},{mgg:10000000},{mgg:20000000},{mgg:50000000}];
+const CONTRACT_ABI = [
+  "function join(uint8,address) external",
+  "function getUser(address) view returns (uint256 directTeamCount, uint256 directInc, uint256 autopoolInc, uint256 awardInc, address[] directList)",
+  "function users(address) view returns (uint256 directCount, uint256 directIncome, uint256 autopoolIncome, uint256 awardIncome)"
+];
 const ERC20_ABI = ["function approve(address,uint256) returns (bool)"];
-const CONTRACT_ABI = ["function joinWithMGG(uint8,address) external", "function joinWithBNB(uint8,address) external payable", "function getUser(address) view returns (uint256,uint256,uint256,uint256)"];
 
 function render(){
-  document.getElementById("pkgs").innerHTML = packagesMGG.map((m,i)=>`
+  document.getElementById("packages").innerHTML = packages.map((p,i)=>`
     <div class="card">
-      <b style="color:#FFD700">LEVEL ${i+1}</b><br>
-      <small>Package: ${m.toLocaleString()} MGG = ${packagesBNB[i]} BNB (opBNB)<br>
-      Dist: 20% Direct in BNB | 60% Autopool MGG | 10% Award MGG | 10% Creator MGG</small><br>
-      <button class="btn" style="width:48%;background:#fff;color:#000" onclick="joinMGG(${i})">JOIN WITH MGG</button>
-      <button class="btn" style="width:48%" onclick="joinBNB(${i})">JOIN WITH BNB</button>
-    </div>
-  `).join("");
+      <h3 style="color:#FFD700;font-family:Orbitron;margin:0">LEVEL ${i+1} - ${p.mgg.toLocaleString()} MGG</h3>
+      <div style="font-size:11px;opacity:0.7;margin-top:6px">20% Direct: ${(p.mgg*0.2).toLocaleString()} | 60% Pool: ${(p.mgg*0.6).toLocaleString()}<br>10% Award: ${(p.mgg*0.1).toLocaleString()} | 10% Creator</div>
+      <button class="btn" style="width:100%;margin-top:10px" onclick="joinPkg(${i})">ACTIVATE</button>
+    </div>`).join("");
 }
 render();
 
 async function connect(){
+  if(!window.ethereum){alert("Install Metamask");return}
   const provider = new ethers.BrowserProvider(window.ethereum);
   await provider.send("eth_requestAccounts",[]);
   const signer = await provider.getSigner();
-  document.getElementById("w").innerText = "Connected: " + await signer.getAddress();
-  try{await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:"0xcc"}]})}catch(e){await window.ethereum.request({method:"wallet_addEthereumChain",params:[{chainId:"0xcc",chainName:"opBNB Mainnet",rpcUrls:["https://opbnb-mainnet-rpc.bnbchain.org"],nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18}}]})}
+  const addr = await signer.getAddress();
+  document.getElementById("wallet").innerText = "Connected: "+addr;
+  try{await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:CHAIN_ID_HEX}]})}catch(e){await window.ethereum.request({method:"wallet_addEthereumChain",params:[{chainId:CHAIN_ID_HEX,chainName:"opBNB Mainnet",rpcUrls:["https://opbnb-mainnet-rpc.bnbchain.org"],nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18}}]})}
+  loadDashboard(addr);
 }
 
-async function joinMGG(level){
+async function loadDashboard(userAddr){
+  try{
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
+    const data = await contract.getUser(userAddr);
+    document.getElementById("directTeam").innerText = data[0].toString();
+    document.getElementById("directIncome").innerText = ethers.formatUnits(data[1],18) + " MGG";
+    document.getElementById("autopoolIncome").innerText = ethers.formatUnits(data[2],18) + " MGG";
+    document.getElementById("awardIncome").innerText = ethers.formatUnits(data[3],18) + " MGG";
+    const list = data[4];
+    document.getElementById("teamList").innerHTML = list.length ? list.map(a=>`<div>${a}</div>`).join("") : "No Direct Team Yet";
+  }catch(e){ console.log("Dashboard error, contract may not have getUser yet", e); }
+}
+
+async function joinPkg(level){
   try{
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
     const token = new ethers.Contract(MGG_TOKEN, ERC20_ABI, signer);
     const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-    const amount = ethers.parseUnits(packagesMGG[level].toString(),18);
+    const amount = ethers.parseUnits(packages[level].mgg.toString(),18);
     const upline = document.getElementById("upline").value;
     const tx1 = await token.approve(CONTRACT_ADDRESS, amount); await tx1.wait();
-    const tx2 = await contract.joinWithMGG(level, upline); await tx2.wait();
-    alert("Joined with MGG! Direct 20% in BNB sent to upline.");
-  }catch(e){alert(e.message)}
-}
-
-async function joinBNB(level){
-  try{
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-    const upline = document.getElementById("upline").value;
-    const bnbAmount = ethers.parseEther(packagesBNB[level].toString());
-    const tx = await contract.joinWithBNB(level, upline, {value: bnbAmount});
-    await tx.wait();
-    alert("Joined with BNB (opBNB)! Direct 20% in BNB sent to upline, rest MGG distributed.");
-  }catch(e){alert(e.message)}
+    const tx2 = await contract.join(level, upline); await tx2.wait();
+    alert("Level "+(level+1)+" Activated!");
+    const addr = await signer.getAddress(); loadDashboard(addr);
+  }catch(err){ alert(err.message); }
 }
 </script>
 </body>
