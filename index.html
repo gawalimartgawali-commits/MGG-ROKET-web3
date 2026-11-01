@@ -23,25 +23,29 @@
 }
 </style>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MGG ROKET LEGEND - NO FOOTER LINE - FINAL</title>
+<title>MGG ROKET LEGEND - 4 BOXES - TOTAL AFFILIATE LOYALTY COMMUNITY</title>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.0/dist/ethers.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;600;700&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
 <style>
 body{margin:0;background:#000000;color:#fff;font-family:Inter,sans-serif;overflow-x:hidden}
 .vip-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at top, #1a1500 0%, #000000 60%), radial-gradient(ellipse at bottom right, #001a33 0%, #000000 50%);z-index:-1}
-.header{background:linear-gradient(135deg, #000000 0%, #1a1500 50%, #000000 100%);padding:25px 20px;border-bottom:2px solid #FFD700;box-shadow:0 5px 30px #FFD70030;position:sticky;top:0;z-index:100}
+.header{background:linear-gradient(135deg, #000000 0%, #1a1500 50%, #000000 100%);padding:22px 20px;border-bottom:2px solid #FFD700;box-shadow:0 5px 30px #FFD70030;position:sticky;top:0;z-index:100}
 .header-inner{max-width:1300px;margin:auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px}
 .logo h1{margin:0;line-height:1;font-family:Cinzel}
-.logo .big{font-size:42px;font-weight:900;color:#FFD700;letter-spacing:6px;display:block;text-shadow:0 0 20px #FFD700, 0 0 40px #FFD70050}
-.logo .small{font-size:11px;letter-spacing:10px;opacity:0.8;color:#FFD700;display:block;margin-top:6px}
+.logo .big{font-size:44px;font-weight:900;color:#FFD700;letter-spacing:6px;display:block;text-shadow:0 0 20px #FFD700, 0 0 40px #FFD70050}
+.logo .small{font-size:7px;letter-spacing:14px;opacity:0.7;color:#FFD700;display:block;margin-top:4px;font-weight:600}
 .btn-vip{padding:12px 28px;background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;font-weight:900;border:none;border-radius:25px;cursor:pointer;font-family:Orbitron;font-size:12px;box-shadow:0 0 20px #FFD70060;letter-spacing:1px;transition:0.3s}
 .container{max-width:1300px;margin:auto;padding:20px}
 .vip-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin:25px 0}
-.vip-card{background:linear-gradient(145deg,#1a1500,#0f0f0f);border:1px solid #FFD70040;border-radius:18px;padding:20px;position:relative;overflow:hidden}
+.vip-card{background:linear-gradient(145deg,#1a1500,#0f0f0f);border:1px solid #FFD70040;border-radius:18px;padding:22px;position:relative;overflow:hidden}
 .vip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#FFD700,#FFA500,#FFD700)}
-.vip-card h3{font-size:10px;opacity:0.7;margin:0 0 10px 0;letter-spacing:1.5px;font-family:Orbitron;color:#FFD700}
-.vip-card b{font-size:28px;color:#FFD700;display:block;font-family:Cinzel;font-weight:900;text-shadow:0 0 10px #FFD70050}
+.vip-card h3{font-size:10px;opacity:0.8;margin:0 0 12px 0;letter-spacing:1.5px;font-family:Orbitron;color:#FFD700}
+.vip-card b{font-size:30px;color:#FFD700;display:block;font-family:Cinzel;font-weight:900;text-shadow:0 0 10px #FFD70050;margin-bottom:6px}
 .vip-card span{font-size:11px;opacity:0.6}
+.vip-card.total{border-color:#FFD70080;box-shadow:0 0 25px #FFD70020}
+.vip-card.affiliate{border-color:#00ff8860;box-shadow:0 0 25px #00ff8815}
+.vip-card.loyalty{border-color:#ff44ff60;box-shadow:0 0 25px #ff44ff15}
+.vip-card.community{border-color:#00d4ff60;box-shadow:0 0 25px #00d4ff15}
 .vip-wallets{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin:25px 0}
 .vip-wallet{background:linear-gradient(145deg,#0f0f0f,#1a1500);border:1px solid #FFD70030;border-radius:16px;padding:18px}
 .vip-wallet.vip-income{border:2px solid #FFD700;box-shadow:0 0 25px #FFD70020}
@@ -50,9 +54,11 @@ body{margin:0;background:#000000;color:#fff;font-family:Inter,sans-serif;overflo
 .vip-wallet h4{font-family:Orbitron;color:#FFD700;font-size:11px;margin:0 0 12px 0;letter-spacing:1px}
 .vip-wallet .addr{font-size:11px;word-break:break-all;background:#000000;padding:10px;border-radius:8px;border:1px solid #FFD70020;margin-top:8px;color:#FFD700}
 .vip-packages{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;margin:25px 0}
-.vip-pkg{background:linear-gradient(145deg,#1a1500,#000000);border:1px solid #FFD70030;border-radius:18px;padding:20px;position:relative;overflow:hidden;transition:0.3s}
-.vip-pkg:hover{border-color:#FFD70080;box-shadow:0 10px 30px #FFD70020;transform:translateY(-4px)}
-.vip-pkg.vip-active{border:2px solid #00ff88;box-shadow:0 0 30px #00ff8840}
+.vip-pkg{background:linear-gradient(145deg,#1a1500,#000000);border:1px solid #FFD70030;border-radius:18px;padding:20px;position:relative;overflow:hidden;transition:0.3s;opacity:0.6}
+.vip-pkg.unlocked{opacity:1;border-color:#FFD70060;box-shadow:0 5px 20px #FFD70015}
+.vip-pkg.unlocked:hover{border-color:#FFD70080;box-shadow:0 10px 30px #FFD70020;transform:translateY(-4px)}
+.vip-pkg.vip-active{border:2px solid #00ff88;box-shadow:0 0 30px #00ff8840;opacity:1}
+.vip-pkg.locked{opacity:0.35;pointer-events:none;filter:grayscale(0.5)}
 .vip-pkg::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#FFD700,#FFA500)}
 .vip-level{position:absolute;top:12px;right:12px;background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;font-size:8px;padding:5px 10px;border-radius:12px;font-family:Orbitron;font-weight:900}
 .vip-pkg h3{font-family:Cinzel;color:#FFD700;font-size:16px;margin:0 0 5px 0}
@@ -83,52 +89,56 @@ input.vip-input{width:100%;padding:12px;background:#000000;color:#FFD700;border:
 <div class="container">
 
 <div class="vip-stats">
-<div class="vip-card">
-<h3>SELF PACKAGES</h3>
-<b id="totalInvest">0 MGG</b>
-<span>Your Self Packages</span>
+<div class="vip-card total">
+<h3>TOTAL AWARDS</h3>
+<b id="totalAwards">0 MGG</b>
+<span>Total Awards - Affiliate + Loyalty + Community</span>
+<div style="background:#000;height:6px;border-radius:3px;margin:10px 0;overflow:hidden"><div id="totalBar" style="height:100%;background:linear-gradient(90deg,#FFD700,#FFA500);width:0%;border-radius:3px"></div></div>
+<span id="totalText" style="font-size:9px">Your Total Earnings</span>
 </div>
-<div class="vip-card">
-<h3>TOTAL EARNED</h3>
-<b id="totalEarn">0 MGG</b>
-<span>Affiliate + Loyalty + Bonus</span>
+<div class="vip-card affiliate">
+<h3>AFFILIATE AWARD</h3>
+<b id="affiliateAward">0 MGG</b>
+<span>Affiliate Award - 20% Direct Income</span>
+<div style="margin-top:10px;font-size:10px"><span style="color:#00ff88">Team:</span> <span id="affTeamCount">0</span> Members</div>
 </div>
-<div class="vip-card">
+<div class="vip-card loyalty">
 <h3>LOYALTY AWARD</h3>
-<b id="autopoolEarn">0 MGG</b>
-<span>Loyalty Retopup 3x - Award</span>
-<div style="background:#000;height:6px;border-radius:3px;margin:10px 0;overflow:hidden"><div id="retopupBar" style="height:100%;background:linear-gradient(90deg,#FFD700,#00ff88);width:0%;border-radius:3px"></div></div>
-<span id="retopupText" style="font-size:9px">0% / 300% - Retopup Progress</span>
+<b id="loyaltyAward">0 MGG</b>
+<span>Loyalty Award - Autopool 3x Award</span>
+<div style="background:#000;height:6px;border-radius:3px;margin:10px 0;overflow:hidden"><div id="loyaltyBar" style="height:100%;background:linear-gradient(90deg,#ff44ff,#ff00ff);width:0%;border-radius:3px"></div></div>
+<span id="loyaltyText" style="font-size:9px">0% / 300% - Loyalty Progress</span>
 </div>
-<div class="vip-card">
-<h3>AFFILIATE TEAM</h3>
-<b id="directTeam">0</b>
-<span>Affiliate Community Members</span>
+<div class="vip-card community">
+<h3>AFFILIATE COMMUNITY AWARD</h3>
+<b id="communityAward">0 MGG</b>
+<span>Community Award - Community Bonus</span>
+<div style="margin-top:10px;font-size:10px"><span style="color:#00d4ff">Need:</span> <span id="communityNeed">0</span> For Next Level</div>
 </div>
 </div>
 
 <div class="vip-wallets">
 <div class="vip-wallet vip-income">
 <h4>INCOME WALLET - CREATOR WALLET</h4>
-<div style="font-size:10px;opacity:0.6">All Funds Go Here - Zero Balance - Treasury</div>
+<div style="font-size:10px;opacity:0.6">All Funds - Zero Balance - Treasury</div>
 <div class="addr">0x332B34D1f611F285a3334BF052f9E163E5733daa</div>
-<div style="margin-top:10px;font-size:10px"><span style="color:#FFD700">Token:</span> 0x7bAFE...B39D | <span style="color:#FFD700">Chain:</span> opBNB 204 | <span style="color:#FFD700">Status:</span> LEGEND</div>
+<div style="margin-top:10px;font-size:10px"><span style="color:#FFD700">Token:</span> 0x7bAFE...B39D | <span style="color:#FFD700">Chain:</span> opBNB 204</div>
 </div>
 
 <div class="vip-wallet vip-active">
 <h4>ACTIVE WALLET / ID STATUS</h4>
-<div style="font-size:10px;opacity:0.6">Your Wallet Status</div>
+<div style="font-size:10px;opacity:0.6">Your Wallet Status - Buy from Package 1 Onwards</div>
 <div id="activeAddr" class="addr" style="color:#00ff88;border-color:#00ff8840">Not Connected - Connect Wallet</div>
 <div style="margin-top:12px">
 <div style="font-size:14px;font-weight:900;font-family:Orbitron" id="activeStatus">INACTIVE</div>
-<div style="font-size:10px;opacity:0.6;margin-top:4px" id="activePkg">Current Package: None | Buy Package to Activate ID</div>
+<div style="font-size:10px;opacity:0.6;margin-top:4px" id="activePkg">Current Package: None | Buy Package 1 First - Sequential</div>
 </div>
 </div>
 
 <div class="vip-wallet vip-aff">
 <h4>AFFILIATE LINK - REFERRAL LINK</h4>
 <div style="font-size:10px;opacity:0.6">Share Link - 20% Affiliate Income</div>
-<input id="affLink" class="vip-input" value="Connect Wallet First - Link Will Be Generated" readonly style="margin-top:10px;border-color:#ff44ff40">
+<input id="affLink" class="vip-input" value="Connect Wallet First" readonly style="margin-top:10px;border-color:#ff44ff40">
 <div style="display:flex;gap:8px;margin-top:10px">
 <button onclick="copyAffLink()" class="btn-vip" style="flex:1;background:linear-gradient(90deg,#ff44ff,#ff00ff)">COPY LINK</button>
 <button onclick="shareAffLink()" class="btn-vip" style="flex:1;background:transparent;color:#FFD700;border:2px solid #FFD700">SHARE LINK</button>
@@ -138,14 +148,11 @@ input.vip-input{width:100%;padding:12px;background:#000000;color:#FFD700;border:
 
 <div class="vip-wallet" style="margin:20px 0">
 <h4>UPLINE WALLET - REFERRAL WALLET</h4>
-<input id="upline" class="vip-input" value="0x332B34D1f611F285a3334BF052f9E163E5733daa" placeholder="Upline Wallet - Auto Fill from ?ref=">
-<div style="font-size:9px;opacity:0.6;margin-top:6px">If coming from referral link, auto fill - ?ref=0x... - Affiliate 20% goes to upline</div>
+<input id="upline" class="vip-input" value="0x332B34D1f611F285a3334BF052f9E163E5733daa" placeholder="Upline Wallet">
 </div>
 
-<h3 style="font-family:Cinzel;color:#FFD700;font-size:18px;margin:30px 0 15px 0;letter-spacing:2px;text-shadow:0 0 15px #FFD70050">PACKAGES - BUY + RETOPUP</h3>
+<h3 style="font-family:Cinzel;color:#FFD700;font-size:18px;margin:30px 0 15px 0;letter-spacing:2px;text-shadow:0 0 15px #FFD70050">PACKAGES - BUY FROM PACKAGE 1 ONWARDS - SEQUENTIAL</h3>
 <div class="vip-packages" id="vipPackages"></div>
-
-<!-- NO FOOTER LINE HERE - REMOVED AS PER REQUEST -->
 
 </div>
 
@@ -157,9 +164,9 @@ const communityBonus = [100,500,1000,2000,5000,10000,30000,50000,100000,300000,6
 const affCommunity = [0,1,2,3,5,10,20,30,40,50,60,70];
 const levelNames = ["BRONZE","SILVER","GOLD","PLATINUM","DIAMOND","RUBY","EMERALD","SAPPHIRE","CROWN","LEGEND","MYTHIC","GOD"];
 
-let provider, signer, userAddress;
+let provider, signer, userAddress, currentUserLevel = 0;
 const ERC20_ABI = ["function approve(address,uint256) returns (bool)", "function balanceOf(address) view returns (uint256)"];
-const CONTRACT_ABI = ["function join(uint8,address) external", "function retopup(uint8) external", "function currentLevel(address) view returns (uint256)", "function totalEarnedMGG(address) view returns (uint256)"];
+const CONTRACT_ABI = ["function join(uint8,address) external", "function retopup(uint8) external", "function currentLevel(address) view returns (uint256)", "function totalEarnedMGG(address) view returns (uint256)", "function affiliateCount(address) view returns (uint256)", "function getUserInfo(address) view returns (uint8,address,uint256,uint256,uint256,uint256)"];
 
 window.addEventListener('load', ()=>{
   const urlParams = new URLSearchParams(window.location.search);
@@ -175,15 +182,23 @@ function renderPackages(){
     const retopup = m*3;
     const bonus = communityBonus[i];
     const community = affCommunity[i];
-    return `<div class="vip-pkg" id="vipPkg${i}">
-      <div class="vip-level">${levelNames[i]}</div>
+    const isUnlocked = i <= currentUserLevel;
+    const isActive = i < currentUserLevel;
+    const isNext = i === currentUserLevel;
+    const statusClass = isActive ? 'vip-active' : (isNext ? 'unlocked' : 'locked');
+    const btnText = isActive ? `ACTIVE` : (isNext ? `BUY ${m.toLocaleString()} MGG` : `LOCKED`);
+    const retopupBtnText = isActive ? `RETOPUP` : `LOCKED`;
+    return `<div class="vip-pkg ${statusClass}" id="vipPkg${i}">
+      <div class="vip-level">${levelNames[i]} ${isActive ? 'ACTIVE' : (isNext ? 'NEXT' : 'LOCKED')}</div>
       <h3>LEVEL ${i+1} - ${m.toLocaleString()} MGG</h3>
-      <div class="vip-price">Self Packages: ${m.toLocaleString()} MGG<br>Affiliate: ${aff.toLocaleString()} MGG (20%)<br>Loyalty Award 3x: ${retopup.toLocaleString()} MGG<br>Affiliate Community: ${community} | Community Bonus: ${bonus.toLocaleString()} MGG</div>
-      <div class="vip-details"><div>Affiliate: <span>${aff.toLocaleString()}</span></div><div>Loyalty Award: <span>${retopup.toLocaleString()}</span></div><div>Community: <span>${community}</span></div><div>Bonus: <span>${bonus.toLocaleString()}</span></div></div>
+      <div class="vip-price">Self Packages: ${m.toLocaleString()} MGG<br>Affiliate: ${aff.toLocaleString()} MGG (20%)<br>Loyalty Award 3x: ${retopup.toLocaleString()} MGG<br>Affiliate Community: ${community} | Community Bonus: ${bonus.toLocaleString()} MGG<br><span style="color:${isNext?'#00ff88':'#ff4444'}">${isNext?'UNLOCKED - Can Buy Now':(isActive?'BOUGHT':'LOCKED')}</span></div>
+      <div class="vip-details"><div>Affiliate: <span>${aff.toLocaleString()}</span></div><div>Loyalty: <span>${retopup.toLocaleString()}</span></div><div>Community: <span>${community}</span></div><div>Bonus: <span>${bonus.toLocaleString()}</span></div></div>
       <div class="btn-group">
-        <button onclick="buyPackage(${i})" class="btn-vip-buy">BUY ${m.toLocaleString()} MGG</button>
-        <button onclick="retopupPackage(${i})" class="btn-retopup">RETOPUP ${m.toLocaleString()} MGG</button>
+        <button onclick="buyPackage(${i})" class="btn-vip-buy" ${!isNext ? 'disabled style="background:#333;color:#666"' : ''}>${btnText}</button>
+        <button onclick="retopupPackage(${i})" class="btn-retopup" ${!isActive ? 'disabled style="background:#333;color:#666"' : ''}>${retopupBtnText}</button>
       </div>
+      ${isNext ? `<div style="font-size:8px;color:#00ff88;margin-top:6px;text-align:center">NEXT PACKAGE - Sequential</div>` : ''}
+      ${!isNext && !isActive ? `<div style="font-size:8px;color:#ff4444;margin-top:6px;text-align:center">Buy Package ${currentUserLevel+1} First</div>` : ''}
     </div>`;
   }).join("");
 }
@@ -205,24 +220,56 @@ async function connectWallet(){
     if(CONTRACT_ADDRESS !== "0xYOUR_CONTRACT_ADDRESS"){
       try{
         const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
-        const level = await contract.currentLevel(userAddress);
-        const earned = await contract.totalEarnedMGG(userAddress);
+        const userInfo = await contract.getUserInfo(userAddress);
+        const level = Number(userInfo[0]);
+        const earned = userInfo[2];
+        const affCount = userInfo[4];
+        const loyaltyClaimed = userInfo[5];
+        currentUserLevel = level;
+        const totalEarned = parseFloat(ethers.formatUnits(earned,18));
+        const affiliateEarn = Math.max(0, totalEarned - parseFloat(ethers.formatUnits(loyaltyClaimed,18)));
+        const loyaltyEarn = parseFloat(ethers.formatUnits(loyaltyClaimed,18));
+        
         if(level > 0){
+          const currentPkg = packagesMGG[level-1];
+          const loyaltyTarget = currentPkg*3;
+          const communityBonusEarn = communityBonus[level-1];
+          
           document.getElementById('activeStatus').innerText = "ACTIVE - Level "+level+" - "+levelNames[level-1];
           document.getElementById('activeStatus').style.color = "#00ff88";
-          document.getElementById('activePkg').innerText = "Current: Level "+level+" | Package: "+packagesMGG[level-1].toLocaleString()+" MGG | Earned: "+parseFloat(ethers.formatUnits(earned,18)).toFixed(0)+" MGG";
-          document.getElementById('totalInvest').innerText = packagesMGG[level-1].toLocaleString()+" MGG";
-          document.getElementById('totalEarn').innerText = parseFloat(ethers.formatUnits(earned,18)).toFixed(0)+" MGG";
-          document.getElementById('autopoolEarn').innerText = (packagesMGG[level-1]*3).toLocaleString()+" MGG";
-          document.getElementById('retopupBar').style.width = "100%";
-          document.getElementById('retopupText').innerText = "100% / 300% - ACTIVE - Loyalty Award";
+          document.getElementById('activePkg').innerText = "Current: Level "+level+" | Package: "+currentPkg.toLocaleString()+" MGG | Earned: "+totalEarned.toFixed(0)+" MGG | Community: "+affCount.toString();
+          
+          // 4 BOXES UPDATE
+          document.getElementById('totalAwards').innerText = totalEarned.toFixed(0)+" MGG";
+          document.getElementById('totalBar').style.width = Math.min(100, (totalEarned / loyaltyTarget * 100)) + "%";
+          document.getElementById('totalText').innerText = totalEarned.toFixed(0)+" / "+loyaltyTarget.toLocaleString()+" Total";
+          
+          document.getElementById('affiliateAward').innerText = affiliateEarn.toFixed(0)+" MGG";
+          document.getElementById('affTeamCount').innerText = affCount.toString();
+          
+          document.getElementById('loyaltyAward').innerText = loyaltyEarn.toFixed(0)+" MGG";
+          document.getElementById('loyaltyBar').style.width = Math.min(100, (loyaltyEarn / loyaltyTarget * 100)) + "%";
+          document.getElementById('loyaltyText').innerText = loyaltyEarn.toFixed(0)+" / "+loyaltyTarget.toLocaleString()+" - "+ (loyaltyEarn >= loyaltyTarget ? "3x Completed" : Math.floor(loyaltyEarn/loyaltyTarget*100)+"%");
+          
+          document.getElementById('communityAward').innerText = (affCount >= affCommunity[level-1] ? communityBonusEarn.toLocaleString() : "0")+" MGG";
+          document.getElementById('communityNeed').innerText = level < 12 ? affCommunity[level]+" For Level "+(level+1) : "Max Level";
+          
         } else {
-          document.getElementById('activeStatus').innerText = "INACTIVE - Buy Package to Activate";
+          document.getElementById('activeStatus').innerText = "INACTIVE - Buy Package 1 First";
           document.getElementById('activeStatus').style.color = "#ff4444";
+          document.getElementById('activePkg').innerText = "Current: None | Buy Level 1 - 1000 MGG First - Sequential";
+          currentUserLevel = 0;
+          document.getElementById('totalAwards').innerText = "0 MGG";
+          document.getElementById('affiliateAward').innerText = "0 MGG";
+          document.getElementById('loyaltyAward').innerText = "0 MGG";
+          document.getElementById('communityAward').innerText = "0 MGG";
         }
+        renderPackages();
       }catch(e){ document.getElementById('activeStatus').innerText = "Contract Not Deployed"; }
     } else {
-      document.getElementById('activeStatus').innerText = "Contract Not Deployed - Deploy on Remix";
+      document.getElementById('activeStatus').innerText = "Contract Not Deployed - Deploy Now";
+      currentUserLevel = 0;
+      renderPackages();
     }
     const token = new ethers.Contract(MGG_TOKEN, ERC20_ABI, provider);
     const bal = await token.balanceOf(userAddress);
@@ -241,48 +288,42 @@ function copyAffLink(){
 function shareAffLink(){
   const affLink = document.getElementById('affLink').value;
   if(affLink.includes("Connect Wallet First")){ alert("Connect Wallet First!"); return; }
-  if(navigator.share){ navigator.share({title:"MGG ROKET LEGEND - Join", text:"Join MGG ROKET LEGEND - Loyalty Award 3x", url:affLink}); }
+  if(navigator.share){ navigator.share({title:"MGG ROKET LEGEND", text:"Join MGG ROKET LEGEND", url:affLink}); }
   else { copyAffLink(); }
 }
 
 async function buyPackage(level){
   if(!signer){ alert("CONNECT WALLET First!"); await connectWallet(); return; }
   if(CONTRACT_ADDRESS === "0xYOUR_CONTRACT_ADDRESS"){ alert("Deploy Contract First!"); return; }
+  if(level !== currentUserLevel){ alert(`Sequential Buy!\nMust buy Package ${currentUserLevel+1} first!\nCurrent: ${currentUserLevel}\nTried: Level ${level+1}`); return; }
   try{
-    const upline = document.getElementById('upline').value || "0x0000000000000000000000000000000000000000";
+    const upline = document.getElementById('upline').value || "0x332B34D1f611F285a3334BF052f9E163E5733daa";
     const amountMGG = packagesMGG[level];
-    if(!confirm(`Confirm BUY?\nPackage: ${amountMGG} MGG\nLevel: ${level+1} - ${levelNames[level]}`)) return;
+    if(!confirm(`Confirm BUY?\nPackage: ${amountMGG} MGG\nLevel: ${level+1} - ${levelNames[level]}\nNeed Community: ${affCommunity[level]}\nUpline: ${upline}`)) return;
     const token = new ethers.Contract(MGG_TOKEN, ERC20_ABI, signer);
     const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
     const amount = ethers.parseUnits(amountMGG.toString(),18);
     const tx1 = await token.approve(CONTRACT_ADDRESS, amount); await tx1.wait();
     const tx2 = await contract.join(level, upline); await tx2.wait();
-    alert(`Success! Package ${level+1} - ${amountMGG} MGG - ${levelNames[level]} - ID ACTIVE!`);
+    alert(`Success!\nPackage ${level+1} - ${amountMGG} MGG\nID ACTIVE!`);
     await connectWallet();
   }catch(err){ alert("Error: "+err.message); }
 }
 
 async function retopupPackage(level){
   if(!signer){ alert("CONNECT WALLET First!"); await connectWallet(); return; }
-  if(CONTRACT_ADDRESS === "0xYOUR_CONTRACT_ADDRESS"){ alert("Deploy Contract First! - Retopup needs contract!"); return; }
+  if(CONTRACT_ADDRESS === "0xYOUR_CONTRACT_ADDRESS"){ alert("Deploy Contract First!"); return; }
+  if(level >= currentUserLevel){ alert(`Cannot Retopup!\nBuy first!\nCurrent: ${currentUserLevel}\nRetopup for bought packages`); return; }
   try{
     const amountMGG = packagesMGG[level];
-    if(!confirm(`Confirm RETOPUP?\nPackage: ${amountMGG} MGG\nLevel: ${level+1} - ${levelNames[level]}\nLoyalty Award 3x: ${amountMGG*3} MGG\nAuto upgraded!`)) return;
+    if(!confirm(`Confirm RETOPUP?\nPackage: ${amountMGG} MGG\nLevel: ${level+1}`)) return;
     const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-    try{
-      const tx = await contract.retopup(level);
-      await tx.wait();
-      alert(`Retopup Success!\nPackage ${level+1} - ${amountMGG} MGG - Loyalty Award 3x: ${amountMGG*3} MGG`);
-    }catch(e){
-      const token = new ethers.Contract(MGG_TOKEN, ERC20_ABI, signer);
-      const amount = ethers.parseUnits(amountMGG.toString(),18);
-      const tx1 = await token.approve(CONTRACT_ADDRESS, amount); await tx1.wait();
-      const upline = document.getElementById('upline').value || "0x0000000000000000000000000000000000000000";
-      const tx2 = await contract.join(level, upline); await tx2.wait();
-      alert(`Retopup Success! Via Join - Package ${level+1} - ${amountMGG} MGG`);
-    }
+    const tx = await contract.retopup(level);
+    await tx.wait();
+    alert(`Retopup Success!\nPackage ${level+1}`);
     await connectWallet();
   }catch(err){ alert("Retopup Error: "+err.message); }
 }
 </script>
-<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInl
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
+</html>
