@@ -23,7 +23,7 @@
 }
 </style>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MGG ROKET LEGEND - 4 BOXES - TOTAL AFFILIATE LOYALTY COMMUNITY</title>
+<title>MGG ROKET LEGEND - BALANCE SHOW AFTER CONNECT</title>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.0/dist/ethers.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;600;700&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
 <style>
@@ -53,6 +53,11 @@ body{margin:0;background:#000000;color:#fff;font-family:Inter,sans-serif;overflo
 .vip-wallet.vip-aff{border:2px solid #ff44ff;box-shadow:0 0 25px #ff44ff20;background:linear-gradient(145deg,#1a0033,#0f0f0f)}
 .vip-wallet h4{font-family:Orbitron;color:#FFD700;font-size:11px;margin:0 0 12px 0;letter-spacing:1px}
 .vip-wallet .addr{font-size:11px;word-break:break-all;background:#000000;padding:10px;border-radius:8px;border:1px solid #FFD70020;margin-top:8px;color:#FFD700}
+.balance-box{background:linear-gradient(145deg,#001a00,#000000);border:1px solid #00ff8840;border-radius:12px;padding:12px;margin-top:12px}
+.balance-box .bal-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #00ff8815}
+.balance-box .bal-row:last-child{border:none}
+.balance-box .bal-label{font-size:10px;opacity:0.7;color:#00ff88;font-family:Orbitron}
+.balance-box .bal-value{font-size:13px;font-weight:900;color:#FFD700;font-family:Cinzel}
 .vip-packages{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;margin:25px 0}
 .vip-pkg{background:linear-gradient(145deg,#1a1500,#000000);border:1px solid #FFD70030;border-radius:18px;padding:20px;position:relative;overflow:hidden;transition:0.3s;opacity:0.6}
 .vip-pkg.unlocked{opacity:1;border-color:#FFD70060;box-shadow:0 5px 20px #FFD70015}
@@ -129,9 +134,26 @@ input.vip-input{width:100%;padding:12px;background:#000000;color:#FFD700;border:
 <h4>ACTIVE WALLET / ID STATUS</h4>
 <div style="font-size:10px;opacity:0.6">Your Wallet Status - Buy from Package 1 Onwards</div>
 <div id="activeAddr" class="addr" style="color:#00ff88;border-color:#00ff8840">Not Connected - Connect Wallet</div>
+
+<!-- BALANCE SHOW AFTER CONNECT - NEW -->
+<div id="balanceDisplay" class="balance-box" style="display:none">
+<div class="bal-row">
+<span class="bal-label">MGG BALANCE</span>
+<span class="bal-value" id="mggBal">0 MGG</span>
+</div>
+<div class="bal-row">
+<span class="bal-label">BNB BALANCE (GAS)</span>
+<span class="bal-value" id="bnbBal">0 BNB</span>
+</div>
+<div class="bal-row">
+<span class="bal-label">ID WALLET HOLD</span>
+<span class="bal-value" id="holdBal" style="color:#00ff88">0 MGG HOLD</span>
+</div>
+</div>
+
 <div style="margin-top:12px">
 <div style="font-size:14px;font-weight:900;font-family:Orbitron" id="activeStatus">INACTIVE</div>
-<div style="font-size:10px;opacity:0.6;margin-top:4px" id="activePkg">Current Package: None | Buy Package 1 First - Sequential</div>
+<div style="font-size:10px;opacity:0.6;margin-top:4px" id="activePkg">Current Package: None | Buy Package 1 First</div>
 </div>
 </div>
 
@@ -151,7 +173,7 @@ input.vip-input{width:100%;padding:12px;background:#000000;color:#FFD700;border:
 <input id="upline" class="vip-input" value="0x332B34D1f611F285a3334BF052f9E163E5733daa" placeholder="Upline Wallet">
 </div>
 
-<h3 style="font-family:Cinzel;color:#FFD700;font-size:18px;margin:30px 0 15px 0;letter-spacing:2px;text-shadow:0 0 15px #FFD70050">PACKAGES - BUY FROM PACKAGE 1 ONWARDS - SEQUENTIAL</h3>
+<h3 style="font-family:Cinzel;color:#FFD700;font-size:18px;margin:30px 0 15px 0;letter-spacing:2px;text-shadow:0 0 15px #FFD70050">PACKAGES - BUY FROM PACKAGE 1 ONWARDS</h3>
 <div class="vip-packages" id="vipPackages"></div>
 
 </div>
@@ -197,7 +219,7 @@ function renderPackages(){
         <button onclick="buyPackage(${i})" class="btn-vip-buy" ${!isNext ? 'disabled style="background:#333;color:#666"' : ''}>${btnText}</button>
         <button onclick="retopupPackage(${i})" class="btn-retopup" ${!isActive ? 'disabled style="background:#333;color:#666"' : ''}>${retopupBtnText}</button>
       </div>
-      ${isNext ? `<div style="font-size:8px;color:#00ff88;margin-top:6px;text-align:center">NEXT PACKAGE - Sequential</div>` : ''}
+      ${isNext ? `<div style="font-size:8px;color:#00ff88;margin-top:6px;text-align:center">NEXT PACKAGE</div>` : ''}
       ${!isNext && !isActive ? `<div style="font-size:8px;color:#ff4444;margin-top:6px;text-align:center">Buy Package ${currentUserLevel+1} First</div>` : ''}
     </div>`;
   }).join("");
@@ -217,6 +239,38 @@ async function connectWallet(){
     const affLink = window.location.origin + window.location.pathname + "?ref=" + userAddress;
     document.getElementById('affLink').value = affLink;
     try{ await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:"0xcc"}]}); }catch(e){ await window.ethereum.request({method:"wallet_addEthereumChain",params:[{chainId:"0xcc",chainName:"opBNB Mainnet",rpcUrls:["https://opbnb-mainnet-rpc.bnbchain.org"],nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18}}]}); }
+    
+    // BALANCE SHOW AFTER CONNECT - NEW FEATURE
+    try{
+      const token = new ethers.Contract(MGG_TOKEN, ERC20_ABI, provider);
+      const mggBalRaw = await token.balanceOf(userAddress);
+      const mggBal = parseFloat(ethers.formatUnits(mggBalRaw,18));
+      
+      const bnbBalRaw = await provider.getBalance(userAddress);
+      const bnbBal = parseFloat(ethers.formatUnits(bnbBalRaw,18));
+      
+      // Show balance box
+      document.getElementById('balanceDisplay').style.display = "block";
+      document.getElementById('mggBal').innerText = mggBal.toLocaleString() + " MGG";
+      document.getElementById('bnbBal').innerText = bnbBal.toFixed(4) + " BNB";
+      document.getElementById('holdBal').innerText = "0 MGG HOLD";
+      
+      // Color coding for low balance
+      if(mggBal < 1000){
+        document.getElementById('mggBal').style.color = "#ff4444";
+      } else {
+        document.getElementById('mggBal').style.color = "#FFD700";
+      }
+      
+      if(bnbBal < 0.001){
+        document.getElementById('bnbBal').style.color = "#ff4444";
+        document.getElementById('bnbBal').innerText = bnbBal.toFixed(6) + " BNB - Low Gas!";
+      }
+      
+    }catch(e){
+      console.log("Balance fetch error", e);
+    }
+    
     if(CONTRACT_ADDRESS !== "0xYOUR_CONTRACT_ADDRESS"){
       try{
         const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
@@ -225,10 +279,12 @@ async function connectWallet(){
         const earned = userInfo[2];
         const affCount = userInfo[4];
         const loyaltyClaimed = userInfo[5];
+        const invested = userInfo[3];
         currentUserLevel = level;
         const totalEarned = parseFloat(ethers.formatUnits(earned,18));
         const affiliateEarn = Math.max(0, totalEarned - parseFloat(ethers.formatUnits(loyaltyClaimed,18)));
         const loyaltyEarn = parseFloat(ethers.formatUnits(loyaltyClaimed,18));
+        const totalInvested = parseFloat(ethers.formatUnits(invested,18));
         
         if(level > 0){
           const currentPkg = packagesMGG[level-1];
@@ -237,9 +293,8 @@ async function connectWallet(){
           
           document.getElementById('activeStatus').innerText = "ACTIVE - Level "+level+" - "+levelNames[level-1];
           document.getElementById('activeStatus').style.color = "#00ff88";
-          document.getElementById('activePkg').innerText = "Current: Level "+level+" | Package: "+currentPkg.toLocaleString()+" MGG | Earned: "+totalEarned.toFixed(0)+" MGG | Community: "+affCount.toString();
+          document.getElementById('activePkg').innerText = "Current: Level "+level+" | Package: "+currentPkg.toLocaleString()+" MGG | Earned: "+totalEarned.toFixed(0)+" MGG";
           
-          // 4 BOXES UPDATE
           document.getElementById('totalAwards').innerText = totalEarned.toFixed(0)+" MGG";
           document.getElementById('totalBar').style.width = Math.min(100, (totalEarned / loyaltyTarget * 100)) + "%";
           document.getElementById('totalText').innerText = totalEarned.toFixed(0)+" / "+loyaltyTarget.toLocaleString()+" Total";
@@ -249,81 +304,15 @@ async function connectWallet(){
           
           document.getElementById('loyaltyAward').innerText = loyaltyEarn.toFixed(0)+" MGG";
           document.getElementById('loyaltyBar').style.width = Math.min(100, (loyaltyEarn / loyaltyTarget * 100)) + "%";
-          document.getElementById('loyaltyText').innerText = loyaltyEarn.toFixed(0)+" / "+loyaltyTarget.toLocaleString()+" - "+ (loyaltyEarn >= loyaltyTarget ? "3x Completed" : Math.floor(loyaltyEarn/loyaltyTarget*100)+"%");
+          document.getElementById('loyaltyText').innerText = loyaltyEarn.toFixed(0)+" / "+loyaltyTarget.toLocaleString();
           
           document.getElementById('communityAward').innerText = (affCount >= affCommunity[level-1] ? communityBonusEarn.toLocaleString() : "0")+" MGG";
           document.getElementById('communityNeed').innerText = level < 12 ? affCommunity[level]+" For Level "+(level+1) : "Max Level";
           
+          // Update HOLD balance
+          document.getElementById('holdBal').innerText = totalInvested.toLocaleString() + " MGG HOLD";
+          
         } else {
           document.getElementById('activeStatus').innerText = "INACTIVE - Buy Package 1 First";
           document.getElementById('activeStatus').style.color = "#ff4444";
-          document.getElementById('activePkg').innerText = "Current: None | Buy Level 1 - 1000 MGG First - Sequential";
-          currentUserLevel = 0;
-          document.getElementById('totalAwards').innerText = "0 MGG";
-          document.getElementById('affiliateAward').innerText = "0 MGG";
-          document.getElementById('loyaltyAward').innerText = "0 MGG";
-          document.getElementById('communityAward').innerText = "0 MGG";
-        }
-        renderPackages();
-      }catch(e){ document.getElementById('activeStatus').innerText = "Contract Not Deployed"; }
-    } else {
-      document.getElementById('activeStatus').innerText = "Contract Not Deployed - Deploy Now";
-      currentUserLevel = 0;
-      renderPackages();
-    }
-    const token = new ethers.Contract(MGG_TOKEN, ERC20_ABI, provider);
-    const bal = await token.balanceOf(userAddress);
-    const mgg = parseFloat(ethers.formatUnits(bal,18));
-    document.getElementById('activeAddr').innerText = userAddress + "\nMGG Balance: " + mgg.toLocaleString();
-  }catch(e){ alert(e.message); }
-}
-
-function copyAffLink(){
-  const affLink = document.getElementById('affLink');
-  if(affLink.value.includes("Connect Wallet First")){ alert("Connect Wallet First!"); return; }
-  affLink.select(); document.execCommand('copy');
-  alert("Affiliate Link Copied!\n"+affLink.value);
-}
-
-function shareAffLink(){
-  const affLink = document.getElementById('affLink').value;
-  if(affLink.includes("Connect Wallet First")){ alert("Connect Wallet First!"); return; }
-  if(navigator.share){ navigator.share({title:"MGG ROKET LEGEND", text:"Join MGG ROKET LEGEND", url:affLink}); }
-  else { copyAffLink(); }
-}
-
-async function buyPackage(level){
-  if(!signer){ alert("CONNECT WALLET First!"); await connectWallet(); return; }
-  if(CONTRACT_ADDRESS === "0xYOUR_CONTRACT_ADDRESS"){ alert("Deploy Contract First!"); return; }
-  if(level !== currentUserLevel){ alert(`Sequential Buy!\nMust buy Package ${currentUserLevel+1} first!\nCurrent: ${currentUserLevel}\nTried: Level ${level+1}`); return; }
-  try{
-    const upline = document.getElementById('upline').value || "0x332B34D1f611F285a3334BF052f9E163E5733daa";
-    const amountMGG = packagesMGG[level];
-    if(!confirm(`Confirm BUY?\nPackage: ${amountMGG} MGG\nLevel: ${level+1} - ${levelNames[level]}\nNeed Community: ${affCommunity[level]}\nUpline: ${upline}`)) return;
-    const token = new ethers.Contract(MGG_TOKEN, ERC20_ABI, signer);
-    const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-    const amount = ethers.parseUnits(amountMGG.toString(),18);
-    const tx1 = await token.approve(CONTRACT_ADDRESS, amount); await tx1.wait();
-    const tx2 = await contract.join(level, upline); await tx2.wait();
-    alert(`Success!\nPackage ${level+1} - ${amountMGG} MGG\nID ACTIVE!`);
-    await connectWallet();
-  }catch(err){ alert("Error: "+err.message); }
-}
-
-async function retopupPackage(level){
-  if(!signer){ alert("CONNECT WALLET First!"); await connectWallet(); return; }
-  if(CONTRACT_ADDRESS === "0xYOUR_CONTRACT_ADDRESS"){ alert("Deploy Contract First!"); return; }
-  if(level >= currentUserLevel){ alert(`Cannot Retopup!\nBuy first!\nCurrent: ${currentUserLevel}\nRetopup for bought packages`); return; }
-  try{
-    const amountMGG = packagesMGG[level];
-    if(!confirm(`Confirm RETOPUP?\nPackage: ${amountMGG} MGG\nLevel: ${level+1}`)) return;
-    const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-    const tx = await contract.retopup(level);
-    await tx.wait();
-    alert(`Retopup Success!\nPackage ${level+1}`);
-    await connectWallet();
-  }catch(err){ alert("Retopup Error: "+err.message); }
-}
-</script>
-<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
-</html>
+          document.getElementById('activeP
