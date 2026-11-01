@@ -1,118 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MGG LEGEND - Dashboard</title>
+<title>MGG ROKET LEGEND - NO FOOTER LINE - FINAL</title>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.0/dist/ethers.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;600;700&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@400;700&display=swap');
-body{margin:0;background:#000;color:#fff;font-family:Inter}
-.header{text-align:center;padding:25px;background:radial-gradient(circle at top,#222200,#000)}
-.header h1{font-family:Orbitron;color:#FFD700;margin:0;letter-spacing:2px}
-.badge{background:#FFD700;color:#000;padding:5px 12px;border-radius:20px;font-weight:900;font-size:11px;margin:3px;display:inline-block}
-.container{max-width:1100px;margin:auto;padding:15px}
-.dash{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
-@media(min-width:700px){.dash{grid-template-columns:1fr 1fr 1fr 1fr}}
-.box{background:#111;border:1px solid #333;border-radius:14px;padding:14px;text-align:center}
-.box b{color:#FFD700;font-size:18px;display:block}
-.box small{opacity:0.6;font-size:11px}
-.btn{padding:12px 20px;background:#FFD700;color:#000;font-weight:900;border:none;border-radius:25px;cursor:pointer;font-family:Orbitron}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:20px}
-.card{background:#111;border:1px solid #222;border-radius:14px;padding:14px}
-.card:hover{border-color:#FFD700}
-input{width:100%;padding:10px;background:#000;color:#fff;border:1px solid #444;border-radius:8px}
-.team-list{background:#0a0a0a;border:1px solid #333;border-radius:10px;padding:10px;max-height:150px;overflow:auto;font-size:12px;margin-top:8px}
+body{margin:0;background:#000000;color:#fff;font-family:Inter,sans-serif;overflow-x:hidden}
+.vip-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at top, #1a1500 0%, #000000 60%), radial-gradient(ellipse at bottom right, #001a33 0%, #000000 50%);z-index:-1}
+.header{background:linear-gradient(135deg, #000000 0%, #1a1500 50%, #000000 100%);padding:25px 20px;border-bottom:2px solid #FFD700;box-shadow:0 5px 30px #FFD70030;position:sticky;top:0;z-index:100}
+.header-inner{max-width:1300px;margin:auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px}
+.logo h1{margin:0;line-height:1;font-family:Cinzel}
+.logo .big{font-size:42px;font-weight:900;color:#FFD700;letter-spacing:6px;display:block;text-shadow:0 0 20px #FFD700, 0 0 40px #FFD70050}
+.logo .small{font-size:11px;letter-spacing:10px;opacity:0.8;color:#FFD700;display:block;margin-top:6px}
+.btn-vip{padding:12px 28px;background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;font-weight:900;border:none;border-radius:25px;cursor:pointer;font-family:Orbitron;font-size:12px;box-shadow:0 0 20px #FFD70060;letter-spacing:1px;transition:0.3s}
+.container{max-width:1300px;margin:auto;padding:20px}
+.vip-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin:25px 0}
+.vip-card{background:linear-gradient(145deg,#1a1500,#0f0f0f);border:1px solid #FFD70040;border-radius:18px;padding:20px;position:relative;overflow:hidden}
+.vip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#FFD700,#FFA500,#FFD700)}
+.vip-card h3{font-size:10px;opacity:0.7;margin:0 0 10px 0;letter-spacing:1.5px;font-family:Orbitron;color:#FFD700}
+.vip-card b{font-size:28px;color:#FFD700;display:block;font-family:Cinzel;font-weight:900;text-shadow:0 0 10px #FFD70050}
+.vip-card span{font-size:11px;opacity:0.6}
+.vip-wallets{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin:25px 0}
+.vip-wallet{background:linear-gradient(145deg,#0f0f0f,#1a1500);border:1px solid #FFD70030;border-radius:16px;padding:18px}
+.vip-wallet.vip-income{border:2px solid #FFD700;box-shadow:0 0 25px #FFD70020}
+.vip-wallet.vip-active{border:2px solid #00ff88;box-shadow:0 0 25px #00ff8820}
+.vip-wallet.vip-aff{border:2px solid #ff44ff;box-shadow:0 0 25px #ff44ff20;background:linear-gradient(145deg,#1a0033,#0f0f0f)}
+.vip-wallet h4{font-family:Orbitron;color:#FFD700;font-size:11px;margin:0 0 12px 0;letter-spacing:1px}
+.vip-wallet .addr{font-size:11px;word-break:break-all;background:#000000;padding:10px;border-radius:8px;border:1px solid #FFD70020;margin-top:8px;color:#FFD700}
+.vip-packages{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;margin:25px 0}
+.vip-pkg{background:linear-gradient(145deg,#1a1500,#000000);border:1px solid #FFD70030;border-radius:18px;padding:20px;position:relative;overflow:hidden;transition:0.3s}
+.vip-pkg:hover{border-color:#FFD70080;box-shadow:0 10px 30px #FFD70020;transform:translateY(-4px)}
+.vip-pkg.vip-active{border:2px solid #00ff88;box-shadow:0 0 30px #00ff8840}
+.vip-pkg::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#FFD700,#FFA500)}
+.vip-level{position:absolute;top:12px;right:12px;background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;font-size:8px;padding:5px 10px;border-radius:12px;font-family:Orbitron;font-weight:900}
+.vip-pkg h3{font-family:Cinzel;color:#FFD700;font-size:16px;margin:0 0 5px 0}
+.vip-pkg .vip-price{font-size:11px;opacity:0.7;margin:8px 0;line-height:1.7;color:#FFD70080}
+.vip-details{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:10px;background:#00000080;padding:12px;border-radius:10px;margin:12px 0;border:1px solid #FFD70015}
+.vip-details span{color:#FFD700;font-weight:700;font-size:11px}
+.btn-vip-buy{width:100%;padding:12px;background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;font-weight:900;border:none;border-radius:10px;cursor:pointer;font-family:Orbitron;font-size:11px;letter-spacing:0.5px;box-shadow:0 0 15px #FFD70040;margin-top:8px;transition:0.3s}
+.btn-retopup{width:100%;padding:12px;background:linear-gradient(90deg,#00ff88,#00cc6a);color:#000;font-weight:900;border:none;border-radius:10px;cursor:pointer;font-family:Orbitron;font-size:11px;letter-spacing:0.5px;box-shadow:0 0 15px #00ff8840;margin-top:8px;transition:0.3s}
+.btn-group{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+input.vip-input{width:100%;padding:12px;background:#000000;color:#FFD700;border:1px solid #FFD70040;border-radius:10px;font-size:11px;box-sizing:border-box}
 </style>
 </head>
 <body>
+<div class="vip-bg"></div>
+
 <div class="header">
-<h1>MGG LEGEND GLOBAL</h1>
-<p>Decentralized Autopool 3x - opBNB Chain</p>
-<span class="badge">20% DIRECT</span><span class="badge">60% AUTOPOOL 3x</span><span class="badge">10% AWARD</span><span class="badge">10% CREATOR</span>
+<div class="header-inner">
+<div class="logo">
+<h1><span class="big">MGG ROKET</span><span class="small">LEGEND</span></h1>
+</div>
+<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+<span id="walletStatus" style="font-size:10px;opacity:0.7;color:#FFD700">Not Connected</span>
+<button id="connectBtn" onclick="connectWallet()" class="btn-vip">CONNECT WALLET</button>
+</div>
+</div>
 </div>
 
 <div class="container">
-<button class="btn" onclick="connect()">CONNECT WALLET - opBNB</button>
-<p id="wallet" style="font-size:12px;opacity:0.7;margin-top:8px">Not Connected</p>
 
-<!-- DASHBOARD - तुझी मागणी -->
-<div class="dash">
-<div class="box"><b id="directTeam">0</b><small>Direct Team</small></div>
-<div class="box"><b id="directIncome">0 MGG</b><small>Direct Income Wallet (20%)</small></div>
-<div class="box"><b id="autopoolIncome">0 MGG</b><small>Autopool Income Wallet (60% 3x)</small></div>
-<div class="box"><b id="awardIncome">0 MGG</b><small>Award Income Wallet (10%)</small></div>
+<div class="vip-stats">
+<div class="vip-card">
+<h3>SELF PACKAGES</h3>
+<b id="totalInvest">0 MGG</b>
+<span>Your Self Packages</span>
+</div>
+<div class="vip-card">
+<h3>TOTAL EARNED</h3>
+<b id="totalEarn">0 MGG</b>
+<span>Affiliate + Loyalty + Bonus</span>
+</div>
+<div class="vip-card">
+<h3>LOYALTY AWARD</h3>
+<b id="autopoolEarn">0 MGG</b>
+<span>Loyalty Retopup 3x - Award</span>
+<div style="background:#000;height:6px;border-radius:3px;margin:10px 0;overflow:hidden"><div id="retopupBar" style="height:100%;background:linear-gradient(90deg,#FFD700,#00ff88);width:0%;border-radius:3px"></div></div>
+<span id="retopupText" style="font-size:9px">0% / 300% - Retopup Progress</span>
+</div>
+<div class="vip-card">
+<h3>AFFILIATE TEAM</h3>
+<b id="directTeam">0</b>
+<span>Affiliate Community Members</span>
+</div>
 </div>
 
-<div style="background:#111;border:1px solid #FFD70040;border-radius:12px;padding:12px">
-<label style="color:#FFD700;font-weight:700;font-size:12px">UPLINE / REFERRAL ADDRESS</label>
-<input id="upline" value="0x843162bFc44b13dAAdB13652681b3902332f324D">
-<div id="teamList" class="team-list">Direct Team List will show here after connect...</div>
+<div class="vip-wallets">
+<div class="vip-wallet vip-income">
+<h4>INCOME WALLET - CREATOR WALLET</h4>
+<div style="font-size:10px;opacity:0.6">All Funds Go Here - Zero Balance - Treasury</div>
+<div class="addr">0x332B34D1f611F285a3334BF052f9E163E5733daa</div>
+<div style="margin-top:10px;font-size:10px"><span style="color:#FFD700">Token:</span> 0x7bAFE...B39D | <span style="color:#FFD700">Chain:</span> opBNB 204 | <span style="color:#FFD700">Status:</span> LEGEND</div>
 </div>
 
-<div class="grid" id="packages"></div>
+<div class="vip-wallet vip-active">
+<h4>ACTIVE WALLET / ID STATUS</h4>
+<div style="font-size:10px;opacity:0.6">Your Wallet Status</div>
+<div id="activeAddr" class="addr" style="color:#00ff88;border-color:#00ff8840">Not Connected - Connect Wallet</div>
+<div style="margin-top:12px">
+<div style="font-size:14px;font-weight:900;font-family:Orbitron" id="activeStatus">INACTIVE</div>
+<div style="font-size:10px;opacity:0.6;margin-top:4px" id="activePkg">Current Package: None | Buy Package to Activate ID</div>
+</div>
+</div>
+
+<div class="vip-wallet vip-aff">
+<h4>AFFILIATE LINK - REFERRAL LINK</h4>
+<div style="font-size:10px;opacity:0.6">Share Link - 20% Affiliate Income</div>
+<input id="affLink" class="vip-input" value="Connect Wallet First - Link Will Be Generated" readonly style="margin-top:10px;border-color:#ff44ff40">
+<div style="display:flex;gap:8px;margin-top:10px">
+<button onclick="copyAffLink()" class="btn-vip" style="flex:1;background:linear-gradient(90deg,#ff44ff,#ff00ff)">COPY LINK</button>
+<button onclick="shareAffLink()" class="btn-vip" style="flex:1;background:transparent;color:#FFD700;border:2px solid #FFD700">SHARE LINK</button>
+</div>
+</div>
+</div>
+
+<div class="vip-wallet" style="margin:20px 0">
+<h4>UPLINE WALLET - REFERRAL WALLET</h4>
+<input id="upline" class="vip-input" value="0x332B34D1f611F285a3334BF052f9E163E5733daa" placeholder="Upline Wallet - Auto Fill from ?ref=">
+<div style="font-size:9px;opacity:0.6;margin-top:6px">If coming from referral link, auto fill - ?ref=0x... - Affiliate 20% goes to upline</div>
+</div>
+
+<h3 style="font-family:Cinzel;color:#FFD700;font-size:18px;margin:30px 0 15px 0;letter-spacing:2px;text-shadow:0 0 15px #FFD70050">PACKAGES - BUY + RETOPUP</h3>
+<div class="vip-packages" id="vipPackages"></div>
+
+<!-- NO FOOTER LINE HERE - REMOVED AS PER REQUEST -->
+
 </div>
 
 <script>
 const MGG_TOKEN = "0x7bAFE03A292fEf5bF3c60ae2c924a9956ff1B39D";
-const CONTRACT_ADDRESS = "0xYOUR_DEPLOYED_CONTRACT"; // <-- इथे तुझा Contract टाक
-const CHAIN_ID_HEX = "0xcc";
-const packages = [{mgg:1000},{mgg:2000},{mgg:5000},{mgg:10000},{mgg:20000},{mgg:50000},{mgg:100000},{mgg:200000},{mgg:500000},{mgg:1000000},{mgg:2000000},{mgg:5000000},{mgg:10000000},{mgg:20000000},{mgg:50000000}];
-const CONTRACT_ABI = [
-  "function join(uint8,address) external",
-  "function getUser(address) view returns (uint256 directTeamCount, uint256 directInc, uint256 autopoolInc, uint256 awardInc, address[] directList)",
-  "function users(address) view returns (uint256 directCount, uint256 directIncome, uint256 autopoolIncome, uint256 awardIncome)"
-];
-const ERC20_ABI = ["function approve(address,uint256) returns (bool)"];
+let CONTRACT_ADDRESS = "0xYOUR_CONTRACT_ADDRESS";
+const packagesMGG = [1000,2000,5000,10000,20000,50000,100000,200000,500000,1000000,2000000,5000000];
+const communityBonus = [100,500,1000,2000,5000,10000,30000,50000,100000,300000,600000,1000000];
+const affCommunity = [0,1,2,3,5,10,20,30,40,50,60,70];
+const levelNames = ["BRONZE","SILVER","GOLD","PLATINUM","DIAMOND","RUBY","EMERALD","SAPPHIRE","CROWN","LEGEND","MYTHIC","GOD"];
 
-function render(){
-  document.getElementById("packages").innerHTML = packages.map((p,i)=>`
-    <div class="card">
-      <h3 style="color:#FFD700;font-family:Orbitron;margin:0">LEVEL ${i+1} - ${p.mgg.toLocaleString()} MGG</h3>
-      <div style="font-size:11px;opacity:0.7;margin-top:6px">20% Direct: ${(p.mgg*0.2).toLocaleString()} | 60% Pool: ${(p.mgg*0.6).toLocaleString()}<br>10% Award: ${(p.mgg*0.1).toLocaleString()} | 10% Creator</div>
-      <button class="btn" style="width:100%;margin-top:10px" onclick="joinPkg(${i})">ACTIVATE</button>
-    </div>`).join("");
+let provider, signer, userAddress;
+const ERC20_ABI = ["function approve(address,uint256) returns (bool)", "function balanceOf(address) view returns (uint256)"];
+const CONTRACT_ABI = ["function join(uint8,address) external", "function retopup(uint8) external", "function currentLevel(address) view returns (uint256)", "function totalEarnedMGG(address) view returns (uint256)"];
+
+window.addEventListener('load', ()=>{
+  const urlParams = new URLSearchParams(window.location.search);
+  const ref = urlParams.get('ref');
+  if(ref && ref.startsWith('0x')){ document.getElementById('upline').value = ref; }
+  renderPackages();
+});
+
+function renderPackages(){
+  const grid = document.getElementById('vipPackages');
+  grid.innerHTML = packagesMGG.map((m,i)=>{
+    const aff = Math.floor(m*0.2);
+    const retopup = m*3;
+    const bonus = communityBonus[i];
+    const community = affCommunity[i];
+    return `<div class="vip-pkg" id="vipPkg${i}">
+      <div class="vip-level">${levelNames[i]}</div>
+      <h3>LEVEL ${i+1} - ${m.toLocaleString()} MGG</h3>
+      <div class="vip-price">Self Packages: ${m.toLocaleString()} MGG<br>Affiliate: ${aff.toLocaleString()} MGG (20%)<br>Loyalty Award 3x: ${retopup.toLocaleString()} MGG<br>Affiliate Community: ${community} | Community Bonus: ${bonus.toLocaleString()} MGG</div>
+      <div class="vip-details"><div>Affiliate: <span>${aff.toLocaleString()}</span></div><div>Loyalty Award: <span>${retopup.toLocaleString()}</span></div><div>Community: <span>${community}</span></div><div>Bonus: <span>${bonus.toLocaleString()}</span></div></div>
+      <div class="btn-group">
+        <button onclick="buyPackage(${i})" class="btn-vip-buy">BUY ${m.toLocaleString()} MGG</button>
+        <button onclick="retopupPackage(${i})" class="btn-retopup">RETOPUP ${m.toLocaleString()} MGG</button>
+      </div>
+    </div>`;
+  }).join("");
 }
-render();
 
-async function connect(){
-  if(!window.ethereum){alert("Install Metamask");return}
-  const provider = new ethers.BrowserProvider(window.ethereum);
-  await provider.send("eth_requestAccounts",[]);
-  const signer = await provider.getSigner();
-  const addr = await signer.getAddress();
-  document.getElementById("wallet").innerText = "Connected: "+addr;
-  try{await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:CHAIN_ID_HEX}]})}catch(e){await window.ethereum.request({method:"wallet_addEthereumChain",params:[{chainId:CHAIN_ID_HEX,chainName:"opBNB Mainnet",rpcUrls:["https://opbnb-mainnet-rpc.bnbchain.org"],nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18}}]})}
-  loadDashboard(addr);
-}
-
-async function loadDashboard(userAddr){
+async function connectWallet(){
   try{
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
-    const data = await contract.getUser(userAddr);
-    document.getElementById("directTeam").innerText = data[0].toString();
-    document.getElementById("directIncome").innerText = ethers.formatUnits(data[1],18) + " MGG";
-    document.getElementById("autopoolIncome").innerText = ethers.formatUnits(data[2],18) + " MGG";
-    document.getElementById("awardIncome").innerText = ethers.formatUnits(data[3],18) + " MGG";
-    const list = data[4];
-    document.getElementById("teamList").innerHTML = list.length ? list.map(a=>`<div>${a}</div>`).join("") : "No Direct Team Yet";
-  }catch(e){ console.log("Dashboard error, contract may not have getUser yet", e); }
+    if(!window.ethereum){ alert("Install Metamask!"); return; }
+    provider = new ethers.BrowserProvider(window.ethereum);
+    await provider.send("eth_requestAccounts",[]);
+    signer = await provider.getSigner();
+    userAddress = await signer.getAddress();
+    document.getElementById('walletStatus').innerText = userAddress.slice(0,6)+"..."+userAddress.slice(-4)+" Connected";
+    document.getElementById('connectBtn').innerText = "CONNECTED";
+    document.getElementById('connectBtn').style.background = "linear-gradient(90deg,#00ff88,#00cc6a)";
+    document.getElementById('activeAddr').innerText = userAddress;
+    const affLink = window.location.origin + window.location.pathname + "?ref=" + userAddress;
+    document.getElementById('affLink').value = affLink;
+    try{ await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:"0xcc"}]}); }catch(e){ await window.ethereum.request({method:"wallet_addEthereumChain",params:[{chainId:"0xcc",chainName:"opBNB Mainnet",rpcUrls:["https://opbnb-mainnet-rpc.bnbchain.org"],nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18}}]}); }
+    if(CONTRACT_ADDRESS !== "0xYOUR_CONTRACT_ADDRESS"){
+      try{
+        const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
+        const level = await contract.currentLevel(userAddress);
+        const earned = await contract.totalEarnedMGG(userAddress);
+        if(level > 0){
+          document.getElementById('activeStatus').innerText = "ACTIVE - Level "+level+" - "+levelNames[level-1];
+          document.getElementById('activeStatus').style.color = "#00ff88";
+          document.getElementById('activePkg').innerText = "Current: Level "+level+" | Package: "+packagesMGG[level-1].toLocaleString()+" MGG | Earned: "+parseFloat(ethers.formatUnits(earned,18)).toFixed(0)+" MGG";
+          document.getElementById('totalInvest').innerText = packagesMGG[level-1].toLocaleString()+" MGG";
+          document.getElementById('totalEarn').innerText = parseFloat(ethers.formatUnits(earned,18)).toFixed(0)+" MGG";
+          document.getElementById('autopoolEarn').innerText = (packagesMGG[level-1]*3).toLocaleString()+" MGG";
+          document.getElementById('retopupBar').style.width = "100%";
+          document.getElementById('retopupText').innerText = "100% / 300% - ACTIVE - Loyalty Award";
+        } else {
+          document.getElementById('activeStatus').innerText = "INACTIVE - Buy Package to Activate";
+          document.getElementById('activeStatus').style.color = "#ff4444";
+        }
+      }catch(e){ document.getElementById('activeStatus').innerText = "Contract Not Deployed"; }
+    } else {
+      document.getElementById('activeStatus').innerText = "Contract Not Deployed - Deploy on Remix";
+    }
+    const token = new ethers.Contract(MGG_TOKEN, ERC20_ABI, provider);
+    const bal = await token.balanceOf(userAddress);
+    const mgg = parseFloat(ethers.formatUnits(bal,18));
+    document.getElementById('activeAddr').innerText = userAddress + "\nMGG Balance: " + mgg.toLocaleString();
+  }catch(e){ alert(e.message); }
 }
 
-async function joinPkg(level){
+function copyAffLink(){
+  const affLink = document.getElementById('affLink');
+  if(affLink.value.includes("Connect Wallet First")){ alert("Connect Wallet First!"); return; }
+  affLink.select(); document.execCommand('copy');
+  alert("Affiliate Link Copied!\n"+affLink.value);
+}
+
+function shareAffLink(){
+  const affLink = document.getElementById('affLink').value;
+  if(affLink.includes("Connect Wallet First")){ alert("Connect Wallet First!"); return; }
+  if(navigator.share){ navigator.share({title:"MGG ROKET LEGEND - Join", text:"Join MGG ROKET LEGEND - Loyalty Award 3x", url:affLink}); }
+  else { copyAffLink(); }
+}
+
+async function buyPackage(level){
+  if(!signer){ alert("CONNECT WALLET First!"); await connectWallet(); return; }
+  if(CONTRACT_ADDRESS === "0xYOUR_CONTRACT_ADDRESS"){ alert("Deploy Contract First!"); return; }
   try{
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
+    const upline = document.getElementById('upline').value || "0x0000000000000000000000000000000000000000";
+    const amountMGG = packagesMGG[level];
+    if(!confirm(`Confirm BUY?\nPackage: ${amountMGG} MGG\nLevel: ${level+1} - ${levelNames[level]}`)) return;
     const token = new ethers.Contract(MGG_TOKEN, ERC20_ABI, signer);
     const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-    const amount = ethers.parseUnits(packages[level].mgg.toString(),18);
-    const upline = document.getElementById("upline").value;
+    const amount = ethers.parseUnits(amountMGG.toString(),18);
     const tx1 = await token.approve(CONTRACT_ADDRESS, amount); await tx1.wait();
     const tx2 = await contract.join(level, upline); await tx2.wait();
-    alert("Level "+(level+1)+" Activated!");
-    const addr = await signer.getAddress(); loadDashboard(addr);
-  }catch(err){ alert(err.message); }
+    alert(`Success! Package ${level+1} - ${amountMGG} MGG - ${levelNames[level]} - ID ACTIVE!`);
+    await connectWallet();
+  }catch(err){ alert("Error: "+err.message); }
+}
+
+async function retopupPackage(level){
+  if(!signer){ alert("CONNECT WALLET First!"); await connectWallet(); return; }
+  if(CONTRACT_ADDRESS === "0xYOUR_CONTRACT_ADDRESS"){ alert("Deploy Contract First! - Retopup needs contract!"); return; }
+  try{
+    const amountMGG = packagesMGG[level];
+    if(!confirm(`Confirm RETOPUP?\nPackage: ${amountMGG} MGG\nLevel: ${level+1} - ${levelNames[level]}\nLoyalty Award 3x: ${amountMGG*3} MGG\nAuto upgraded!`)) return;
+    const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+    try{
+      const tx = await contract.retopup(level);
+      await tx.wait();
+      alert(`Retopup Success!\nPackage ${level+1} - ${amountMGG} MGG - Loyalty Award 3x: ${amountMGG*3} MGG`);
+    }catch(e){
+      const token = new ethers.Contract(MGG_TOKEN, ERC20_ABI, signer);
+      const amount = ethers.parseUnits(amountMGG.toString(),18);
+      const tx1 = await token.approve(CONTRACT_ADDRESS, amount); await tx1.wait();
+      const upline = document.getElementById('upline').value || "0x0000000000000000000000000000000000000000";
+      const tx2 = await contract.join(level, upline); await tx2.wait();
+      alert(`Retopup Success! Via Join - Package ${level+1} - ${amountMGG} MGG`);
+    }
+    await connectWallet();
+  }catch(err){ alert("Retopup Error: "+err.message); }
 }
 </script>
-</body>
-</html>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInl
