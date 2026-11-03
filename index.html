@@ -23,57 +23,81 @@
 }
 </style>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MGG ROKET LEGEND - BALANCE SHOW AFTER CONNECT</title>
+<title>MGG ROKET LEGEND - FINAL CLEAN</title>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.0/dist/ethers.umd.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;600;700&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#000000;color:#fff;font-family:Inter,sans-serif;overflow-x:hidden}
-.vip-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at top, #1a1500 0%, #000000 60%), radial-gradient(ellipse at bottom right, #001a33 0%, #000000 50%);z-index:-1}
-.header{background:linear-gradient(135deg, #000000 0%, #1a1500 50%, #000000 100%);padding:22px 20px;border-bottom:2px solid #FFD700;box-shadow:0 5px 30px #FFD70030;position:sticky;top:0;z-index:100}
-.header-inner{max-width:1300px;margin:auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px}
-.logo h1{margin:0;line-height:1;font-family:Cinzel}
-.logo .big{font-size:44px;font-weight:900;color:#FFD700;letter-spacing:6px;display:block;text-shadow:0 0 20px #FFD700, 0 0 40px #FFD70050}
-.logo .small{font-size:7px;letter-spacing:14px;opacity:0.7;color:#FFD700;display:block;margin-top:4px;font-weight:600}
-.btn-vip{padding:12px 28px;background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;font-weight:900;border:none;border-radius:25px;cursor:pointer;font-family:Orbitron;font-size:12px;box-shadow:0 0 20px #FFD70060;letter-spacing:1px;transition:0.3s}
-.container{max-width:1300px;margin:auto;padding:20px}
-.vip-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin:25px 0}
-.vip-card{background:linear-gradient(145deg,#1a1500,#0f0f0f);border:1px solid #FFD70040;border-radius:18px;padding:22px;position:relative;overflow:hidden}
-.vip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#FFD700,#FFA500,#FFD700)}
-.vip-card h3{font-size:10px;opacity:0.8;margin:0 0 12px 0;letter-spacing:1.5px;font-family:Orbitron;color:#FFD700}
-.vip-card b{font-size:30px;color:#FFD700;display:block;font-family:Cinzel;font-weight:900;text-shadow:0 0 10px #FFD70050;margin-bottom:6px}
-.vip-card span{font-size:11px;opacity:0.6}
-.vip-card.total{border-color:#FFD70080;box-shadow:0 0 25px #FFD70020}
-.vip-card.affiliate{border-color:#00ff8860;box-shadow:0 0 25px #00ff8815}
-.vip-card.loyalty{border-color:#ff44ff60;box-shadow:0 0 25px #ff44ff15}
-.vip-card.community{border-color:#00d4ff60;box-shadow:0 0 25px #00d4ff15}
-.vip-wallets{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin:25px 0}
-.vip-wallet{background:linear-gradient(145deg,#0f0f0f,#1a1500);border:1px solid #FFD70030;border-radius:16px;padding:18px}
-.vip-wallet.vip-income{border:2px solid #FFD700;box-shadow:0 0 25px #FFD70020}
-.vip-wallet.vip-active{border:2px solid #00ff88;box-shadow:0 0 25px #00ff8820}
-.vip-wallet.vip-aff{border:2px solid #ff44ff;box-shadow:0 0 25px #ff44ff20;background:linear-gradient(145deg,#1a0033,#0f0f0f)}
-.vip-wallet h4{font-family:Orbitron;color:#FFD700;font-size:11px;margin:0 0 12px 0;letter-spacing:1px}
-.vip-wallet .addr{font-size:11px;word-break:break-all;background:#000000;padding:10px;border-radius:8px;border:1px solid #FFD70020;margin-top:8px;color:#FFD700}
-.balance-box{background:linear-gradient(145deg,#001a00,#000000);border:1px solid #00ff8840;border-radius:12px;padding:12px;margin-top:12px}
-.balance-box .bal-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #00ff8815}
+*{box-sizing:border-box}
+body{margin:0;background:#0a0e27;color:#ffffff;font-family:Inter,sans-serif;overflow-x:hidden}
+.vip-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at top left, #1a1f3d 0%, #0a0e27 40%), radial-gradient(ellipse at bottom right, #2d1b69 0%, #0a0e27 50%), radial-gradient(ellipse at top right, #0f3460 0%, transparent 50%);z-index:-1}
+.header{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 20px 18px 20px;position:sticky;top:0;z-index:100;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#6c5ce7,#00cec9,#0984e3,#6c5ce7)}
+.header-inner{max-width:1300px;margin:auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.logo h1{margin:0;line-height:1;font-family:Space Grotesk}
+.logo .big{font-size:36px;font-weight:700;color:#ffffff;letter-spacing:4px;display:block;line-height:0.9;background:linear-gradient(90deg,#ffffff,#a29bfe);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo .small{font-size:7px;letter-spacing:12px;opacity:0.6;color:#a29bfe;display:block;margin-top:4px;font-weight:500}
+.wallet-wrap{display:flex;gap:12px;align-items:center;flex-wrap:wrap;transform:translateY(-4px);margin-top:4px}
+.btn-vip{padding:11px 24px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff;font-weight:600;border:none;border-radius:12px;cursor:pointer;font-family:Inter;font-size:11px;box-shadow:0 8px 20px rgba(108,92,231,0.3);letter-spacing:0.5px;transition:0.3s}
+.container{max-width:1300px;margin:auto;padding:16px}
+.vip-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:16px 0}
+.vip-card{background:rgba(255,255,255,0.06);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:14px;position:relative;overflow:hidden;transition:0.3s}
+.vip-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.15);box-shadow:0 12px 32px rgba(0,0,0,0.2)}
+.vip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)}
+.vip-card h3{font-size:8px;opacity:0.8;margin:0 0 8px 0;letter-spacing:1.2px;font-family:Inter;color:rgba(255,255,255,0.7);font-weight:600;text-transform:uppercase}
+.vip-card b{font-size:20px;color:#ffffff;display:block;font-family:Space Grotesk;font-weight:700;margin-bottom:6px;letter-spacing:0.5px}
+.vip-card span{font-size:8px;opacity:0.6;color:rgba(255,255,255,0.6)}
+.vip-card.total{border-color:rgba(108,92,231,0.3);background:linear-gradient(135deg,rgba(108,92,231,0.15),rgba(162,155,254,0.08))}
+.vip-card.total b{color:#a29bfe}
+.vip-card.aff{border-color:rgba(0,206,201,0.3);background:linear-gradient(135deg,rgba(0,206,201,0.12),rgba(129,236,236,0.06))}
+.vip-card.aff b{color:#81ecec}
+.vip-card.community{border-color:rgba(9,132,227,0.3);background:linear-gradient(135deg,rgba(9,132,227,0.12),rgba(116,185,255,0.06))}
+.vip-card.community b{color:#74b9ff}
+.vip-card.loyalty{border-color:rgba(0,184,148,0.3);background:linear-gradient(135deg,rgba(0,184,148,0.12),rgba(85,239,196,0.06))}
+.vip-card.loyalty b{color:#55efc4}
+.vip-wallets{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin:16px 0}
+.vip-wallet{background:rgba(255,255,255,0.05);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px}
+.vip-wallet h4{font-family:Inter;color:rgba(255,255,255,0.7);font-size:9px;margin:0 0 10px 0;letter-spacing:1px;font-weight:600;text-transform:uppercase}
+.vip-wallet .addr{font-size:10px;word-break:break-all;background:rgba(0,0,0,0.3);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);margin-top:8px;color:#a29bfe}
+.balance-box{background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px;margin-top:10px}
+.balance-box .bal-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
 .balance-box .bal-row:last-child{border:none}
-.balance-box .bal-label{font-size:10px;opacity:0.7;color:#00ff88;font-family:Orbitron}
-.balance-box .bal-value{font-size:13px;font-weight:900;color:#FFD700;font-family:Cinzel}
-.vip-packages{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;margin:25px 0}
-.vip-pkg{background:linear-gradient(145deg,#1a1500,#000000);border:1px solid #FFD70030;border-radius:18px;padding:20px;position:relative;overflow:hidden;transition:0.3s;opacity:0.6}
-.vip-pkg.unlocked{opacity:1;border-color:#FFD70060;box-shadow:0 5px 20px #FFD70015}
-.vip-pkg.unlocked:hover{border-color:#FFD70080;box-shadow:0 10px 30px #FFD70020;transform:translateY(-4px)}
-.vip-pkg.vip-active{border:2px solid #00ff88;box-shadow:0 0 30px #00ff8840;opacity:1}
-.vip-pkg.locked{opacity:0.35;pointer-events:none;filter:grayscale(0.5)}
-.vip-pkg::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#FFD700,#FFA500)}
-.vip-level{position:absolute;top:12px;right:12px;background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;font-size:8px;padding:5px 10px;border-radius:12px;font-family:Orbitron;font-weight:900}
-.vip-pkg h3{font-family:Cinzel;color:#FFD700;font-size:16px;margin:0 0 5px 0}
-.vip-pkg .vip-price{font-size:11px;opacity:0.7;margin:8px 0;line-height:1.7;color:#FFD70080}
-.vip-details{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:10px;background:#00000080;padding:12px;border-radius:10px;margin:12px 0;border:1px solid #FFD70015}
-.vip-details span{color:#FFD700;font-weight:700;font-size:11px}
-.btn-vip-buy{width:100%;padding:12px;background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;font-weight:900;border:none;border-radius:10px;cursor:pointer;font-family:Orbitron;font-size:11px;letter-spacing:0.5px;box-shadow:0 0 15px #FFD70040;margin-top:8px;transition:0.3s}
-.btn-retopup{width:100%;padding:12px;background:linear-gradient(90deg,#00ff88,#00cc6a);color:#000;font-weight:900;border:none;border-radius:10px;cursor:pointer;font-family:Orbitron;font-size:11px;letter-spacing:0.5px;box-shadow:0 0 15px #00ff8840;margin-top:8px;transition:0.3s}
-.btn-group{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-input.vip-input{width:100%;padding:12px;background:#000000;color:#FFD700;border:1px solid #FFD70040;border-radius:10px;font-size:11px;box-sizing:border-box}
+.balance-box .bal-label{font-size:8px;opacity:0.6;color:rgba(255,255,255,0.6);font-family:Inter;font-weight:500}
+.balance-box .bal-value{font-size:11px;font-weight:600;color:#ffffff;font-family:Space Grotesk}
+.btn-withdraw{width:100%;padding:10px;background:linear-gradient(135deg,#00b894,#55efc4);color:#0a0e27;font-weight:600;border:none;border-radius:10px;cursor:pointer;font-family:Inter;font-size:8px;letter-spacing:0.5px;box-shadow:0 6px 16px rgba(0,184,148,0.25);margin-top:8px;transition:0.3s}
+.btn-withdraw.blue{background:linear-gradient(135deg,#0984e3,#74b9ff);color:#fff;box-shadow:0 6px 16px rgba(9,132,227,0.25)}
+.btn-withdraw:disabled{background:rgba(255,255,255,0.06)!important;color:rgba(255,255,255,0.3)!important;box-shadow:none!important;cursor:not-allowed;border:1px solid rgba(255,255,255,0.06)}
+.vip-packages{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin:16px 0}
+.vip-pkg{background:rgba(255,255,255,0.04);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px;position:relative;overflow:hidden;transition:0.3s;opacity:0.5}
+.vip-pkg.unlocked{opacity:1;border-color:rgba(255,255,255,0.12);box-shadow:0 8px 24px rgba(0,0,0,0.15)}
+.vip-pkg.vip-active{border:1.5px solid rgba(108,92,231,0.4);box-shadow:0 0 24px rgba(108,92,231,0.15);opacity:1;background:linear-gradient(135deg,rgba(108,92,231,0.08),rgba(255,255,255,0.03))}
+.vip-pkg.locked{opacity:0.3;pointer-events:none;filter:grayscale(0.3)}
+.vip-pkg::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#6c5ce7,transparent)}
+.vip-level{position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.8);font-size:6px;padding:4px 8px;border-radius:20px;font-family:Inter;font-weight:600;border:1px solid rgba(255,255,255,0.1)}
+.vip-pkg h3{font-family:Space Grotesk;color:#ffffff;font-size:14px;margin:0 0 4px 0;font-weight:600}
+.vip-pkg .vip-price{font-size:8px;opacity:0.6;margin:6px 0;line-height:1.6;color:rgba(255,255,255,0.6)}
+.vip-details{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:8px;background:rgba(0,0,0,0.2);padding:10px;border-radius:8px;margin:10px 0;border:1px solid rgba(255,255,255,0.05)}
+.vip-details span{color:#ffffff;font-weight:600;font-size:9px}
+.btn-vip-buy{width:100%;padding:10px;background:rgba(255,255,255,0.08);color:#fff;font-weight:600;border:1px solid rgba(255,255,255,0.12);border-radius:10px;cursor:pointer;font-family:Inter;font-size:8px;letter-spacing:0.5px;transition:0.3s;backdrop-filter:blur(10px)}
+.btn-vip-buy:hover{background:rgba(255,255,255,0.12);transform:translateY(-1px)}
+.btn-vip-retopup{width:100%;padding:10px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff;font-weight:600;border:none;border-radius:10px;cursor:pointer;font-family:Inter;font-size:8px;letter-spacing:0.3px;box-shadow:0 6px 16px rgba(108,92,231,0.25);transition:0.3s}
+.btn-vip-retopup:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(108,92,231,0.35)}
+.btn-vip-retopup:disabled{background:rgba(255,255,255,0.06)!important;color:rgba(255,255,255,0.3)!important;box-shadow:none!important;cursor:not-allowed;border:1px solid rgba(255,255,255,0.06)}
+.btn-group-side{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+input.vip-input{width:100%;padding:10px;background:rgba(0,0,0,0.3);color:#ffffff;border:1px solid rgba(255,255,255,0.1);border-radius:10px;font-size:10px;box-sizing:border-box;font-family:Inter}
+.affiliate-list{background:rgba(255,255,255,0.04);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;margin:16px 0}
+.affiliate-list h4{font-family:Inter;color:rgba(255,255,255,0.7);font-size:9px;margin:0 0 12px 0;letter-spacing:1px;font-weight:600;text-transform:uppercase}
+.aff-table{width:100%;border-collapse:collapse;margin-top:8px}
+.aff-table th{font-family:Inter;font-size:7px;color:rgba(255,255,255,0.5);text-align:left;padding:8px;background:rgba(0,0,0,0.2);border-bottom:1px solid rgba(255,255,255,0.06);font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.aff-table td{font-size:9px;padding:8px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(255,255,255,0.8)}
+@media (max-width:768px){
+.header{padding:10px 14px 16px 14px}
+.logo .big{font-size:28px;letter-spacing:3px}
+.wallet-wrap{transform:translateY(-4px);margin-top:4px;width:100%;justify-content:space-between}
+.btn-vip{padding:9px 14px;font-size:9px}
+.vip-stats{grid-template-columns:1fr 1fr;gap:8px}
+.vip-card{padding:12px}
+.vip-card b{font-size:18px}
+}
 </style>
 </head>
 <body>
@@ -84,8 +108,8 @@ input.vip-input{width:100%;padding:12px;background:#000000;color:#FFD700;border:
 <div class="logo">
 <h1><span class="big">MGG ROKET</span><span class="small">LEGEND</span></h1>
 </div>
-<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-<span id="walletStatus" style="font-size:10px;opacity:0.7;color:#FFD700">Not Connected</span>
+<div class="wallet-wrap">
+<span id="walletStatus" style="font-size:9px;opacity:0.7;color:rgba(255,255,255,0.7);font-family:Inter">Not Connected</span>
 <button id="connectBtn" onclick="connectWallet()" class="btn-vip">CONNECT WALLET</button>
 </div>
 </div>
@@ -95,85 +119,95 @@ input.vip-input{width:100%;padding:12px;background:#000000;color:#FFD700;border:
 
 <div class="vip-stats">
 <div class="vip-card total">
-<h3>TOTAL AWARDS</h3>
-<b id="totalAwards">0 MGG</b>
-<span>Total Awards - Affiliate + Loyalty + Community</span>
-<div style="background:#000;height:6px;border-radius:3px;margin:10px 0;overflow:hidden"><div id="totalBar" style="height:100%;background:linear-gradient(90deg,#FFD700,#FFA500);width:0%;border-radius:3px"></div></div>
-<span id="totalText" style="font-size:9px">Your Total Earnings</span>
+<h3>Total Award</h3>
+<b id="totalAward">0 MGG</b>
+<span>Total Award</span>
+<div style="margin-top:8px;font-size:7px;background:rgba(0,0,0,0.2);padding:6px;border-radius:6px;border:1px solid rgba(255,255,255,0.05)">
+<div style="display:flex;justify-content:space-between;padding:2px 0"><span>Aff:</span><span id="totalAff" style="color:#a29bfe">0</span></div>
+<div style="display:flex;justify-content:space-between;padding:2px 0"><span>Com:</span><span id="totalCommunity" style="color:#74b9ff">0</span></div>
+<div style="display:flex;justify-content:space-between;padding:2px 0"><span>Loy:</span><span id="totalLoyalty" style="color:#55efc4">0</span></div>
 </div>
-<div class="vip-card affiliate">
-<h3>AFFILIATE AWARD</h3>
+</div>
+
+<div class="vip-card aff">
+<h3>Affiliate Award</h3>
 <b id="affiliateAward">0 MGG</b>
-<span>Affiliate Award - 20% Direct Income</span>
-<div style="margin-top:10px;font-size:10px"><span style="color:#00ff88">Team:</span> <span id="affTeamCount">0</span> Members</div>
+<span>Affiliate - 20%</span>
+<div style="margin-top:8px;font-size:8px">Team: <span id="affTeamCount" style="color:#81ecec">0</span></div>
+<div style="background:rgba(0,0,0,0.3);height:4px;border-radius:2px;margin-top:6px;overflow:hidden"><div id="affBar" style="height:100%;background:linear-gradient(90deg,#00cec9,#81ecec);width:0%"></div></div>
 </div>
-<div class="vip-card loyalty">
-<h3>LOYALTY AWARD</h3>
-<b id="loyaltyAward">0 MGG</b>
-<span>Loyalty Award - Autopool 3x Award</span>
-<div style="background:#000;height:6px;border-radius:3px;margin:10px 0;overflow:hidden"><div id="loyaltyBar" style="height:100%;background:linear-gradient(90deg,#ff44ff,#ff00ff);width:0%;border-radius:3px"></div></div>
-<span id="loyaltyText" style="font-size:9px">0% / 300% - Loyalty Progress</span>
-</div>
+
 <div class="vip-card community">
-<h3>AFFILIATE COMMUNITY AWARD</h3>
+<h3>Community Award</h3>
 <b id="communityAward">0 MGG</b>
-<span>Community Award - Community Bonus</span>
-<div style="margin-top:10px;font-size:10px"><span style="color:#00d4ff">Need:</span> <span id="communityNeed">0</span> For Next Level</div>
+<span>Community - HOLD</span>
+<div style="margin-top:6px;font-size:7px">HOLD: <span id="communityHold" style="color:#74b9ff">0 HOLD</span> | Req: <span id="communityReq">0</span></div>
+<div style="background:rgba(0,0,0,0.3);height:4px;border-radius:2px;margin-top:6px;overflow:hidden"><div id="communityBar" style="height:100%;background:linear-gradient(90deg,#0984e3,#74b9ff);width:0%"></div></div>
+<div id="communityStatus" style="font-size:7px;margin-top:6px;color:#74b9ff;text-align:center">Community</div>
 </div>
+
+<div class="vip-card loyalty">
+<h3>Loyalty Award</h3>
+<b id="loyaltyAward">0 MGG</b>
+<span>Loyalty - 300%</span>
+<div style="margin-top:6px;font-size:7px">Progress: <span id="loyaltyProgress" style="color:#55efc4">0%</span></div>
+<div style="background:rgba(0,0,0,0.3);height:5px;border-radius:2px;margin-top:6px;overflow:hidden"><div id="loyaltyBar" style="height:100%;background:linear-gradient(90deg,#00b894,#55efc4);width:0%"></div></div>
+<div id="loyaltyStatus" style="font-size:6px;margin-top:6px;color:#55efc4;text-align:center">Retopup</div>
+</div>
+</div>
+
+<div class="affiliate-list">
+<h4>Affiliate List</h4>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<span style="font-size:9px;opacity:0.6">Total: <span id="affListCount" style="color:#a29bfe;font-weight:700">0</span></span>
+<span style="font-size:7px;opacity:0.4">List</span>
+</div>
+<table class="aff-table">
+<thead>
+<tr><th>#</th><th>WALLET</th><th>LEVEL</th><th>PKG</th><th>JOINED</th></tr>
+</thead>
+<tbody id="affiliateTableBody">
+<tr><td colspan="5" style="text-align:center;padding:16px;opacity:0.4;font-size:8px">No Affiliates - Share Link</td></tr>
+</tbody>
+</table>
 </div>
 
 <div class="vip-wallets">
-<div class="vip-wallet vip-income">
-<h4>INCOME WALLET - CREATOR WALLET</h4>
-<div style="font-size:10px;opacity:0.6">All Funds - Zero Balance - Treasury</div>
+<div class="vip-wallet">
+<h4>Income Wallet</h4>
 <div class="addr">0x332B34D1f611F285a3334BF052f9E163E5733daa</div>
-<div style="margin-top:10px;font-size:10px"><span style="color:#FFD700">Token:</span> 0x7bAFE...B39D | <span style="color:#FFD700">Chain:</span> opBNB 204</div>
 </div>
 
-<div class="vip-wallet vip-active">
-<h4>ACTIVE WALLET / ID STATUS</h4>
-<div style="font-size:10px;opacity:0.6">Your Wallet Status - Buy from Package 1 Onwards</div>
-<div id="activeAddr" class="addr" style="color:#00ff88;border-color:#00ff8840">Not Connected - Connect Wallet</div>
-
-<!-- BALANCE SHOW AFTER CONNECT - NEW -->
+<div class="vip-wallet">
+<h4>Active Wallet</h4>
+<div id="activeAddr" class="addr" style="color:#a29bfe">Not Connected</div>
 <div id="balanceDisplay" class="balance-box" style="display:none">
-<div class="bal-row">
-<span class="bal-label">MGG BALANCE</span>
-<span class="bal-value" id="mggBal">0 MGG</span>
+<div class="bal-row"><span class="bal-label">MGG</span><span class="bal-value" id="mggBal">0 MGG</span></div>
+<div class="bal-row"><span class="bal-label">BNB</span><span class="bal-value" id="bnbBal">0 BNB</span></div>
+<div class="bal-row"><span class="bal-label">TOTAL</span><span class="bal-value" id="totalAwardBal">0 MGG</span></div>
 </div>
-<div class="bal-row">
-<span class="bal-label">BNB BALANCE (GAS)</span>
-<span class="bal-value" id="bnbBal">0 BNB</span>
-</div>
-<div class="bal-row">
-<span class="bal-label">ID WALLET HOLD</span>
-<span class="bal-value" id="holdBal" style="color:#00ff88">0 MGG HOLD</span>
+<div style="margin-top:10px">
+<div style="font-size:11px;font-weight:700;font-family:Space Grotesk" id="activeStatus">INACTIVE</div>
+<div style="font-size:8px;opacity:0.5;margin-top:3px" id="activePkg">Buy Package 1 - 1000 MGG</div>
 </div>
 </div>
 
-<div style="margin-top:12px">
-<div style="font-size:14px;font-weight:900;font-family:Orbitron" id="activeStatus">INACTIVE</div>
-<div style="font-size:10px;opacity:0.6;margin-top:4px" id="activePkg">Current Package: None | Buy Package 1 First</div>
-</div>
-</div>
-
-<div class="vip-wallet vip-aff">
-<h4>AFFILIATE LINK - REFERRAL LINK</h4>
-<div style="font-size:10px;opacity:0.6">Share Link - 20% Affiliate Income</div>
-<input id="affLink" class="vip-input" value="Connect Wallet First" readonly style="margin-top:10px;border-color:#ff44ff40">
-<div style="display:flex;gap:8px;margin-top:10px">
-<button onclick="copyAffLink()" class="btn-vip" style="flex:1;background:linear-gradient(90deg,#ff44ff,#ff00ff)">COPY LINK</button>
-<button onclick="shareAffLink()" class="btn-vip" style="flex:1;background:transparent;color:#FFD700;border:2px solid #FFD700">SHARE LINK</button>
+<div class="vip-wallet">
+<h4>Affiliate Link</h4>
+<input id="affLink" class="vip-input" value="Connect Wallet First" readonly style="margin-top:8px">
+<div style="display:flex;gap:8px;margin-top:8px">
+<button onclick="copyAffLink()" class="btn-vip" style="flex:1;background:linear-gradient(135deg,#6c5ce7,#a29bfe);padding:9px;font-size:8px">COPY</button>
+<button onclick="shareAffLink()" class="btn-vip" style="flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:9px;font-size:8px">SHARE</button>
 </div>
 </div>
 </div>
 
-<div class="vip-wallet" style="margin:20px 0">
-<h4>UPLINE WALLET - REFERRAL WALLET</h4>
-<input id="upline" class="vip-input" value="0x332B34D1f611F285a3334BF052f9E163E5733daa" placeholder="Upline Wallet">
+<div class="vip-wallet" style="margin:14px 0">
+<h4>Upline Wallet</h4>
+<input id="upline" class="vip-input" value="0x332B34D1f611F285a3334BF052f9E163E5733daa">
 </div>
 
-<h3 style="font-family:Cinzel;color:#FFD700;font-size:18px;margin:30px 0 15px 0;letter-spacing:2px;text-shadow:0 0 15px #FFD70050">PACKAGES - BUY FROM PACKAGE 1 ONWARDS</h3>
+<h3 style="font-family:Space Grotesk;color:#ffffff;font-size:12px;margin:20px 0 12px 0;letter-spacing:0.5px;font-weight:600;opacity:0.9">PACKAGES - NO CONDITION - 1 THEN 2</h3>
 <div class="vip-packages" id="vipPackages"></div>
 
 </div>
@@ -186,133 +220,77 @@ const communityBonus = [100,500,1000,2000,5000,10000,30000,50000,100000,300000,6
 const affCommunity = [0,1,2,3,5,10,20,30,40,50,60,70];
 const levelNames = ["BRONZE","SILVER","GOLD","PLATINUM","DIAMOND","RUBY","EMERALD","SAPPHIRE","CROWN","LEGEND","MYTHIC","GOD"];
 
-let provider, signer, userAddress, currentUserLevel = 0;
+let provider, signer, userAddress, currentUserLevel = 0, currentAffCount = 0, currentHold = 0, currentPercent = 0, currentPkg = 0;
 const ERC20_ABI = ["function approve(address,uint256) returns (bool)", "function balanceOf(address) view returns (uint256)"];
-const CONTRACT_ABI = ["function join(uint8,address) external", "function retopup(uint8) external", "function currentLevel(address) view returns (uint256)", "function totalEarnedMGG(address) view returns (uint256)", "function affiliateCount(address) view returns (uint256)", "function getUserInfo(address) view returns (uint8,address,uint256,uint256,uint256,uint256)"];
+const CONTRACT_ABI = ["function join(uint8,address) external", "function withdrawalAfter300() external", "function retopupSamePackageManual() external", "function withdrawCommunityReward() external", "function currentLevel(address) view returns (uint256)", "function getUserInfo(address) view returns (uint8,uint256,uint256,uint256,uint256,uint256)"];
 
 window.addEventListener('load', ()=>{
   const urlParams = new URLSearchParams(window.location.search);
   const ref = urlParams.get('ref');
   if(ref && ref.startsWith('0x')){ document.getElementById('upline').value = ref; }
   renderPackages();
+  if(window.ethereum){
+    window.ethereum.on('accountsChanged', (accounts)=>{ if(accounts.length > 0){ connectWallet(); } else { location.reload(); } });
+    window.ethereum.on('chainChanged', ()=>{ location.reload(); });
+  }
 });
 
 function renderPackages(){
   const grid = document.getElementById('vipPackages');
   grid.innerHTML = packagesMGG.map((m,i)=>{
     const aff = Math.floor(m*0.2);
-    const retopup = m*3;
     const bonus = communityBonus[i];
     const community = affCommunity[i];
     const isUnlocked = i <= currentUserLevel;
     const isActive = i < currentUserLevel;
     const isNext = i === currentUserLevel;
+    const isCurrent = i === currentUserLevel - 1;
     const statusClass = isActive ? 'vip-active' : (isNext ? 'unlocked' : 'locked');
-    const btnText = isActive ? `ACTIVE` : (isNext ? `BUY ${m.toLocaleString()} MGG` : `LOCKED`);
-    const retopupBtnText = isActive ? `RETOPUP` : `LOCKED`;
-    return `<div class="vip-pkg ${statusClass}" id="vipPkg${i}">
+    
+    const needAff = community;
+    const communityQualified = isCurrent && currentAffCount >= needAff && currentHold >= bonus;
+    const loyaltyQualified = isCurrent && currentPercent >= 100;
+    
+    return `<div class="vip-pkg ${statusClass}">
       <div class="vip-level">${levelNames[i]} ${isActive ? 'ACTIVE' : (isNext ? 'NEXT' : 'LOCKED')}</div>
-      <h3>LEVEL ${i+1} - ${m.toLocaleString()} MGG</h3>
-      <div class="vip-price">Self Packages: ${m.toLocaleString()} MGG<br>Affiliate: ${aff.toLocaleString()} MGG (20%)<br>Loyalty Award 3x: ${retopup.toLocaleString()} MGG<br>Affiliate Community: ${community} | Community Bonus: ${bonus.toLocaleString()} MGG<br><span style="color:${isNext?'#00ff88':'#ff4444'}">${isNext?'UNLOCKED - Can Buy Now':(isActive?'BOUGHT':'LOCKED')}</span></div>
-      <div class="vip-details"><div>Affiliate: <span>${aff.toLocaleString()}</span></div><div>Loyalty: <span>${retopup.toLocaleString()}</span></div><div>Community: <span>${community}</span></div><div>Bonus: <span>${bonus.toLocaleString()}</span></div></div>
-      <div class="btn-group">
-        <button onclick="buyPackage(${i})" class="btn-vip-buy" ${!isNext ? 'disabled style="background:#333;color:#666"' : ''}>${btnText}</button>
-        <button onclick="retopupPackage(${i})" class="btn-retopup" ${!isActive ? 'disabled style="background:#333;color:#666"' : ''}>${retopupBtnText}</button>
+      <h3>LEVEL ${i+1} - ${m.toLocaleString()}</h3>
+      <div class="vip-price">
+        Package: ${m.toLocaleString()} MGG | Affiliate: ${aff.toLocaleString()} MGG<br>
+        Community: ${bonus.toLocaleString()} MGG | Need: ${community}<br>
+        Loyalty: Retopup
       </div>
-      ${isNext ? `<div style="font-size:8px;color:#00ff88;margin-top:6px;text-align:center">NEXT PACKAGE</div>` : ''}
-      ${!isNext && !isActive ? `<div style="font-size:8px;color:#ff4444;margin-top:6px;text-align:center">Buy Package ${currentUserLevel+1} First</div>` : ''}
+      <div class="vip-details">
+        <div>Community: <span>${bonus.toLocaleString()}</span></div>
+        <div>Need: <span>${community}</span></div>
+        <div>Loyalty: <span>Retopup</span></div>
+        <div>Type: <span>No Condition</span></div>
+      </div>
+      
+      ${isCurrent ? `
+        <div style="background:rgba(9,132,227,0.08);border:1px solid rgba(9,132,227,0.15);border-radius:8px;padding:8px;margin:8px 0">
+          <div style="font-size:6px;color:#74b9ff;font-family:Inter;margin-bottom:6px;letter-spacing:0.5px">COMMUNITY - QUALIFIED THEN BUTTON ON</div>
+          <button onclick="withdrawCommunityOnPackage(${i})" class="btn-withdraw blue" ${communityQualified ? '' : 'disabled'} style="margin-top:0;font-size:7px;padding:9px">
+            ${communityQualified ? `WITHDRAWAL - ${bonus.toLocaleString()} - QUALIFIED - ON` : `NEED ${needAff} AFF - LOCKED`}
+          </button>
+        </div>
+      ` : ''}
+      
+      <div class="btn-group-side">
+        <button onclick="buyPackage(${i})" class="btn-vip-buy" ${!isNext ? 'disabled style="background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.2)"' : ''}>${isActive?'ACTIVE':(isNext?'BUY '+m.toLocaleString():'LOCKED')}</button>
+        <button onclick="loyaltyRetopupOnPackage(${i})" class="btn-vip-retopup" ${loyaltyQualified ? '' : 'disabled'}>${loyaltyQualified ? 'RETOPUP' : 'RETOPUP LOCKED'}</button>
+      </div>
+      <div style="font-size:6px;color:rgba(255,255,255,0.4);margin-top:6px;text-align:center">1 Package Buy Then 2 - No Condition</div>
     </div>`;
   }).join("");
 }
 
 async function connectWallet(){
   try{
-    if(!window.ethereum){ alert("Install Metamask!"); return; }
+    if(!window.ethereum){ alert("Install Metamask"); return; }
+    document.getElementById('connectBtn').innerText = "CONNECTING...";
     provider = new ethers.BrowserProvider(window.ethereum);
     await provider.send("eth_requestAccounts",[]);
     signer = await provider.getSigner();
     userAddress = await signer.getAddress();
-    document.getElementById('walletStatus').innerText = userAddress.slice(0,6)+"..."+userAddress.slice(-4)+" Connected";
-    document.getElementById('connectBtn').innerText = "CONNECTED";
-    document.getElementById('connectBtn').style.background = "linear-gradient(90deg,#00ff88,#00cc6a)";
-    document.getElementById('activeAddr').innerText = userAddress;
-    const affLink = window.location.origin + window.location.pathname + "?ref=" + userAddress;
-    document.getElementById('affLink').value = affLink;
-    try{ await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:"0xcc"}]}); }catch(e){ await window.ethereum.request({method:"wallet_addEthereumChain",params:[{chainId:"0xcc",chainName:"opBNB Mainnet",rpcUrls:["https://opbnb-mainnet-rpc.bnbchain.org"],nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18}}]}); }
-    
-    // BALANCE SHOW AFTER CONNECT - NEW FEATURE
-    try{
-      const token = new ethers.Contract(MGG_TOKEN, ERC20_ABI, provider);
-      const mggBalRaw = await token.balanceOf(userAddress);
-      const mggBal = parseFloat(ethers.formatUnits(mggBalRaw,18));
-      
-      const bnbBalRaw = await provider.getBalance(userAddress);
-      const bnbBal = parseFloat(ethers.formatUnits(bnbBalRaw,18));
-      
-      // Show balance box
-      document.getElementById('balanceDisplay').style.display = "block";
-      document.getElementById('mggBal').innerText = mggBal.toLocaleString() + " MGG";
-      document.getElementById('bnbBal').innerText = bnbBal.toFixed(4) + " BNB";
-      document.getElementById('holdBal').innerText = "0 MGG HOLD";
-      
-      // Color coding for low balance
-      if(mggBal < 1000){
-        document.getElementById('mggBal').style.color = "#ff4444";
-      } else {
-        document.getElementById('mggBal').style.color = "#FFD700";
-      }
-      
-      if(bnbBal < 0.001){
-        document.getElementById('bnbBal').style.color = "#ff4444";
-        document.getElementById('bnbBal').innerText = bnbBal.toFixed(6) + " BNB - Low Gas!";
-      }
-      
-    }catch(e){
-      console.log("Balance fetch error", e);
-    }
-    
-    if(CONTRACT_ADDRESS !== "0xYOUR_CONTRACT_ADDRESS"){
-      try{
-        const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
-        const userInfo = await contract.getUserInfo(userAddress);
-        const level = Number(userInfo[0]);
-        const earned = userInfo[2];
-        const affCount = userInfo[4];
-        const loyaltyClaimed = userInfo[5];
-        const invested = userInfo[3];
-        currentUserLevel = level;
-        const totalEarned = parseFloat(ethers.formatUnits(earned,18));
-        const affiliateEarn = Math.max(0, totalEarned - parseFloat(ethers.formatUnits(loyaltyClaimed,18)));
-        const loyaltyEarn = parseFloat(ethers.formatUnits(loyaltyClaimed,18));
-        const totalInvested = parseFloat(ethers.formatUnits(invested,18));
-        
-        if(level > 0){
-          const currentPkg = packagesMGG[level-1];
-          const loyaltyTarget = currentPkg*3;
-          const communityBonusEarn = communityBonus[level-1];
-          
-          document.getElementById('activeStatus').innerText = "ACTIVE - Level "+level+" - "+levelNames[level-1];
-          document.getElementById('activeStatus').style.color = "#00ff88";
-          document.getElementById('activePkg').innerText = "Current: Level "+level+" | Package: "+currentPkg.toLocaleString()+" MGG | Earned: "+totalEarned.toFixed(0)+" MGG";
-          
-          document.getElementById('totalAwards').innerText = totalEarned.toFixed(0)+" MGG";
-          document.getElementById('totalBar').style.width = Math.min(100, (totalEarned / loyaltyTarget * 100)) + "%";
-          document.getElementById('totalText').innerText = totalEarned.toFixed(0)+" / "+loyaltyTarget.toLocaleString()+" Total";
-          
-          document.getElementById('affiliateAward').innerText = affiliateEarn.toFixed(0)+" MGG";
-          document.getElementById('affTeamCount').innerText = affCount.toString();
-          
-          document.getElementById('loyaltyAward').innerText = loyaltyEarn.toFixed(0)+" MGG";
-          document.getElementById('loyaltyBar').style.width = Math.min(100, (loyaltyEarn / loyaltyTarget * 100)) + "%";
-          document.getElementById('loyaltyText').innerText = loyaltyEarn.toFixed(0)+" / "+loyaltyTarget.toLocaleString();
-          
-          document.getElementById('communityAward').innerText = (affCount >= affCommunity[level-1] ? communityBonusEarn.toLocaleString() : "0")+" MGG";
-          document.getElementById('communityNeed').innerText = level < 12 ? affCommunity[level]+" For Level "+(level+1) : "Max Level";
-          
-          // Update HOLD balance
-          document.getElementById('holdBal').innerText = totalInvested.toLocaleString() + " MGG HOLD";
-          
-        } else {
-          document.getElementById('activeStatus').innerText = "INACTIVE - Buy Package 1 First";
-          document.getElementById('activeStatus').style.color = "#ff4444";
-          document.getElementById('activeP
+    document.getElementById('walletStatus').innerText = userAddress.slice(0,6)+"..."+userAddress.slice(-4);
+    document.getElementById('connectBtn').
