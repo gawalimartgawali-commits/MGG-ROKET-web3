@@ -22,14 +22,15 @@
   font-family: "Optimistic Mono", ui-monospace, monospace;
 }
 </style>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MGG ROKET LEGEND - FINAL CLEAN</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<title>MGG ROKET LEGEND - SCROLL WALLET FIX</title>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.0/dist/ethers.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#0a0e27;color:#ffffff;font-family:Inter,sans-serif;overflow-x:hidden}
-.vip-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at top left, #1a1f3d 0%, #0a0e27 40%), radial-gradient(ellipse at bottom right, #2d1b69 0%, #0a0e27 50%), radial-gradient(ellipse at top right, #0f3460 0%, transparent 50%);z-index:-1}
+html{overflow-y:auto;overflow-x:hidden;height:auto;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+body{margin:0;background:#0a0e27;color:#ffffff;font-family:Inter,sans-serif;overflow-y:auto;overflow-x:hidden;height:auto;min-height:100vh;-webkit-overflow-scrolling:touch;position:relative}
+.vip-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at top left, #1a1f3d 0%, #0a0e27 40%), radial-gradient(ellipse at bottom right, #2d1b69 0%, #0a0e27 50%), radial-gradient(ellipse at top right, #0f3460 0%, transparent 50%);z-index:-1;pointer-events:none}
 .header{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 20px 18px 20px;position:sticky;top:0;z-index:100;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
 .header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#6c5ce7,#00cec9,#0984e3,#6c5ce7)}
 .header-inner{max-width:1300px;margin:auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
@@ -37,14 +38,13 @@ body{margin:0;background:#0a0e27;color:#ffffff;font-family:Inter,sans-serif;over
 .logo .big{font-size:36px;font-weight:700;color:#ffffff;letter-spacing:4px;display:block;line-height:0.9;background:linear-gradient(90deg,#ffffff,#a29bfe);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .logo .small{font-size:7px;letter-spacing:12px;opacity:0.6;color:#a29bfe;display:block;margin-top:4px;font-weight:500}
 .wallet-wrap{display:flex;gap:12px;align-items:center;flex-wrap:wrap;transform:translateY(-4px);margin-top:4px}
-.btn-vip{padding:11px 24px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff;font-weight:600;border:none;border-radius:12px;cursor:pointer;font-family:Inter;font-size:11px;box-shadow:0 8px 20px rgba(108,92,231,0.3);letter-spacing:0.5px;transition:0.3s}
-.container{max-width:1300px;margin:auto;padding:16px}
-.vip-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:16px 0}
-.vip-card{background:rgba(255,255,255,0.06);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:14px;position:relative;overflow:hidden;transition:0.3s}
-.vip-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.15);box-shadow:0 12px 32px rgba(0,0,0,0.2)}
-.vip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)}
+.btn-vip{padding:11px 24px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff;font-weight:600;border:none;border-radius:12px;cursor:pointer;font-family:Inter;font-size:11px;box-shadow:0 8px 20px rgba(108,92,231,0.3);letter-spacing:0.5px;transition:0.3s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.btn-vip:active{transform:scale(0.98)}
+.container{max-width:1300px;margin:auto;padding:16px 16px 120px 16px;min-height:100vh;overflow-y:visible}
+.vip-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+.vip-card{background:rgba(255,255,255,0.06);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:12px;position:relative;overflow:hidden}
 .vip-card h3{font-size:8px;opacity:0.8;margin:0 0 8px 0;letter-spacing:1.2px;font-family:Inter;color:rgba(255,255,255,0.7);font-weight:600;text-transform:uppercase}
-.vip-card b{font-size:20px;color:#ffffff;display:block;font-family:Space Grotesk;font-weight:700;margin-bottom:6px;letter-spacing:0.5px}
+.vip-card b{font-size:18px;color:#ffffff;display:block;font-family:Space Grotesk;font-weight:700;margin-bottom:6px}
 .vip-card span{font-size:8px;opacity:0.6;color:rgba(255,255,255,0.6)}
 .vip-card.total{border-color:rgba(108,92,231,0.3);background:linear-gradient(135deg,rgba(108,92,231,0.15),rgba(162,155,254,0.08))}
 .vip-card.total b{color:#a29bfe}
@@ -55,48 +55,47 @@ body{margin:0;background:#0a0e27;color:#ffffff;font-family:Inter,sans-serif;over
 .vip-card.loyalty{border-color:rgba(0,184,148,0.3);background:linear-gradient(135deg,rgba(0,184,148,0.12),rgba(85,239,196,0.06))}
 .vip-card.loyalty b{color:#55efc4}
 .vip-wallets{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin:16px 0}
-.vip-wallet{background:rgba(255,255,255,0.05);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px}
+.vip-wallet{background:rgba(255,255,255,0.05);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;overflow:visible}
 .vip-wallet h4{font-family:Inter;color:rgba(255,255,255,0.7);font-size:9px;margin:0 0 10px 0;letter-spacing:1px;font-weight:600;text-transform:uppercase}
 .vip-wallet .addr{font-size:10px;word-break:break-all;background:rgba(0,0,0,0.3);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);margin-top:8px;color:#a29bfe}
 .balance-box{background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px;margin-top:10px}
 .balance-box .bal-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
 .balance-box .bal-row:last-child{border:none}
-.balance-box .bal-label{font-size:8px;opacity:0.6;color:rgba(255,255,255,0.6);font-family:Inter;font-weight:500}
+.balance-box .bal-label{font-size:8px;opacity:0.6;color:rgba(255,255,255,0.6);font-weight:500}
 .balance-box .bal-value{font-size:11px;font-weight:600;color:#ffffff;font-family:Space Grotesk}
-.btn-withdraw{width:100%;padding:10px;background:linear-gradient(135deg,#00b894,#55efc4);color:#0a0e27;font-weight:600;border:none;border-radius:10px;cursor:pointer;font-family:Inter;font-size:8px;letter-spacing:0.5px;box-shadow:0 6px 16px rgba(0,184,148,0.25);margin-top:8px;transition:0.3s}
-.btn-withdraw.blue{background:linear-gradient(135deg,#0984e3,#74b9ff);color:#fff;box-shadow:0 6px 16px rgba(9,132,227,0.25)}
-.btn-withdraw:disabled{background:rgba(255,255,255,0.06)!important;color:rgba(255,255,255,0.3)!important;box-shadow:none!important;cursor:not-allowed;border:1px solid rgba(255,255,255,0.06)}
-.vip-packages{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin:16px 0}
-.vip-pkg{background:rgba(255,255,255,0.04);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px;position:relative;overflow:hidden;transition:0.3s;opacity:0.5}
+.btn-withdraw{width:100%;padding:10px;background:linear-gradient(135deg,#00b894,#55efc4);color:#0a0e27;font-weight:600;border:none;border-radius:10px;cursor:pointer;font-family:Inter;font-size:8px;letter-spacing:0.5px;margin-top:8px;touch-action:manipulation}
+.btn-withdraw.blue{background:linear-gradient(135deg,#0984e3,#74b9ff);color:#fff}
+.btn-withdraw:disabled{background:rgba(255,255,255,0.06)!important;color:rgba(255,255,255,0.3)!important;cursor:not-allowed;border:1px solid rgba(255,255,255,0.06)}
+.vip-packages{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin:16px 0;overflow:visible;min-height:200px}
+.vip-pkg{background:rgba(255,255,255,0.05);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px;position:relative;overflow:visible;transition:0.3s;opacity:1;min-height:180px}
 .vip-pkg.unlocked{opacity:1;border-color:rgba(255,255,255,0.12);box-shadow:0 8px 24px rgba(0,0,0,0.15)}
 .vip-pkg.vip-active{border:1.5px solid rgba(108,92,231,0.4);box-shadow:0 0 24px rgba(108,92,231,0.15);opacity:1;background:linear-gradient(135deg,rgba(108,92,231,0.08),rgba(255,255,255,0.03))}
-.vip-pkg.locked{opacity:0.3;pointer-events:none;filter:grayscale(0.3)}
-.vip-pkg::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#6c5ce7,transparent)}
-.vip-level{position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.8);font-size:6px;padding:4px 8px;border-radius:20px;font-family:Inter;font-weight:600;border:1px solid rgba(255,255,255,0.1)}
+.vip-pkg.locked{opacity:0.6;filter:grayscale(0.2)}
+.vip-level{position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.8);font-size:6px;padding:4px 8px;border-radius:20px;font-weight:600;border:1px solid rgba(255,255,255,0.1)}
 .vip-pkg h3{font-family:Space Grotesk;color:#ffffff;font-size:14px;margin:0 0 4px 0;font-weight:600}
 .vip-pkg .vip-price{font-size:8px;opacity:0.6;margin:6px 0;line-height:1.6;color:rgba(255,255,255,0.6)}
 .vip-details{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:8px;background:rgba(0,0,0,0.2);padding:10px;border-radius:8px;margin:10px 0;border:1px solid rgba(255,255,255,0.05)}
 .vip-details span{color:#ffffff;font-weight:600;font-size:9px}
-.btn-vip-buy{width:100%;padding:10px;background:rgba(255,255,255,0.08);color:#fff;font-weight:600;border:1px solid rgba(255,255,255,0.12);border-radius:10px;cursor:pointer;font-family:Inter;font-size:8px;letter-spacing:0.5px;transition:0.3s;backdrop-filter:blur(10px)}
-.btn-vip-buy:hover{background:rgba(255,255,255,0.12);transform:translateY(-1px)}
-.btn-vip-retopup{width:100%;padding:10px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff;font-weight:600;border:none;border-radius:10px;cursor:pointer;font-family:Inter;font-size:8px;letter-spacing:0.3px;box-shadow:0 6px 16px rgba(108,92,231,0.25);transition:0.3s}
-.btn-vip-retopup:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(108,92,231,0.35)}
-.btn-vip-retopup:disabled{background:rgba(255,255,255,0.06)!important;color:rgba(255,255,255,0.3)!important;box-shadow:none!important;cursor:not-allowed;border:1px solid rgba(255,255,255,0.06)}
+.btn-vip-buy{width:100%;padding:10px;background:rgba(255,255,255,0.08);color:#fff;font-weight:600;border:1px solid rgba(255,255,255,0.12);border-radius:10px;cursor:pointer;font-family:Inter;font-size:8px;letter-spacing:0.5px;touch-action:manipulation}
+.btn-vip-retopup{width:100%;padding:10px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff;font-weight:600;border:none;border-radius:10px;cursor:pointer;font-family:Inter;font-size:8px;touch-action:manipulation}
+.btn-vip-retopup:disabled{background:rgba(255,255,255,0.06)!important;color:rgba(255,255,255,0.3)!important;cursor:not-allowed;border:1px solid rgba(255,255,255,0.06)}
 .btn-group-side{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 input.vip-input{width:100%;padding:10px;background:rgba(0,0,0,0.3);color:#ffffff;border:1px solid rgba(255,255,255,0.1);border-radius:10px;font-size:10px;box-sizing:border-box;font-family:Inter}
-.affiliate-list{background:rgba(255,255,255,0.04);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;margin:16px 0}
+.affiliate-list{background:rgba(255,255,255,0.04);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;margin:16px 0;overflow:visible}
 .affiliate-list h4{font-family:Inter;color:rgba(255,255,255,0.7);font-size:9px;margin:0 0 12px 0;letter-spacing:1px;font-weight:600;text-transform:uppercase}
 .aff-table{width:100%;border-collapse:collapse;margin-top:8px}
-.aff-table th{font-family:Inter;font-size:7px;color:rgba(255,255,255,0.5);text-align:left;padding:8px;background:rgba(0,0,0,0.2);border-bottom:1px solid rgba(255,255,255,0.06);font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.aff-table th{font-size:7px;color:rgba(255,255,255,0.5);text-align:left;padding:8px;background:rgba(0,0,0,0.2);border-bottom:1px solid rgba(255,255,255,0.06);font-weight:600;text-transform:uppercase}
 .aff-table td{font-size:9px;padding:8px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(255,255,255,0.8)}
 @media (max-width:768px){
-.header{padding:10px 14px 16px 14px}
-.logo .big{font-size:28px;letter-spacing:3px}
-.wallet-wrap{transform:translateY(-4px);margin-top:4px;width:100%;justify-content:space-between}
-.btn-vip{padding:9px 14px;font-size:9px}
+.header{padding:10px 14px 14px 14px}
+.logo .big{font-size:26px;letter-spacing:2px}
+.wallet-wrap{transform:none;margin-top:8px;width:100%;justify-content:space-between}
+.btn-vip{padding:10px 18px;font-size:10px;min-height:40px}
 .vip-stats{grid-template-columns:1fr 1fr;gap:8px}
-.vip-card{padding:12px}
-.vip-card b{font-size:18px}
+.vip-card{padding:10px}
+.vip-card b{font-size:16px}
+.vip-packages{grid-template-columns:1fr;gap:10px}
+.container{padding:12px 12px 100px 12px}
 }
 </style>
 </head>
@@ -109,7 +108,7 @@ input.vip-input{width:100%;padding:10px;background:rgba(0,0,0,0.3);color:#ffffff
 <h1><span class="big">MGG ROKET</span><span class="small">LEGEND</span></h1>
 </div>
 <div class="wallet-wrap">
-<span id="walletStatus" style="font-size:9px;opacity:0.7;color:rgba(255,255,255,0.7);font-family:Inter">Not Connected</span>
+<span id="walletStatus" style="font-size:9px;opacity:0.7;color:rgba(255,255,255,0.7)">Not Connected</span>
 <button id="connectBtn" onclick="connectWallet()" class="btn-vip">CONNECT WALLET</button>
 </div>
 </div>
@@ -188,7 +187,7 @@ input.vip-input{width:100%;padding:10px;background:rgba(0,0,0,0.3);color:#ffffff
 </div>
 <div style="margin-top:10px">
 <div style="font-size:11px;font-weight:700;font-family:Space Grotesk" id="activeStatus">INACTIVE</div>
-<div style="font-size:8px;opacity:0.5;margin-top:3px" id="activePkg">Buy Package 1 - 1000 MGG</div>
+<div style="font-size:8px;opacity:0.5;margin-top:3px" id="activePkg">Buy Package 1 - 1000 MGG - No Condition</div>
 </div>
 </div>
 
@@ -207,8 +206,12 @@ input.vip-input{width:100%;padding:10px;background:rgba(0,0,0,0.3);color:#ffffff
 <input id="upline" class="vip-input" value="0x332B34D1f611F285a3334BF052f9E163E5733daa">
 </div>
 
-<h3 style="font-family:Space Grotesk;color:#ffffff;font-size:12px;margin:20px 0 12px 0;letter-spacing:0.5px;font-weight:600;opacity:0.9">PACKAGES - NO CONDITION - 1 THEN 2</h3>
-<div class="vip-packages" id="vipPackages"></div>
+<h3 style="font-family:Space Grotesk;color:#ffffff;font-size:13px;margin:22px 0 12px 0;letter-spacing:0.5px;font-weight:600;opacity:0.9">PACKAGES - NO CONDITION - 1 THEN 2 - SCROLL DOWN ↓</h3>
+<div class="vip-packages" id="vipPackages">
+<div style="grid-column:1/-1;text-align:center;padding:40px;color:rgba(255,255,255,0.5);font-size:10px">Loading Packages... If not loading, please refresh</div>
+</div>
+
+<div style="height:100px"></div>
 
 </div>
 
@@ -224,73 +227,68 @@ let provider, signer, userAddress, currentUserLevel = 0, currentAffCount = 0, cu
 const ERC20_ABI = ["function approve(address,uint256) returns (bool)", "function balanceOf(address) view returns (uint256)"];
 const CONTRACT_ABI = ["function join(uint8,address) external", "function withdrawalAfter300() external", "function retopupSamePackageManual() external", "function withdrawCommunityReward() external", "function currentLevel(address) view returns (uint256)", "function getUserInfo(address) view returns (uint8,uint256,uint256,uint256,uint256,uint256)"];
 
-window.addEventListener('load', ()=>{
-  const urlParams = new URLSearchParams(window.location.search);
-  const ref = urlParams.get('ref');
-  if(ref && ref.startsWith('0x')){ document.getElementById('upline').value = ref; }
-  renderPackages();
-  if(window.ethereum){
-    window.ethereum.on('accountsChanged', (accounts)=>{ if(accounts.length > 0){ connectWallet(); } else { location.reload(); } });
-    window.ethereum.on('chainChanged', ()=>{ location.reload(); });
-  }
-});
-
 function renderPackages(){
-  const grid = document.getElementById('vipPackages');
-  grid.innerHTML = packagesMGG.map((m,i)=>{
-    const aff = Math.floor(m*0.2);
-    const bonus = communityBonus[i];
-    const community = affCommunity[i];
-    const isUnlocked = i <= currentUserLevel;
-    const isActive = i < currentUserLevel;
-    const isNext = i === currentUserLevel;
-    const isCurrent = i === currentUserLevel - 1;
-    const statusClass = isActive ? 'vip-active' : (isNext ? 'unlocked' : 'locked');
-    
-    const needAff = community;
-    const communityQualified = isCurrent && currentAffCount >= needAff && currentHold >= bonus;
-    const loyaltyQualified = isCurrent && currentPercent >= 100;
-    
-    return `<div class="vip-pkg ${statusClass}">
-      <div class="vip-level">${levelNames[i]} ${isActive ? 'ACTIVE' : (isNext ? 'NEXT' : 'LOCKED')}</div>
-      <h3>LEVEL ${i+1} - ${m.toLocaleString()}</h3>
-      <div class="vip-price">
-        Package: ${m.toLocaleString()} MGG | Affiliate: ${aff.toLocaleString()} MGG<br>
-        Community: ${bonus.toLocaleString()} MGG | Need: ${community}<br>
-        Loyalty: Retopup
-      </div>
-      <div class="vip-details">
-        <div>Community: <span>${bonus.toLocaleString()}</span></div>
-        <div>Need: <span>${community}</span></div>
-        <div>Loyalty: <span>Retopup</span></div>
-        <div>Type: <span>No Condition</span></div>
-      </div>
+  try{
+    const grid = document.getElementById('vipPackages');
+    if(!grid){ console.log("vipPackages not found"); return; }
+    grid.innerHTML = packagesMGG.map((m,i)=>{
+      const aff = Math.floor(m*0.2);
+      const bonus = communityBonus[i];
+      const community = affCommunity[i];
+      const isUnlocked = i <= currentUserLevel;
+      const isActive = i < currentUserLevel;
+      const isNext = i === currentUserLevel;
+      const isCurrent = i === currentUserLevel - 1;
+      const statusClass = isActive ? 'vip-active' : (isNext ? 'unlocked' : 'locked');
       
-      ${isCurrent ? `
-        <div style="background:rgba(9,132,227,0.08);border:1px solid rgba(9,132,227,0.15);border-radius:8px;padding:8px;margin:8px 0">
-          <div style="font-size:6px;color:#74b9ff;font-family:Inter;margin-bottom:6px;letter-spacing:0.5px">COMMUNITY - QUALIFIED THEN BUTTON ON</div>
-          <button onclick="withdrawCommunityOnPackage(${i})" class="btn-withdraw blue" ${communityQualified ? '' : 'disabled'} style="margin-top:0;font-size:7px;padding:9px">
-            ${communityQualified ? `WITHDRAWAL - ${bonus.toLocaleString()} - QUALIFIED - ON` : `NEED ${needAff} AFF - LOCKED`}
-          </button>
+      const needAff = community;
+      const communityQualified = isCurrent && currentAffCount >= needAff && currentHold >= bonus;
+      const loyaltyQualified = isCurrent && currentPercent >= 100;
+      
+      return `<div class="vip-pkg ${statusClass}">
+        <div class="vip-level">${levelNames[i]} ${isActive ? 'ACTIVE' : (isNext ? 'NEXT' : 'LOCKED')}</div>
+        <h3>LEVEL ${i+1} - ${m.toLocaleString()}</h3>
+        <div class="vip-price">
+          Package: ${m.toLocaleString()} MGG | Affiliate: ${aff.toLocaleString()} MGG<br>
+          Community: ${bonus.toLocaleString()} MGG | Need: ${community}<br>
+          Loyalty: Retopup - No Condition
         </div>
-      ` : ''}
-      
-      <div class="btn-group-side">
-        <button onclick="buyPackage(${i})" class="btn-vip-buy" ${!isNext ? 'disabled style="background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.2)"' : ''}>${isActive?'ACTIVE':(isNext?'BUY '+m.toLocaleString():'LOCKED')}</button>
-        <button onclick="loyaltyRetopupOnPackage(${i})" class="btn-vip-retopup" ${loyaltyQualified ? '' : 'disabled'}>${loyaltyQualified ? 'RETOPUP' : 'RETOPUP LOCKED'}</button>
-      </div>
-      <div style="font-size:6px;color:rgba(255,255,255,0.4);margin-top:6px;text-align:center">1 Package Buy Then 2 - No Condition</div>
-    </div>`;
-  }).join("");
+        <div class="vip-details">
+          <div>Community: <span>${bonus.toLocaleString()}</span></div>
+          <div>Need: <span>${community}</span></div>
+          <div>Loyalty: <span>Retopup</span></div>
+          <div>Type: <span>No Condition</span></div>
+        </div>
+        
+        ${isCurrent ? `
+          <div style="background:rgba(9,132,227,0.08);border:1px solid rgba(9,132,227,0.15);border-radius:8px;padding:8px;margin:8px 0">
+            <div style="font-size:6px;color:#74b9ff;font-family:Inter;margin-bottom:6px;letter-spacing:0.5px">COMMUNITY - QUALIFIED THEN BUTTON ON</div>
+            <button onclick="withdrawCommunityOnPackage(${i})" class="btn-withdraw blue" ${communityQualified ? '' : 'disabled'} style="margin-top:0;font-size:7px;padding:9px">
+              ${communityQualified ? `WITHDRAWAL - ${bonus.toLocaleString()} - QUALIFIED - ON` : `NEED ${needAff} AFF - LOCKED`}
+            </button>
+          </div>
+        ` : ''}
+        
+        <div class="btn-group-side">
+          <button onclick="buyPackage(${i})" class="btn-vip-buy" ${!isNext ? 'disabled style="background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.3)"' : ''}>${isActive?'ACTIVE':(isNext?'BUY '+m.toLocaleString():'LOCKED')}</button>
+          <button onclick="loyaltyRetopupOnPackage(${i})" class="btn-vip-retopup" ${loyaltyQualified ? '' : 'disabled'}>${loyaltyQualified ? 'RETOPUP' : 'RETOPUP LOCKED'}</button>
+        </div>
+        <div style="font-size:6px;color:rgba(255,255,255,0.4);margin-top:6px;text-align:center">1 Package Buy Then 2 - No Condition - Buy Side Retopup</div>
+      </div>`;
+    }).join("");
+    console.log("Packages rendered:", packagesMGG.length);
+  }catch(e){
+    console.error("Render error:", e);
+    document.getElementById('vipPackages').innerHTML = `<div style="color:#ff7675;padding:20px;text-align:center">Error loading packages: ${e.message}<br><button onclick="location.reload()" style="margin-top:10px;padding:8px 16px;background:#6c5ce7;color:white;border:none;border-radius:8px">Refresh</button></div>`;
+  }
 }
 
 async function connectWallet(){
+  const btn = document.getElementById('connectBtn');
+  const status = document.getElementById('walletStatus');
   try{
-    if(!window.ethereum){ alert("Install Metamask"); return; }
-    document.getElementById('connectBtn').innerText = "CONNECTING...";
-    provider = new ethers.BrowserProvider(window.ethereum);
-    await provider.send("eth_requestAccounts",[]);
-    signer = await provider.getSigner();
-    userAddress = await signer.getAddress();
-    document.getElementById('walletStatus').innerText = userAddress.slice(0,6)+"..."+userAddress.slice(-4);
-    document.getElementById('connectBtn').
+    console.log("Connect clicked");
+    if(typeof window.ethereum === 'undefined'){
+      alert("Metamask Not Found!\n\nMobile मध्ये:\n1. Metamask App Open करा\n2. Browser मध्ये ही Site Open करा\n\nDesktop मध्ये:\n1. Metamask Extension Install करा\n2. Refresh करा");
+      if(/Android|iPhone|iPad/i.test(navigator.userAgent)){
+       
