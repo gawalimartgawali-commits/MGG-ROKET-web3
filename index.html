@@ -22,196 +22,144 @@
   font-family: "Optimistic Mono", ui-monospace, monospace;
 }
 </style>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-<title>MGG ROKET LEGEND - SCROLL WALLET FIX</title>
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.0/dist/ethers.umd.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>MGG ROKET LEGEND - NO BOX AWARD ONLY</title>
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}
-html{overflow-y:auto;overflow-x:hidden;height:auto;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
-body{margin:0;background:#0a0e27;color:#ffffff;font-family:Inter,sans-serif;overflow-y:auto;overflow-x:hidden;height:auto;min-height:100vh;-webkit-overflow-scrolling:touch;position:relative}
-.vip-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at top left, #1a1f3d 0%, #0a0e27 40%), radial-gradient(ellipse at bottom right, #2d1b69 0%, #0a0e27 50%), radial-gradient(ellipse at top right, #0f3460 0%, transparent 50%);z-index:-1;pointer-events:none}
-.header{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 20px 18px 20px;position:sticky;top:0;z-index:100;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
-.header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#6c5ce7,#00cec9,#0984e3,#6c5ce7)}
-.header-inner{max-width:1300px;margin:auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.logo h1{margin:0;line-height:1;font-family:Space Grotesk}
-.logo .big{font-size:36px;font-weight:700;color:#ffffff;letter-spacing:4px;display:block;line-height:0.9;background:linear-gradient(90deg,#ffffff,#a29bfe);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.logo .small{font-size:7px;letter-spacing:12px;opacity:0.6;color:#a29bfe;display:block;margin-top:4px;font-weight:500}
-.wallet-wrap{display:flex;gap:12px;align-items:center;flex-wrap:wrap;transform:translateY(-4px);margin-top:4px}
-.btn-vip{padding:11px 24px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff;font-weight:600;border:none;border-radius:12px;cursor:pointer;font-family:Inter;font-size:11px;box-shadow:0 8px 20px rgba(108,92,231,0.3);letter-spacing:0.5px;transition:0.3s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.btn-vip:active{transform:scale(0.98)}
-.container{max-width:1300px;margin:auto;padding:16px 16px 120px 16px;min-height:100vh;overflow-y:visible}
-.vip-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
-.vip-card{background:rgba(255,255,255,0.06);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:12px;position:relative;overflow:hidden}
-.vip-card h3{font-size:8px;opacity:0.8;margin:0 0 8px 0;letter-spacing:1.2px;font-family:Inter;color:rgba(255,255,255,0.7);font-weight:600;text-transform:uppercase}
-.vip-card b{font-size:18px;color:#ffffff;display:block;font-family:Space Grotesk;font-weight:700;margin-bottom:6px}
-.vip-card span{font-size:8px;opacity:0.6;color:rgba(255,255,255,0.6)}
-.vip-card.total{border-color:rgba(108,92,231,0.3);background:linear-gradient(135deg,rgba(108,92,231,0.15),rgba(162,155,254,0.08))}
-.vip-card.total b{color:#a29bfe}
-.vip-card.aff{border-color:rgba(0,206,201,0.3);background:linear-gradient(135deg,rgba(0,206,201,0.12),rgba(129,236,236,0.06))}
-.vip-card.aff b{color:#81ecec}
-.vip-card.community{border-color:rgba(9,132,227,0.3);background:linear-gradient(135deg,rgba(9,132,227,0.12),rgba(116,185,255,0.06))}
-.vip-card.community b{color:#74b9ff}
-.vip-card.loyalty{border-color:rgba(0,184,148,0.3);background:linear-gradient(135deg,rgba(0,184,148,0.12),rgba(85,239,196,0.06))}
-.vip-card.loyalty b{color:#55efc4}
-.vip-wallets{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin:16px 0}
-.vip-wallet{background:rgba(255,255,255,0.05);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;overflow:visible}
-.vip-wallet h4{font-family:Inter;color:rgba(255,255,255,0.7);font-size:9px;margin:0 0 10px 0;letter-spacing:1px;font-weight:600;text-transform:uppercase}
-.vip-wallet .addr{font-size:10px;word-break:break-all;background:rgba(0,0,0,0.3);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);margin-top:8px;color:#a29bfe}
-.balance-box{background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px;margin-top:10px}
-.balance-box .bal-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
-.balance-box .bal-row:last-child{border:none}
-.balance-box .bal-label{font-size:8px;opacity:0.6;color:rgba(255,255,255,0.6);font-weight:500}
-.balance-box .bal-value{font-size:11px;font-weight:600;color:#ffffff;font-family:Space Grotesk}
-.btn-withdraw{width:100%;padding:10px;background:linear-gradient(135deg,#00b894,#55efc4);color:#0a0e27;font-weight:600;border:none;border-radius:10px;cursor:pointer;font-family:Inter;font-size:8px;letter-spacing:0.5px;margin-top:8px;touch-action:manipulation}
-.btn-withdraw.blue{background:linear-gradient(135deg,#0984e3,#74b9ff);color:#fff}
-.btn-withdraw:disabled{background:rgba(255,255,255,0.06)!important;color:rgba(255,255,255,0.3)!important;cursor:not-allowed;border:1px solid rgba(255,255,255,0.06)}
-.vip-packages{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin:16px 0;overflow:visible;min-height:200px}
-.vip-pkg{background:rgba(255,255,255,0.05);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px;position:relative;overflow:visible;transition:0.3s;opacity:1;min-height:180px}
-.vip-pkg.unlocked{opacity:1;border-color:rgba(255,255,255,0.12);box-shadow:0 8px 24px rgba(0,0,0,0.15)}
-.vip-pkg.vip-active{border:1.5px solid rgba(108,92,231,0.4);box-shadow:0 0 24px rgba(108,92,231,0.15);opacity:1;background:linear-gradient(135deg,rgba(108,92,231,0.08),rgba(255,255,255,0.03))}
-.vip-pkg.locked{opacity:0.6;filter:grayscale(0.2)}
-.vip-level{position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.8);font-size:6px;padding:4px 8px;border-radius:20px;font-weight:600;border:1px solid rgba(255,255,255,0.1)}
-.vip-pkg h3{font-family:Space Grotesk;color:#ffffff;font-size:14px;margin:0 0 4px 0;font-weight:600}
-.vip-pkg .vip-price{font-size:8px;opacity:0.6;margin:6px 0;line-height:1.6;color:rgba(255,255,255,0.6)}
-.vip-details{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:8px;background:rgba(0,0,0,0.2);padding:10px;border-radius:8px;margin:10px 0;border:1px solid rgba(255,255,255,0.05)}
-.vip-details span{color:#ffffff;font-weight:600;font-size:9px}
-.btn-vip-buy{width:100%;padding:10px;background:rgba(255,255,255,0.08);color:#fff;font-weight:600;border:1px solid rgba(255,255,255,0.12);border-radius:10px;cursor:pointer;font-family:Inter;font-size:8px;letter-spacing:0.5px;touch-action:manipulation}
-.btn-vip-retopup{width:100%;padding:10px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff;font-weight:600;border:none;border-radius:10px;cursor:pointer;font-family:Inter;font-size:8px;touch-action:manipulation}
-.btn-vip-retopup:disabled{background:rgba(255,255,255,0.06)!important;color:rgba(255,255,255,0.3)!important;cursor:not-allowed;border:1px solid rgba(255,255,255,0.06)}
-.btn-group-side{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-input.vip-input{width:100%;padding:10px;background:rgba(0,0,0,0.3);color:#ffffff;border:1px solid rgba(255,255,255,0.1);border-radius:10px;font-size:10px;box-sizing:border-box;font-family:Inter}
-.affiliate-list{background:rgba(255,255,255,0.04);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;margin:16px 0;overflow:visible}
-.affiliate-list h4{font-family:Inter;color:rgba(255,255,255,0.7);font-size:9px;margin:0 0 12px 0;letter-spacing:1px;font-weight:600;text-transform:uppercase}
-.aff-table{width:100%;border-collapse:collapse;margin-top:8px}
-.aff-table th{font-size:7px;color:rgba(255,255,255,0.5);text-align:left;padding:8px;background:rgba(0,0,0,0.2);border-bottom:1px solid rgba(255,255,255,0.06);font-weight:600;text-transform:uppercase}
-.aff-table td{font-size:9px;padding:8px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(255,255,255,0.8)}
-@media (max-width:768px){
-.header{padding:10px 14px 14px 14px}
-.logo .big{font-size:26px;letter-spacing:2px}
-.wallet-wrap{transform:none;margin-top:8px;width:100%;justify-content:space-between}
-.btn-vip{padding:10px 18px;font-size:10px;min-height:40px}
-.vip-stats{grid-template-columns:1fr 1fr;gap:8px}
-.vip-card{padding:10px}
-.vip-card b{font-size:16px}
-.vip-packages{grid-template-columns:1fr;gap:10px}
-.container{padding:12px 12px 100px 12px}
-}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto;background:#0a0e27;color:#fff;font-family:Inter,sans-serif}
+body{padding-bottom:150px}
+.header{width:100%;background:#1a1f3d;padding:16px;border-bottom:2px solid #6c5ce7;position:sticky;top:0;z-index:999}
+.header-inner{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.logo-big{font-size:28px;font-weight:700;letter-spacing:3px;color:#a29bfe}
+.logo-small{font-size:7px;letter-spacing:10px;color:#a29bfe;opacity:0.6}
+.btn-connect{padding:14px 28px;background:#6c5ce7;color:#fff;font-weight:700;border:none;border-radius:12px;cursor:pointer;font-size:12px;min-height:48px;touch-action:manipulation}
+.container{max-width:1200px;margin:auto;padding:16px;overflow:visible;height:auto}
+/* NO BOX AWARD - Box काढले - फक्त Award */
+.award-only{padding:12px 0;border-bottom:1px solid #1e2447;margin:8px 0}
+.award-only-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.award-only-row:last-child{border:none}
+.award-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px}
+.award-value{font-size:13px;font-weight:700;color:#fff}
+.award-value.total{color:#a29bfe}
+.award-value.aff{color:#81ecec}
+.award-value.com{color:#74b9ff}
+.award-value.loy{color:#55efc4}
+.card{background:#1e2447;border:1px solid #2d345e;border-radius:14px;padding:14px;margin:12px 0;overflow:visible}
+.card h4{font-size:10px;color:#a29bfe;margin-bottom:10px;letter-spacing:1px;text-transform:uppercase}
+.addr{font-size:10px;word-break:break-all;background:#0a0e27;padding:10px;border-radius:8px;border:1px solid #2d345e;color:#a29bfe;margin-top:8px}
+.grid-packages{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:16px 0}
+.pkg{background:#1e2447;border:1px solid #2d345e;border-radius:14px;padding:16px;min-height:160px}
+.pkg.next{border:2px solid #6c5ce7;background:#252b52}
+.pkg.locked{opacity:0.5}
+.pkg h3{font-size:14px;color:#fff;margin-bottom:6px}
+.pkg .price{font-size:10px;color:#a0a0a0;margin:6px 0;line-height:1.5}
+.btn-buy{width:100%;padding:12px;background:#6c5ce7;color:#fff;font-weight:700;border:none;border-radius:10px;cursor:pointer;font-size:10px;margin-top:8px;min-height:44px}
+.btn-buy.retopup{background:#00b894;color:#fff}
+.btn-buy:disabled{background:#2d345e;color:#666;cursor:not-allowed}
+.btn-group{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+input.input{width:100%;padding:12px;background:#0a0e27;color:#fff;border:1px solid #2d345e;border-radius:10px;font-size:11px;min-height:44px}
+.status-box{font-size:10px;padding:8px;background:#0a0e27;border-radius:6px;margin-top:8px;color:#a29bfe;border:1px solid #2d345e}
+@media(max-width:600px){.grid-packages{grid-template-columns:1fr}.logo-big{font-size:22px}}
 </style>
 </head>
 <body>
-<div class="vip-bg"></div>
 
 <div class="header">
 <div class="header-inner">
-<div class="logo">
-<h1><span class="big">MGG ROKET</span><span class="small">LEGEND</span></h1>
+<div>
+<div class="logo-big">MGG ROKET</div>
+<div class="logo-small">LEGEND</div>
 </div>
-<div class="wallet-wrap">
-<span id="walletStatus" style="font-size:9px;opacity:0.7;color:rgba(255,255,255,0.7)">Not Connected</span>
-<button id="connectBtn" onclick="connectWallet()" class="btn-vip">CONNECT WALLET</button>
+<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+<span id="walletStatus" style="font-size:10px;color:#a0a0a0">Not Connected</span>
+<button id="connectBtn" onclick="connectWallet()" class="btn-connect">CONNECT WALLET</button>
 </div>
 </div>
 </div>
 
 <div class="container">
 
-<div class="vip-stats">
-<div class="vip-card total">
-<h3>Total Award</h3>
-<b id="totalAward">0 MGG</b>
-<span>Total Award</span>
-<div style="margin-top:8px;font-size:7px;background:rgba(0,0,0,0.2);padding:6px;border-radius:6px;border:1px solid rgba(255,255,255,0.05)">
-<div style="display:flex;justify-content:space-between;padding:2px 0"><span>Aff:</span><span id="totalAff" style="color:#a29bfe">0</span></div>
-<div style="display:flex;justify-content:space-between;padding:2px 0"><span>Com:</span><span id="totalCommunity" style="color:#74b9ff">0</span></div>
-<div style="display:flex;justify-content:space-between;padding:2px 0"><span>Loy:</span><span id="totalLoyalty" style="color:#55efc4">0</span></div>
+<!-- NO BOX - AWARD ONLY - Box काढले - फक्त Award Values -->
+<div class="award-only">
+<div style="font-size:11px;color:#a29bfe;font-weight:700;margin-bottom:12px;letter-spacing:1px">AWARDS - NO BOX - AWARD ONLY</div>
+<div class="award-only-row">
+<span class="award-label">Total Award</span>
+<span class="award-value total" id="totalAward">0 MGG</span>
+</div>
+<div class="award-only-row">
+<span class="award-label">Affiliate Award - 20%</span>
+<span class="award-value aff" id="affiliateAward">0 MGG - Team: <span id="affTeamCount">0</span></span>
+</div>
+<div class="award-only-row">
+<span class="award-label">Community Award - HOLD - Req: <span id="communityReq">0</span> Direct</span>
+<span class="award-value com" id="communityAward">0 MGG - HOLD: <span id="communityHold">0</span></span>
+</div>
+<div class="award-only-row">
+<span class="award-label">Loyalty Award - 300% - <span id="loyaltyProgress">0%</span></span>
+<span class="award-value loy" id="loyaltyAward">0 MGG</span>
 </div>
 </div>
 
-<div class="vip-card aff">
-<h3>Affiliate Award</h3>
-<b id="affiliateAward">0 MGG</b>
-<span>Affiliate - 20%</span>
-<div style="margin-top:8px;font-size:8px">Team: <span id="affTeamCount" style="color:#81ecec">0</span></div>
-<div style="background:rgba(0,0,0,0.3);height:4px;border-radius:2px;margin-top:6px;overflow:hidden"><div id="affBar" style="height:100%;background:linear-gradient(90deg,#00cec9,#81ecec);width:0%"></div></div>
-</div>
-
-<div class="vip-card community">
-<h3>Community Award</h3>
-<b id="communityAward">0 MGG</b>
-<span>Community - HOLD</span>
-<div style="margin-top:6px;font-size:7px">HOLD: <span id="communityHold" style="color:#74b9ff">0 HOLD</span> | Req: <span id="communityReq">0</span></div>
-<div style="background:rgba(0,0,0,0.3);height:4px;border-radius:2px;margin-top:6px;overflow:hidden"><div id="communityBar" style="height:100%;background:linear-gradient(90deg,#0984e3,#74b9ff);width:0%"></div></div>
-<div id="communityStatus" style="font-size:7px;margin-top:6px;color:#74b9ff;text-align:center">Community</div>
-</div>
-
-<div class="vip-card loyalty">
-<h3>Loyalty Award</h3>
-<b id="loyaltyAward">0 MGG</b>
-<span>Loyalty - 300%</span>
-<div style="margin-top:6px;font-size:7px">Progress: <span id="loyaltyProgress" style="color:#55efc4">0%</span></div>
-<div style="background:rgba(0,0,0,0.3);height:5px;border-radius:2px;margin-top:6px;overflow:hidden"><div id="loyaltyBar" style="height:100%;background:linear-gradient(90deg,#00b894,#55efc4);width:0%"></div></div>
-<div id="loyaltyStatus" style="font-size:6px;margin-top:6px;color:#55efc4;text-align:center">Retopup</div>
-</div>
-</div>
-
-<div class="affiliate-list">
-<h4>Affiliate List</h4>
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-<span style="font-size:9px;opacity:0.6">Total: <span id="affListCount" style="color:#a29bfe;font-weight:700">0</span></span>
-<span style="font-size:7px;opacity:0.4">List</span>
-</div>
-<table class="aff-table">
-<thead>
-<tr><th>#</th><th>WALLET</th><th>LEVEL</th><th>PKG</th><th>JOINED</th></tr>
-</thead>
-<tbody id="affiliateTableBody">
-<tr><td colspan="5" style="text-align:center;padding:16px;opacity:0.4;font-size:8px">No Affiliates - Share Link</td></tr>
-</tbody>
-</table>
-</div>
-
-<div class="vip-wallets">
-<div class="vip-wallet">
+<div class="card">
 <h4>Income Wallet</h4>
 <div class="addr">0x332B34D1f611F285a3334BF052f9E163E5733daa</div>
 </div>
 
-<div class="vip-wallet">
+<div class="card">
 <h4>Active Wallet</h4>
-<div id="activeAddr" class="addr" style="color:#a29bfe">Not Connected</div>
-<div id="balanceDisplay" class="balance-box" style="display:none">
-<div class="bal-row"><span class="bal-label">MGG</span><span class="bal-value" id="mggBal">0 MGG</span></div>
-<div class="bal-row"><span class="bal-label">BNB</span><span class="bal-value" id="bnbBal">0 BNB</span></div>
-<div class="bal-row"><span class="bal-label">TOTAL</span><span class="bal-value" id="totalAwardBal">0 MGG</span></div>
+<div id="activeAddr" class="addr">Not Connected</div>
+<div id="balanceBox" style="display:none;margin-top:10px">
+<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #2d345e"><span style="font-size:9px;color:#888">MGG</span><span id="mggBal" style="font-size:11px;font-weight:700;color:#fff">0 MGG</span></div>
+<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #2d345e"><span style="font-size:9px;color:#888">BNB</span><span id="bnbBal" style="font-size:11px;font-weight:700;color:#fff">0 BNB</span></div>
+<div style="display:flex;justify-content:space-between;padding:6px 0"><span style="font-size:9px;color:#888">TOTAL</span><span id="totalBal" style="font-size:11px;font-weight:700;color:#a29bfe">0 MGG</span></div>
 </div>
-<div style="margin-top:10px">
-<div style="font-size:11px;font-weight:700;font-family:Space Grotesk" id="activeStatus">INACTIVE</div>
-<div style="font-size:8px;opacity:0.5;margin-top:3px" id="activePkg">Buy Package 1 - 1000 MGG - No Condition</div>
+<div style="margin-top:12px">
+<div id="activePkg" style="font-size:9px;color:#a0a0a0;margin-top:4px">Package 1 - 1000 MGG - No Condition - 1 Then 2 - Ready to Buy</div>
 </div>
+<div id="debug" class="status-box">Status: Ready - No Box Award Only - Scroll Down</div>
 </div>
 
-<div class="vip-wallet">
+<div class="card">
 <h4>Affiliate Link</h4>
-<input id="affLink" class="vip-input" value="Connect Wallet First" readonly style="margin-top:8px">
+<input id="affLink" class="input" value="Connect Wallet First" readonly style="margin-top:8px">
 <div style="display:flex;gap:8px;margin-top:8px">
-<button onclick="copyAffLink()" class="btn-vip" style="flex:1;background:linear-gradient(135deg,#6c5ce7,#a29bfe);padding:9px;font-size:8px">COPY</button>
-<button onclick="shareAffLink()" class="btn-vip" style="flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:9px;font-size:8px">SHARE</button>
-</div>
+<button onclick="copyLink()" class="btn-connect" style="flex:1;padding:12px;background:#6c5ce7">COPY</button>
+<button onclick="shareLink()" class="btn-connect" style="flex:1;padding:12px;background:#2d345e">SHARE</button>
 </div>
 </div>
 
-<div class="vip-wallet" style="margin:14px 0">
+<div class="card">
 <h4>Upline Wallet</h4>
-<input id="upline" class="vip-input" value="0x332B34D1f611F285a3334BF052f9E163E5733daa">
+<input id="upline" class="input" value="0x332B34D1f611F285a3334BF052f9E163E5733daa">
 </div>
 
-<h3 style="font-family:Space Grotesk;color:#ffffff;font-size:13px;margin:22px 0 12px 0;letter-spacing:0.5px;font-weight:600;opacity:0.9">PACKAGES - NO CONDITION - 1 THEN 2 - SCROLL DOWN ↓</h3>
-<div class="vip-packages" id="vipPackages">
-<div style="grid-column:1/-1;text-align:center;padding:40px;color:rgba(255,255,255,0.5);font-size:10px">Loading Packages... If not loading, please refresh</div>
+<div class="card">
+<h4>Affiliate List</h4>
+<div style="display:flex;justify-content:space-between;margin-bottom:8px">
+<span style="font-size:10px">Total: <span id="affCount" style="color:#a29bfe;font-weight:700">0</span></span>
+<span style="font-size:8px;color:#666">Affiliate List</span>
+</div>
+<div id="affList" style="font-size:9px;color:#888;padding:10px;text-align:center;border:1px dashed #2d345e;border-radius:8px">No Affiliates - Share Link</div>
 </div>
 
-<div style="height:100px"></div>
+<h3 style="font-size:14px;color:#fff;margin:24px 0 12px 0;font-weight:700">PACKAGES - NO CONDITION - 1 THEN 2 - 12 PACKAGES ↓</h3>
+
+<div class="grid-packages" id="packages">
+<div class="pkg next"><h3>LEVEL 1 - 1,000 MGG</h3><div class="price">Package: 1,000 MGG | Affiliate: 200 MGG (20%)<br>Community: 100 MGG | Need: 0 Direct<br>Loyalty: Retopup - No Condition</div><div class="btn-group"><button class="btn-buy" onclick="buyPackage(0)">BUY 1,000</button><button class="btn-buy retopup" disabled>RETOPUP LOCKED</button></div></div>
+<div class="pkg locked"><h3>LEVEL 2 - 2,000 MGG</h3><div class="price">Package: 2,000 MGG<br>Community: 500 MGG | Need: 1 Direct</div><div class="btn-group"><button class="btn-buy" disabled>LOCKED</button><button class="btn-buy retopup" disabled>RETOPUP LOCKED</button></div></div>
+<div class="pkg locked"><h3>LEVEL 3 - 5,000 MGG</h3><div class="price">Package: 5,000 MGG</div><div class="btn-group"><button class="btn-buy" disabled>LOCKED</button><button class="btn-buy retopup" disabled>RETOPUP LOCKED</button></div></div>
+<div class="pkg locked"><h3>LEVEL 4 - 10,000 MGG</h3><div class="price">Package: 10,000 MGG</div><div class="btn-group"><button class="btn-buy" disabled>LOCKED</button><button class="btn-buy retopup" disabled>RETOPUP LOCKED</button></div></div>
+<div class="pkg locked"><h3>LEVEL 5 - 20,000 MGG</h3><div class="price">Package: 20,000 MGG</div><div class="btn-group"><button class="btn-buy" disabled>LOCKED</button><button class="btn-buy retopup" disabled>RETOPUP LOCKED</button></div></div>
+<div class="pkg locked"><h3>LEVEL 6 - 50,000 MGG</h3><div class="price">Package: 50,000 MGG</div><div class="btn-group"><button class="btn-buy" disabled>LOCKED</button><button class="btn-buy retopup" disabled>RETOPUP LOCKED</button></div></div>
+</div>
+
+<div style="height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px">
+<div style="font-size:12px;color:#a0a0a0">End - 12 Packages - No Box Award Only</div>
+<button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="btn-connect" style="background:#2d345e">GO TO TOP ↑</button>
+</div>
 
 </div>
 
@@ -221,74 +169,140 @@ let CONTRACT_ADDRESS = "0xYOUR_CONTRACT_ADDRESS";
 const packagesMGG = [1000,2000,5000,10000,20000,50000,100000,200000,500000,1000000,2000000,5000000];
 const communityBonus = [100,500,1000,2000,5000,10000,30000,50000,100000,300000,600000,1000000];
 const affCommunity = [0,1,2,3,5,10,20,30,40,50,60,70];
-const levelNames = ["BRONZE","SILVER","GOLD","PLATINUM","DIAMOND","RUBY","EMERALD","SAPPHIRE","CROWN","LEGEND","MYTHIC","GOD"];
+let provider, signer, userAddress, currentLevel = 0, affCount = 0;
 
-let provider, signer, userAddress, currentUserLevel = 0, currentAffCount = 0, currentHold = 0, currentPercent = 0, currentPkg = 0;
-const ERC20_ABI = ["function approve(address,uint256) returns (bool)", "function balanceOf(address) view returns (uint256)"];
-const CONTRACT_ABI = ["function join(uint8,address) external", "function withdrawalAfter300() external", "function retopupSamePackageManual() external", "function withdrawCommunityReward() external", "function currentLevel(address) view returns (uint256)", "function getUserInfo(address) view returns (uint8,uint256,uint256,uint256,uint256,uint256)"];
+function log(msg){
+  const d = document.getElementById('debug');
+  if(d){ d.innerHTML += "<br>" + new Date().toLocaleTimeString() + ": " + msg; }
+  console.log(msg);
+}
 
-function renderPackages(){
+function renderPackagesReal(){
   try{
-    const grid = document.getElementById('vipPackages');
-    if(!grid){ console.log("vipPackages not found"); return; }
-    grid.innerHTML = packagesMGG.map((m,i)=>{
-      const aff = Math.floor(m*0.2);
-      const bonus = communityBonus[i];
-      const community = affCommunity[i];
-      const isUnlocked = i <= currentUserLevel;
-      const isActive = i < currentUserLevel;
-      const isNext = i === currentUserLevel;
-      const isCurrent = i === currentUserLevel - 1;
-      const statusClass = isActive ? 'vip-active' : (isNext ? 'unlocked' : 'locked');
-      
-      const needAff = community;
-      const communityQualified = isCurrent && currentAffCount >= needAff && currentHold >= bonus;
-      const loyaltyQualified = isCurrent && currentPercent >= 100;
-      
-      return `<div class="vip-pkg ${statusClass}">
-        <div class="vip-level">${levelNames[i]} ${isActive ? 'ACTIVE' : (isNext ? 'NEXT' : 'LOCKED')}</div>
-        <h3>LEVEL ${i+1} - ${m.toLocaleString()}</h3>
-        <div class="vip-price">
-          Package: ${m.toLocaleString()} MGG | Affiliate: ${aff.toLocaleString()} MGG<br>
-          Community: ${bonus.toLocaleString()} MGG | Need: ${community}<br>
-          Loyalty: Retopup - No Condition
+    const grid = document.getElementById('packages');
+    if(!grid) return;
+    let html = "";
+    packagesMGG.forEach((m,i)=>{
+      const isNext = i === currentLevel;
+      const isActive = i < currentLevel;
+      const cls = isActive ? "pkg next" : (isNext ? "pkg next" : "pkg locked");
+      const buyText = isActive ? "ACTIVE" : (isNext ? "BUY "+m.toLocaleString() : "LOCKED");
+      const buyDisabled = !isNext ? "disabled" : "";
+      const retopupDisabled = (i === currentLevel -1) ? "" : "disabled";
+      let communityBtn = "";
+      if(i === currentLevel -1){
+        const qualified = affCount >= affCommunity[i];
+        communityBtn = `<button class="btn-buy" style="background:${qualified ? '#0984e3' : '#2d345e'};margin-top:8px" ${qualified ? "" : "disabled"} onclick="withdrawCommunity(${i})">${qualified ? 'WITHDRAWAL - '+communityBonus[i].toLocaleString()+' - ON' : 'NEED '+affCommunity[i]+' AFF - LOCKED'}</button>`;
+      }
+      html += `<div class="${cls}">
+        <h3>LEVEL ${i+1} - ${m.toLocaleString()} MGG</h3>
+        <div class="price">Package: ${m.toLocaleString()} MGG | Aff: ${Math.floor(m*0.2).toLocaleString()} MGG<br>Community: ${communityBonus[i].toLocaleString()} MGG | Need: ${affCommunity[i]} Direct<br>Loyalty: Retopup - No Condition - 1 Then 2</div>
+        ${communityBtn}
+        <div class="btn-group">
+          <button class="btn-buy" ${buyDisabled} onclick="buyPackage(${i})">${buyText}</button>
+          <button class="btn-buy retopup" ${retopupDisabled} onclick="retopupPackage(${i})">${i===currentLevel-1 ? 'RETOPUP' : 'RETOPUP LOCKED'}</button>
         </div>
-        <div class="vip-details">
-          <div>Community: <span>${bonus.toLocaleString()}</span></div>
-          <div>Need: <span>${community}</span></div>
-          <div>Loyalty: <span>Retopup</span></div>
-          <div>Type: <span>No Condition</span></div>
-        </div>
-        
-        ${isCurrent ? `
-          <div style="background:rgba(9,132,227,0.08);border:1px solid rgba(9,132,227,0.15);border-radius:8px;padding:8px;margin:8px 0">
-            <div style="font-size:6px;color:#74b9ff;font-family:Inter;margin-bottom:6px;letter-spacing:0.5px">COMMUNITY - QUALIFIED THEN BUTTON ON</div>
-            <button onclick="withdrawCommunityOnPackage(${i})" class="btn-withdraw blue" ${communityQualified ? '' : 'disabled'} style="margin-top:0;font-size:7px;padding:9px">
-              ${communityQualified ? `WITHDRAWAL - ${bonus.toLocaleString()} - QUALIFIED - ON` : `NEED ${needAff} AFF - LOCKED`}
-            </button>
-          </div>
-        ` : ''}
-        
-        <div class="btn-group-side">
-          <button onclick="buyPackage(${i})" class="btn-vip-buy" ${!isNext ? 'disabled style="background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.3)"' : ''}>${isActive?'ACTIVE':(isNext?'BUY '+m.toLocaleString():'LOCKED')}</button>
-          <button onclick="loyaltyRetopupOnPackage(${i})" class="btn-vip-retopup" ${loyaltyQualified ? '' : 'disabled'}>${loyaltyQualified ? 'RETOPUP' : 'RETOPUP LOCKED'}</button>
-        </div>
-        <div style="font-size:6px;color:rgba(255,255,255,0.4);margin-top:6px;text-align:center">1 Package Buy Then 2 - No Condition - Buy Side Retopup</div>
       </div>`;
-    }).join("");
-    console.log("Packages rendered:", packagesMGG.length);
-  }catch(e){
-    console.error("Render error:", e);
-    document.getElementById('vipPackages').innerHTML = `<div style="color:#ff7675;padding:20px;text-align:center">Error loading packages: ${e.message}<br><button onclick="location.reload()" style="margin-top:10px;padding:8px 16px;background:#6c5ce7;color:white;border:none;border-radius:8px">Refresh</button></div>`;
-  }
+    });
+    grid.innerHTML = html;
+    log("Packages rendered - NO BOX AWARD ONLY");
+  }catch(e){ log("Render error: "+e.message); }
 }
 
 async function connectWallet(){
   const btn = document.getElementById('connectBtn');
   const status = document.getElementById('walletStatus');
+  log("Connect clicked - No Box Version");
+  let eth = window.ethereum;
+  if(!eth){ await new Promise(r=>setTimeout(r,500)); eth = window.ethereum; }
+  if(!eth){
+    alert("Metamask Not Found!\nMOBILE: Metamask App Open -> Browser -> Site Open करा");
+    status.innerText = "Open in Metamask App Browser";
+    if(/Android|iPhone|iPad/i.test(navigator.userAgent)){
+      setTimeout(()=>{ window.location.href = "https://metamask.app.link/dapp/"+window.location.host+window.location.pathname; }, 1000);
+    }
+    return;
+  }
   try{
-    console.log("Connect clicked");
-    if(typeof window.ethereum === 'undefined'){
-      alert("Metamask Not Found!\n\nMobile मध्ये:\n1. Metamask App Open करा\n2. Browser मध्ये ही Site Open करा\n\nDesktop मध्ये:\n1. Metamask Extension Install करा\n2. Refresh करा");
-      if(/Android|iPhone|iPad/i.test(navigator.userAgent)){
-       
+    btn.innerText = "CONNECTING..."; btn.disabled = true; status.innerText = "Connecting...";
+    await eth.request({method:'eth_requestAccounts'});
+    provider = new ethers.providers.Web3Provider(eth);
+    signer = provider.getSigner();
+    userAddress = await signer.getAddress();
+    log("Connected: "+userAddress);
+    status.innerText = userAddress.slice(0,6)+"..."+userAddress.slice(-4);
+    btn.innerText = "CONNECTED ✓"; btn.style.background = "#00b894"; btn.disabled = false;
+    document.getElementById('activeAddr').innerText = userAddress;
+    const affLink = window.location.origin + window.location.pathname + "?ref=" + userAddress;
+    document.getElementById('affLink').value = affLink;
+    document.getElementById('activePkg').innerText = "Package 1 - 1000 MGG - No Condition - Ready";
+    try{
+      const chainId = await eth.request({method:'eth_chainId'});
+      if(chainId !== '0xcc'){
+        try{ await eth.request({method:"wallet_switchEthereumChain",params:[{chainId:"0xcc"}]}); }catch(e){
+          if(e.code===4902){ await eth.request({method:"wallet_addEthereumChain",params:[{chainId:"0xcc",chainName:"opBNB Mainnet",rpcUrls:["https://opbnb-mainnet-rpc.bnbchain.org"],nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18},blockExplorerUrls:["https://opbnbscan.com"]}]});
+          }
+        }
+      }
+    }catch(e){}
+    try{
+      const token = new ethers.Contract(MGG_TOKEN, ["function balanceOf(address) view returns (uint256)"], provider);
+      const mggRaw = await token.balanceOf(userAddress);
+      const mgg = parseFloat(ethers.utils.formatUnits(mggRaw,18));
+      const bnbRaw = await provider.getBalance(userAddress);
+      const bnb = parseFloat(ethers.utils.formatUnits(bnbRaw,18));
+      document.getElementById('balanceBox').style.display = "block";
+      document.getElementById('mggBal').innerText = mgg.toLocaleString()+" MGG";
+      document.getElementById('bnbBal').innerText = bnb.toFixed(5)+" BNB";
+      document.getElementById('totalBal').innerText = mgg.toLocaleString()+" MGG";
+      log("Balances: MGG "+mgg);
+      // Update Awards - No Box
+      document.getElementById('totalAward').innerText = mgg.toLocaleString()+" MGG";
+    }catch(e){ log("Balance error: "+e.message); }
+    if(CONTRACT_ADDRESS !== "0xYOUR_CONTRACT_ADDRESS"){
+      try{
+        const contract = new ethers.Contract(CONTRACT_ADDRESS, ["function getUserInfo(address) view returns (uint8,uint256,uint256,uint256,uint256,uint256)"], provider);
+        const info = await contract.getUserInfo(userAddress);
+        const lvl = Number(info[0]); const aff = Number(info[2]);
+        const earned = parseFloat(ethers.utils.formatUnits(info[1],18));
+        const hold = parseFloat(ethers.utils.formatUnits(info[3],18));
+        currentLevel = lvl; affCount = aff;
+        document.getElementById('totalAward').innerText = earned.toFixed(0)+" MGG";
+        document.getElementById('affiliateAward').innerText = earned.toFixed(0)+" MGG - Team: "+aff;
+        document.getElementById('affTeamCount').innerText = aff;
+        document.getElementById('communityAward').innerText = hold.toLocaleString()+" MGG - HOLD: "+hold.toLocaleString();
+        document.getElementById('communityHold').innerText = hold.toLocaleString();
+        document.getElementById('communityReq').innerText = lvl>0 ? affCommunity[lvl-1] : "0";
+        document.getElementById('loyaltyAward').innerText = earned.toFixed(0)+" MGG";
+        document.getElementById('affCount').innerText = aff;
+        document.getElementById('affList').innerText = aff>0 ? aff+" Affiliates" : "No Affiliates - Share Link";
+        document.getElementById('activePkg').innerText = lvl>0 ? "Level "+lvl+" Active - "+packagesMGG[lvl-1].toLocaleString()+" MGG" : "Package 1 - 1000 MGG - Ready";
+        renderPackagesReal();
+      }catch(e){ renderPackagesReal(); }
+    }else{
+      currentLevel = 0;
+      document.getElementById('activePkg').innerText = "Package 1 - 1000 MGG - No Condition - 1 Then 2 - Ready";
+      renderPackagesReal();
+    }
+  }catch(e){
+    log("Connect error: "+e.message);
+    btn.innerText = "CONNECT WALLET"; btn.disabled = false; status.innerText = "Failed - Try Again";
+    if(e.code!==4001){ alert("Connect Failed: "+e.message); }
+  }
+}
+
+function copyLink(){ const input = document.getElementById('affLink'); if(input.value.includes("Connect")){ alert("Connect Wallet First!"); return; } input.select(); try{ document.execCommand('copy'); alert("Copied!"); }catch(e){ navigator.clipboard.writeText(input.value).then(()=>alert("Copied!")); } }
+function shareLink(){ const val = document.getElementById('affLink').value; if(val.includes("Connect")){ alert("Connect Wallet First!"); return; } if(navigator.share){ navigator.share({title:"MGG ROKET LEGEND", url:val}); }else{ copyLink(); } }
+async function buyPackage(i){ if(i !== currentLevel){ alert("Must buy Package "+(currentLevel+1)+" first! 1 Then 2"); return; } alert("Buy Package "+(i+1)+" - "+packagesMGG[i]+" MGG - Deploy Contract First"); }
+async function retopupPackage(i){ alert("Retopup Package "+(i+1)); }
+async function withdrawCommunity(i){ alert("Community Withdrawal - Level "+(i+1)); }
+
+window.addEventListener('load', ()=>{
+  const urlParams = new URLSearchParams(window.location.search);
+  const ref = urlParams.get('ref');
+  if(ref && ref.startsWith('0x')){ document.getElementById('upline').value = ref; }
+  setTimeout(()=>{ renderPackagesReal(); }, 200);
+  setTimeout(()=>{ if(window.ethereum){ log("Metamask Found ✓"); }else{ log("Metamask NOT Found - Open in Metamask App"); } }, 1000);
+});
+</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute
