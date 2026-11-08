@@ -61,7 +61,19 @@ body{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 30%,#0f3460 60%,#53348
 .bar{height:8px;background:rgba(255,255,255,.18);border-radius:999px;overflow:hidden;margin:10px 0}
 .bar i{display:block;height:100%;background:linear-gradient(90deg,#6c5ce7,#00cec9);width:0%}
 .live{font-size:12px;color:#55efc4;font-weight:700}
+.live-bonus-box{background:#1e1e3a;border:2px solid #00cec9;border-radius:18px;padding:16px;margin-top:16px}
+.live-bonus-head{font-size:22px;font-weight:900;color:#fff;display:flex;align-items:center;gap:10px}
+.live-bonus-head .live-dot{width:14px;height:14px;background:#00e676;box-shadow:0 0 0 0 rgba(0,230,118,.7),0 0 12px #00e676;animation:greenPulse 1.2s infinite}
+.live-bonus-inner{display:flex;flex-direction:column;gap:14px;margin-top:16px}
+.live-inner{border-radius:14px;padding:18px 12px;text-align:center}
+.com-inner{background:#23414f}
+.loy-inner{background:#2b2b4d}
+.live-label{font-size:15px;color:#cbd5e1;font-weight:500}
+.live-num{font-size:42px;font-weight:900;line-height:1.2;margin:6px 0}
+.com-num{color:#00cec9}
+.loy-num{color:#a29bfe}
 .live-dot{display:inline-block;width:8px;height:8px;background:#00e676;border-radius:50%;margin-right:6px;animation:pulse 1.2s infinite}
+@keyframes greenPulse{0%{box-shadow:0 0 0 0 rgba(0,230,118,.7)}70%{box-shadow:0 0 0 10px rgba(0,230,118,0)}100%{box-shadow:0 0 0 0 rgba(0,230,118,0)}}
 @keyframes pulse{0%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}100%{opacity:1;transform:scale(1)}}
 .com-live{background:rgba(0,206,201,.15);border:1px solid rgba(0,206,201,.5);border-radius:10px;padding:8px;margin-top:8px}
 .com-live b{color:#00cec9}
@@ -70,9 +82,6 @@ body{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 30%,#0f3460 60%,#53348
 .live-feed{max-height:120px;overflow:auto;font-size:13px}
 .flex{display:flex;gap:8px;margin-top:10px}
 .flex .btn{flex:1;padding:10px;font-size:13px}
-.qual{font-size:13px;font-weight:700;padding:8px 10px;border-radius:10px;margin-top:10px;text-align:center}
-.qual.red{background:rgba(255,107,107,.18);color:#ff7675;border:1px solid rgba(255,107,107,.4)}
-.qual.green{background:rgba(0,184,148,.18);color:#55efc4;border:1px solid rgba(0,184,148,.5)}
 .team-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:13px}
 .hidden{display:none}
 </style>
@@ -89,15 +98,14 @@ body{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 30%,#0f3460 60%,#53348
   <div class="card">
     <div class="row">
       <div>
-        <div class="small">वॉलेट</div>
+        <div class="small">Wallet</div>
         <div id="walletAddr" class="mono" style="margin-top:6px"></div>
-        <div id="idBox" class="hidden" style="margin-top:10px"><span class="small">तुमचा ID:</span> <b id="myId" style="font-size:20px">#100000</b></div>
-        <div id="qualBox" class="qual red">Affiliate - Not Qualified</div>
+        <div id="idBox" class="hidden" style="margin-top:10px"><span class="small">Your ID:</span> <b id="myId" style="font-size:20px">#100000</b></div>
       </div>
       <div>
         <div class="row" style="gap:10px">
           <div style="background:rgba(0,0,0,.2);border-radius:12px;padding:12px"><div class="small">MGG Balance</div><div class="big" id="mggBal">0</div></div>
-          <div style="background:rgba(0,0,0,.2);border-radius:12px;padding:12px"><div class="small">BNB Balance</div><div class="big" id="bnbBal">0</div></div>
+          <div style="background:rgba(0,0,0,.2);border-radius:12px;padding:12px"><div class="small">OPBNB Balance</div><div class="big" id="bnbBal">0</div></div>
         </div>
         <button id="connectBtn" class="btn btn-primary" style="margin-top:12px">Wallet Connect</button>
         
@@ -113,19 +121,14 @@ body{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 30%,#0f3460 60%,#53348
     <div class="box" style="background:linear-gradient(90deg,#6c5ce7,#00cec9)"><div class="t">Total</div><div class="a" id="totalAmt">0</div><div class="small">MGG</div></div>
   </div>
 
-  <!-- Community LIVE Panel -->
-  <div class="card" style="border:2px solid #00cec9">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-      <h3><span class="live-dot"></span>Community Bonus LIVE</h3>
-      
-    </div>
-    <div class="row" style="margin-top:12px">
-      <div style="background:rgba(0,206,201,.12);border-radius:12px;padding:12px;text-align:center"><div class="small">Community LIVE</div><div class="big" id="comLiveTotal" style="color:#00cec9">0</div><div class="small">MGG</div></div>
-      <div style="background:rgba(108,92,231,.12);border-radius:12px;padding:12px;text-align:center"><div class="small">Loyalty LIVE</div><div class="big" id="loyLiveTotal" style="color:#a29bfe">0</div><div class="small">MGG</div></div>
-      
+  <!-- Live Bonus Box - Photo pramane -->
+  <div class="live-bonus-box">
+    <div class="live-bonus-head"><span class="live-dot"></span>Live Bonus</div>
+    <div class="live-bonus-inner">
+      <div class="live-inner com-inner"><div class="live-label">Community LIVE</div><div class="live-num com-num" id="comLiveTotal">0</div><div class="live-label">MGG</div></div>
+      <div class="live-inner loy-inner"><div class="live-label">Loyalty LIVE</div><div class="live-num loy-num" id="loyLiveTotal">0</div><div class="live-label">MGG</div></div>
     </div>
     <div id="comLiveList" style="margin-top:12px"></div>
-    
   </div>
 
   <!-- Affiliate Link + Team -->
@@ -139,7 +142,7 @@ body{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 30%,#0f3460 60%,#53348
         <button class="btn btn-outline" onclick="shareWA()">WhatsApp</button>
         <button class="btn btn-outline" onclick="shareTG()">Telegram</button>
       </div>
-      <div style="margin-top:12px"><div class="small">Referrer (Upline) Address</div><input id="refInput" class="input" placeholder="0x... Upline चा Address" style="margin-top:6px"></div>
+      <div style="margin-top:12px"><div class="small">Affiliate Address</div><input id="refInput" class="input" placeholder="0x... Affiliate Address" style="margin-top:6px"></div>
     </div>
     <div class="card">
       <h3>Affiliate Team</h3>
@@ -158,13 +161,13 @@ body{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 30%,#0f3460 60%,#53348
   <div class="card">
     <h3>Auto Withdrawal</h3>
     
-    <button class="btn btn-primary" style="margin-top:12px" onclick="doTriggerAll()">Trigger Auto - तिन्ही Auto</button>
+    <button class="btn btn-primary" style="margin-top:12px" onclick="doTriggerAll()">Trigger Auto - All Auto</button>
     
   </div>
 </div>
 
 <script>
-const CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000"; // Deploy नंतर खरा Address टाका
+const CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000"; // Put Real Address After Deploy
 const MGG_TOKEN = "0x7bAFE03A292fEf5bF3c60ae2c924a9956ff1B39D";
 const OPBNB_CHAIN = 204;
 const PACKAGES = [
@@ -284,9 +287,6 @@ async function refreshUser(){
     const id = await contract.userId(userAddr);
     if(id.toString()!=="0"){ document.getElementById('idBox').classList.remove('hidden'); document.getElementById('myId').innerText="#"+id.toString(); document.getElementById('refLink').value = window.location.origin + window.location.pathname + "?ref=" + userAddr; }
     const dc = await contract.directCount(userAddr);
-    const curReq = 0;
-    const qual = document.getElementById('qualBox');
-    if(dc.toNumber()>=curReq){ qual.className="qual green"; qual.innerText=`Affiliate - Qualified`; } else { qual.className="qual red"; qual.innerText=`Affiliate - Not Qualified`; }
     document.getElementById('teamCount').innerText = dc.toString();
     document.getElementById('affAmt').innerText = dc.toString();
     const all = await contract.getAllLevels(userAddr);
@@ -324,7 +324,7 @@ async function doTriggerAll(){
   try{ const tx = await contract.triggerAuto(userAddr); await tx.wait(); await refreshBalances(); await refreshUser(); await refreshLive(); }catch(e){  }
 }
 function copyLink(){ const el=document.getElementById('refLink'); el.select(); document.execCommand('copy');  }
-function shareWA(){ const l=document.getElementById('refLink').value; window.open("https://wa.me/?text="+encodeURIComponent("MGG ROKET LEGEND - Join करा: "+l)); }
+function shareWA(){ const l=document.getElementById('refLink').value; window.open("https://wa.me/?text="+encodeURIComponent("MGG ROKET LEGEND - Join: "+l)); }
 function shareTG(){ const l=document.getElementById('refLink').value; window.open("https://t.me/share/url?url="+encodeURIComponent(l)+"&text="+encodeURIComponent("MGG ROKET LEGEND")); }
 const urlParams = new URLSearchParams(window.location.search);
 if(urlParams.get('ref')){ document.getElementById('refInput').value = urlParams.get('ref'); }
