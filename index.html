@@ -1,333 +1,172 @@
 <!DOCTYPE html>
-<html lang="mr">
-<head><style>
-@font-face {
-  font-family: "Optimistic";
-  font-style: normal;
-  font-weight: 400 600;
-  font-display: swap;
-  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Optimistic Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
-}
-:where(html) {
-  font-family: "Optimistic", system-ui, sans-serif;
-}
-:where(code, pre, kbd, samp) {
-  font-family: "Optimistic Mono", ui-monospace, monospace;
-}
-</style>
+<html lang="en">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MGG ROKET LEGEND</title>
-<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+<script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
-body{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 30%,#0f3460 60%,#533483 100%);min-height:100vh;color:#fff;padding:16px}
-.container{max-width:1100px;margin:0 auto}
-.header{text-align:center;padding:22px 10px 14px}
-.logo{font-size:44px;font-weight:900;color:#fff;letter-spacing:1px;line-height:1}
-.logo span{color:#00cec9}
-.pill{display:inline-block;background:linear-gradient(90deg,#6c5ce7,#00cec9);padding:6px 18px;border-radius:999px;font-weight:800;font-size:18px;margin-top:10px;letter-spacing:3px}
-.sub{opacity:.85;margin-top:10px;font-size:14px}
-.card{background:rgba(255,255,255,.10);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:16px;margin-top:16px}
-.row{display:flex;gap:12px;flex-wrap:wrap}
-.row>*{flex:1;min-width:220px}
-.btn{border:0;cursor:pointer;border-radius:12px;padding:12px 16px;font-weight:800;font-size:15px}
-.btn-primary{background:linear-gradient(90deg,#6c5ce7,#00cec9);color:#fff;width:100%}
-.btn-dark{background:#fff;color:#111;width:100%}
-.btn-outline{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff}
-.small{font-size:13px;opacity:.85;line-height:1.6}
-.big{font-size:28px;font-weight:900}
-.mono{font-family:monospace;word-break:break-all;font-size:13px}
-.input{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.25);color:#fff;outline:none}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
-@media(max-width:700px){.grid4{grid-template-columns:repeat(2,1fr)}.logo{font-size:36px}}
-.box{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:14px;text-align:center}
-.box .t{font-size:13px;opacity:.85}
-.box .a{font-size:26px;font-weight:900;margin-top:6px}
-.pkg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
-@media(max-width:800px){.pkg{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:500px){.pkg{grid-template-columns:1fr}}
-.pcard{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:14px}
-.pname{font-weight:800;font-size:14px;letter-spacing:1px;color:#ffeaa7}
-.pamt{font-size:30px;font-weight:900;margin:8px 0 6px}
-.bonus{display:inline-block;background:#00b894;color:#fff;font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px}
-.bar{height:8px;background:rgba(255,255,255,.18);border-radius:999px;overflow:hidden;margin:10px 0}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,#6c5ce7,#00cec9);width:0%}
-.live{font-size:12px;color:#55efc4;font-weight:700}
-.live-bonus-box{background:#1e1e3a;border:2px solid #00cec9;border-radius:18px;padding:16px;margin-top:16px}
-.live-bonus-head{font-size:22px;font-weight:900;color:#fff;display:flex;align-items:center;gap:10px}
-.live-bonus-head .live-dot{width:14px;height:14px;background:#00e676;box-shadow:0 0 0 0 rgba(0,230,118,.7),0 0 12px #00e676;animation:greenPulse 1.2s infinite}
-.live-bonus-inner{display:flex;flex-direction:column;gap:14px;margin-top:16px}
-.live-inner{border-radius:14px;padding:18px 12px;text-align:center}
-.com-inner{background:#23414f}
-.loy-inner{background:#2b2b4d}
-.live-label{font-size:15px;color:#cbd5e1;font-weight:500}
-.live-num{font-size:42px;font-weight:900;line-height:1.2;margin:6px 0}
-.com-num{color:#00cec9}
-.loy-num{color:#a29bfe}
-.live-dot{display:inline-block;width:8px;height:8px;background:#00e676;border-radius:50%;margin-right:6px;animation:pulse 1.2s infinite}
-@keyframes greenPulse{0%{box-shadow:0 0 0 0 rgba(0,230,118,.7)}70%{box-shadow:0 0 0 10px rgba(0,230,118,0)}100%{box-shadow:0 0 0 0 rgba(0,230,118,0)}}
-@keyframes pulse{0%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}100%{opacity:1;transform:scale(1)}}
-.com-live{background:rgba(0,206,201,.15);border:1px solid rgba(0,206,201,.5);border-radius:10px;padding:8px;margin-top:8px}
-.com-live b{color:#00cec9}
-.loy-live{background:rgba(108,92,231,.15);border:1px solid rgba(108,92,231,.5);border-radius:10px;padding:8px;margin-top:6px}
-.loy-live b{color:#a29bfe}
-.live-feed{max-height:120px;overflow:auto;font-size:13px}
-.flex{display:flex;gap:8px;margin-top:10px}
-.flex .btn{flex:1;padding:10px;font-size:13px}
-.team-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:13px}
-.hidden{display:none}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#0a0a0a;color:#fff;padding:14px;max-width:520px;margin:0 auto}
+h1{text-align:center;color:#ffd700;font-size:24px;margin:10px 0 2px}
+.sub{text-align:center;color:#aaa;font-size:12px;margin-bottom:14px}
+.card{background:#151515;border:1px solid #2a2a2a;border-radius:14px;padding:14px;margin-bottom:12px}
+.btn{width:100%;padding:12px;border:0;border-radius:10px;font-weight:700;cursor:pointer;font-size:15px}
+.btn-gold{background:#ffd700;color:#000}
+.btn-dark{background:#222;color:#fff;border:1px solid #444}
+.btn-green{background:#00c853;color:#fff}
+.btn:disabled{opacity:.5}
+.row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #222;font-size:14px}
+.row b{color:#ffd700}
+input{width:100%;padding:11px;border-radius:10px;border:1px solid #333;background:#222;color:#fff;margin:8px 0}
+.live-title{font-weight:800;font-size:16px;display:flex;align-items:center;gap:8px}
+.dot{width:10px;height:10px;background:#00e676;border-radius:50%;display:inline-block;animation:pulse 1.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,230,118,.6)}100%{box-shadow:0 0 0 10px rgba(0,230,118,0)}}
+.inner{background:#0f0f0f;border:1px solid #2a2a2a;border-radius:10px;padding:10px;margin-top:10px}
+.inner h3{font-size:14px;color:#00e676;margin-bottom:6px}
+.pkg{background:#151515;border:1px solid #2a2a2a;border-radius:12px;padding:12px;margin-bottom:10px}
+.pkg h3{color:#ffd700;font-size:16px}
+.pkg p{color:#aaa;font-size:13px;margin:4px 0}
+.small{font-size:12px;color:#888;text-align:center;margin-top:10px;line-height:1.6}
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="header">
-    <div class="logo">MGG <span>ROKET</span></div>
-    <div class="pill">LEGEND</div>
-    
-  </div>
-
-  <!-- Wallet -->
-  <div class="card">
-    <div class="row">
-      <div>
-        <div class="small">Wallet</div>
-        <div id="walletAddr" class="mono" style="margin-top:6px"></div>
-        <div id="idBox" class="hidden" style="margin-top:10px"><span class="small">Your ID:</span> <b id="myId" style="font-size:20px">#100000</b></div>
-      </div>
-      <div>
-        <div class="row" style="gap:10px">
-          <div style="background:rgba(0,0,0,.2);border-radius:12px;padding:12px"><div class="small">MGG Balance</div><div class="big" id="mggBal">0</div></div>
-          <div style="background:rgba(0,0,0,.2);border-radius:12px;padding:12px"><div class="small">OPBNB Balance</div><div class="big" id="bnbBal">0</div></div>
-        </div>
-        <button id="connectBtn" class="btn btn-primary" style="margin-top:12px">Wallet Connect</button>
-        
-      </div>
-    </div>
-  </div>
-
-  <!-- 4 Boxes -->
-  <div class="grid4">
-    <div class="box"><div class="t">Affiliate</div><div class="a" id="affAmt">0</div><div class="small">Team</div></div>
-    <div class="box"><div class="t">Community</div><div class="a" id="comAmt">0</div><div class="small">MGG</div></div>
-    <div class="box"><div class="t">Loyalty</div><div class="a" id="loyAmt">0</div><div class="small">MGG</div></div>
-    <div class="box" style="background:linear-gradient(90deg,#6c5ce7,#00cec9)"><div class="t">Total</div><div class="a" id="totalAmt">0</div><div class="small">MGG</div></div>
-  </div>
-
-  <!-- Live Bonus Box - Photo pramane -->
-  <div class="live-bonus-box">
-    <div class="live-bonus-head"><span class="live-dot"></span>Live Bonus</div>
-    <div class="live-bonus-inner">
-      <div class="live-inner com-inner"><div class="live-label">Community LIVE</div><div class="live-num com-num" id="comLiveTotal">0</div><div class="live-label">MGG</div></div>
-      <div class="live-inner loy-inner"><div class="live-label">Loyalty LIVE</div><div class="live-num loy-num" id="loyLiveTotal">0</div><div class="live-label">MGG</div></div>
-    </div>
-    <div id="comLiveList" style="margin-top:12px"></div>
-  </div>
-
-  <!-- Affiliate Link + Team -->
-  <div class="row">
-    <div class="card">
-      <h3>Affiliate Link</h3>
-      
-      <input id="refLink" class="input" readonly value="">
-      <div class="flex">
-        <button class="btn btn-dark" onclick="copyLink()">Copy</button>
-        <button class="btn btn-outline" onclick="shareWA()">WhatsApp</button>
-        <button class="btn btn-outline" onclick="shareTG()">Telegram</button>
-      </div>
-      <div style="margin-top:12px"><div class="small">Affiliate Address</div><input id="refInput" class="input" placeholder="0x... Affiliate Address" style="margin-top:6px"></div>
-    </div>
-    <div class="card">
-      <h3>Affiliate Team</h3>
-      <p class="small" style="margin:8px 0">Member Count: <b id="teamCount">0</b></p>
-      <div id="teamList"></div>
-    </div>
-  </div>
-
-  <!-- Packages -->
-  <div class="card">
-    <h3>12 Packages</h3>
-    
-    <div class="pkg" id="pkgGrid"></div>
-  </div>
-
-  <div class="card">
-    <h3>Auto Withdrawal</h3>
-    
-    <button class="btn btn-primary" style="margin-top:12px" onclick="doTriggerAll()">Trigger Auto - All Auto</button>
-    
-  </div>
+<h1>MGG ROKET LEGEND</h1>
+<p class="sub">opBNB Mainnet • Chain ID 204 • MGG Token</p>
+<div class="card">
+<button id="connectBtn" class="btn btn-gold" onclick="connect()">Connect Wallet</button>
+<p id="walletTxt" class="small">Not Connected</p>
+<div class="row"><span>Your ID</span><b id="myId">-</b></div>
+<div class="row"><span>Affiliate</span><b id="myRef">-</b></div>
+<div class="row"><span>Directs</span><b id="myDirect">-</b></div>
+<div class="row"><span>OPBNB Balance</span><b id="bnbBal">-</b></div>
+<div class="row"><span>MGG Balance</span><b id="mggBal">-</b></div>
+<div class="row"><span>Contract</span><b style="font-size:11px">0xC555...dEc9</b></div>
 </div>
-
+<div class="card">
+<div class="live-title"><span class="dot"></span> ● Live Bonus</div>
+<div class="inner"><h3>Community LIVE</h3>
+<div class="row"><span>Pending</span><b id="commPending">0</b></div>
+<div class="row"><span>Claimable Now</span><b id="commClaim">0</b></div>
+<p style="font-size:12px;color:#888">Community is One-Time per Level. Cap reached = Paid Automatically on Trigger.</p>
+</div>
+<div class="inner"><h3>Loyalty LIVE</h3>
+<div class="row"><span>Gross In Cycle</span><b id="loyGross">0</b></div>
+<div class="row"><span>Claimable Now</span><b id="loyClaim">0</b></div>
+<p style="font-size:12px;color:#888">Loyalty Cap = Package x 3. 1-5 Cycles = Reinvest. 6th Cycle = Full Withdraw + Level CLOSED.</p>
+</div>
+<div class="row"><span>Total Live</span><b id="totalLive">0</b></div>
+<button class="btn btn-green" onclick="triggerAll()">Trigger Auto - Claim All</button>
+</div>
+<div class="card">
+<h3 style="margin-bottom:8px">Your Referral Link</h3>
+<input id="refLink" readonly placeholder="Connect first">
+<button class="btn btn-dark" onclick="copyRef()">Copy Referral Link</button>
+<label style="font-size:13px;color:#aaa">Buy With Affiliate (Optional for P1, for new user)</label>
+<input id="refInput" placeholder="Affiliate Wallet Address">
+</div>
+<div id="pkgs"></div>
+<p class="small">Packages are Sequential. P1 first, then P2, then P3...<br>
+Withdraw needs Qualified Directs: P1 0, P2 1, P3 2, P4 3, P5 5, P6 10, P7 20, P8 30, P9 40, P10 50, P11 60, P12 70.<br>
+After 6th Loyalty Cycle, Level CLOSED. Re-Buy same Package to start new 6 Cycles.</p>
 <script>
-const CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000"; // Put Real Address After Deploy
-const MGG_TOKEN = "0x7bAFE03A292fEf5bF3c60ae2c924a9956ff1B39D";
-const OPBNB_CHAIN = 204;
-const PACKAGES = [
-  {name:"STARTER", amt:1000, req:0},{name:"SPARK", amt:2000, req:1},{name:"LIFT", amt:5000, req:2},{name:"THRUST", amt:10000, req:3},
-  {name:"ORBIT", amt:20000, req:5},{name:"LUNAR", amt:50000, req:10},{name:"GALAXY", amt:100000, req:20},{name:"COSMOS", amt:200000, req:30},
-  {name:"NOVA", amt:500000, req:40},{name:"SUPERNOVA", amt:1000000, req:50},{name:"LEGEND", amt:2000000, req:60},{name:"MEGA LEGEND ROKET", amt:5000000, req:70}
-];
-const ABI = [
-  "function buyPackage(uint8 level, address _referrer) external",
-  "function triggerAuto(address _user) external",
-  "function triggerAutoLevel(address _user, uint8 level) external",
-  "function userId(address) view returns (uint256)",
-  "function directCount(address) view returns (uint256)",
-  "function isQualified(address,uint8) view returns (bool)",
-  "function getStatus(address,uint8) view returns ((bool,bool,uint256,uint8,uint256,bool,uint256),uint256,uint256,uint256,uint256)",
-  "function getAllLevels(address) view returns (uint8[],uint256,uint256)"
-];
-const ERC20_ABI = ["function balanceOf(address) view returns (uint256)","function approve(address,uint256) returns (bool)","function allowance(address,address) view returns (uint256)"];
+const TOKEN="0x7bAFE03A292fEf5bF3c60ae2c924a9956ff1B39D";
+const CONTRACT_ADDR="0xC5550a70C1d2865F9FC1028c5f8D8113CEd9dEc9";
+const PKGS=[1000,2000,5000,10000,20000,50000,100000,200000,500000,1000000,2000000,5000000];
+const DIRECTS=[0,1,2,3,5,10,20,30,40,50,60,70];
+const ABI=["function buyPackage(uint8 level, address _referrer) external","function triggerAuto(address _user) external","function triggerAutoLevel(address _user, uint8 level) external","function getAllLevels(address _user) external view returns (uint8[] memory, uint256, uint256)","function getStatus(address _user, uint8 level) external view returns (tuple(bool has,bool everHad,uint256 loyaltyGrossInCycle,uint8 retopupCount,uint256 communityPending,bool isQualifiedNow,uint256 loyaltyCap,bool communityDone), uint256, uint256, uint256, uint256, uint256)","function userId(address) view returns (uint256)","function referrer(address) view returns (address)","function directCount(address) view returns (uint256)","function pkgAmount(uint256) view returns (uint256)","function upgradeReserve(address,uint8) view returns (uint256)"];
+const TOKEN_ABI=["function balanceOf(address) view returns (uint256)","function approve(address,uint256) returns (bool)","function allowance(address,address) view returns (uint256)"];
 let provider, signer, userAddr, contract, tokenContract;
-
-function renderPackages(){
-  const grid=document.getElementById('pkgGrid');
-  grid.innerHTML = PACKAGES.map((p,i)=>{
-    const lvl=i+1;
-    const bonus = p.amt*3;
-    return `<div class="pcard">
-      <div class="pname">P${lvl} • ${p.name}</div>
-      <div class="pamt">${p.amt.toLocaleString('en-IN')} <span style="font-size:14px">MGG</span></div>
-      <span class="bonus">TOTAL BONUS ${bonus.toLocaleString('en-IN')} MGG</span>
-      <div class="bar"><i id="bar-${lvl}"></i></div>
-      <div class="live"><span class="live-dot"></span>LIVE • Affiliate: ${p.req}</div>
-      <div class="com-live">Community LIVE: <b id="com-live-${lvl}">0</b> MGG</div>
-      <div class="loy-live">Loyalty LIVE: <b id="loy-live-${lvl}">0</b> MGG</div>
-      <div class="flex"><button class="btn btn-primary" onclick="buyPkg(${lvl})">Buy</button><button class="btn btn-dark" onclick="triggerPkg(${lvl})">Trigger Auto</button></div>
-      
-    </div>`;
-  }).join('');
-}
-renderPackages();
-
+let contractAddr = CONTRACT_ADDR;
+function fmt(v){ return (Number(ethers.utils.formatEther(v))).toLocaleString('en-US',{maximumFractionDigits:2}); }
 async function connect(){
   try{
-    if(!window.ethereum){ return; }
+    if(!window.ethereum){ alert("Open in MetaMask / SafePal Browser"); return; }
     provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send("eth_requestAccounts", []);
-    const net = await provider.getNetwork();
-    if(net.chainId !== OPBNB_CHAIN){
-      try{ await provider.send("wallet_switchEthereumChain", [{chainId:"0xcc"}]); }catch(e){
-        await provider.send("wallet_addEthereumChain", [{chainId:"0xcc", chainName:"opBNB Mainnet", nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18}, rpcUrls:["https://opbnb-mainnet-rpc.bnbchain.org"], blockExplorerUrls:["https://opbnbscan.com"]}]);
-      }
-    }
+    await provider.send("eth_requestAccounts",[]);
     signer = provider.getSigner();
     userAddr = await signer.getAddress();
-    document.getElementById('walletAddr').innerText = userAddr;
-    document.getElementById('connectBtn').innerText = "Connected ✓";
-    tokenContract = new ethers.Contract(MGG_TOKEN, ERC20_ABI, signer);
-    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-    await refreshBalances();
-    await refreshUser();
-    startLive();
-  }catch(e){  }
+    const net = await provider.getNetwork();
+    if(net.chainId !== 204){ alert("Switch to opBNB Mainnet - Chain ID 204"); try{ await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:"0xCC"}]});}catch(e){} }
+    document.getElementById("walletTxt").innerText = "Connected";
+    document.getElementById("connectBtn").innerText = "Connected";
+    tokenContract = new ethers.Contract(TOKEN, TOKEN_ABI, signer);
+    contract = new ethers.Contract(contractAddr, ABI, signer);
+    await loadAll();
+  }catch(e){ alert("Connect Failed: "+e.message); }
 }
-document.getElementById('connectBtn').onclick = connect;
-
-async function refreshBalances(){
-  const mgg = await tokenContract.balanceOf(userAddr);
-  const bnb = await provider.getBalance(userAddr);
-  document.getElementById('mggBal').innerText = parseFloat(ethers.utils.formatUnits(mgg,18)).toLocaleString('en-IN',{maximumFractionDigits:2});
-  document.getElementById('bnbBal').innerText = parseFloat(ethers.utils.formatUnits(bnb,18)).toFixed(4);
-}
-let liveInterval = null;
-async function refreshLive(){
-  if(!contract || !userAddr) return;
+async function loadAll(){
   try{
-    let totalCom = 0, totalLoy = 0;
-    let listHtml = "";
-    for(let lvl=1; lvl<=12; lvl++){
-      const st = await contract.getStatus(userAddr, lvl);
-      const ul = st[0];
-      const commClaim = st[1];
-      const loyClaim = st[2];
-      const c = ul[4].add(commClaim);
-      const l = ul[2].add(loyClaim);
-      const cNum = parseFloat(ethers.utils.formatUnits(c,18));
-      const lNum = parseFloat(ethers.utils.formatUnits(l,18));
-      totalCom += cNum; totalLoy += lNum;
-      const ce = document.getElementById('com-live-'+lvl);
-      if(ce) ce.innerText = cNum.toFixed(2);
-      const le = document.getElementById('loy-live-'+lvl);
-      if(le) le.innerText = lNum.toFixed(2);
-      // Bar - Community Cap nusar
-      const cap = PACKAGES[lvl-1].amt*0.1;
-      const pct = cap>0 ? Math.min(100, (cNum/cap)*100) : 0;
-      const bar = document.getElementById('bar-'+lvl);
-      if(bar) bar.style.width = pct + "%";
-      if(cNum>0 || lNum>0){
-        listHtml += `<div class="team-item"><span>P${lvl} ${PACKAGES[lvl-1].name} • Community LIVE</span><b style="color:#00cec9">${cNum.toFixed(2)} MGG</b></div><div class="team-item"><span>P${lvl} ${PACKAGES[lvl-1].name} • Loyalty LIVE</span><b style="color:#a29bfe">${lNum.toFixed(2)} MGG</b></div>`;
-      }
-    }
-    document.getElementById('comLiveTotal').innerText = totalCom.toFixed(2);
-    document.getElementById('loyLiveTotal').innerText = totalLoy.toFixed(2);
-    document.getElementById('comLiveList').innerHTML = listHtml || '';
-
-    // Top boxes pan LIVE ne update
-    document.getElementById('comAmt').innerText = totalCom.toFixed(2);
-    document.getElementById('loyAmt').innerText = totalLoy.toFixed(2);
-  }catch(e){}
-}
-function startLive(){
-  if(liveInterval) clearInterval(liveInterval);
-  refreshLive();
-  liveInterval = setInterval(refreshLive, 5000);
-}
-async function refreshUser(){
-  if(CONTRACT_ADDRESS==="0x0000000000000000000000000000000000000000"){  return; }
-  try{
+    const bnb = await provider.getBalance(userAddr);
+    document.getElementById("bnbBal").innerText = Number(ethers.utils.formatEther(bnb)).toFixed(5)+" OPBNB";
+    const mgg = await tokenContract.balanceOf(userAddr);
+    document.getElementById("mggBal").innerText = fmt(mgg)+" MGG";
     const id = await contract.userId(userAddr);
-    if(id.toString()!=="0"){ document.getElementById('idBox').classList.remove('hidden'); document.getElementById('myId').innerText="#"+id.toString(); document.getElementById('refLink').value = window.location.origin + window.location.pathname + "?ref=" + userAddr; }
+    document.getElementById("myId").innerText = id.toString()==="0" ? "Not Registered" : id.toString();
+    const ref = await contract.referrer(userAddr);
+    document.getElementById("myRef").innerText = ref==="0x0000000000000000000000000000000000000000" ? "-" : ref.slice(0,6)+"..."+ref.slice(-4);
     const dc = await contract.directCount(userAddr);
-    document.getElementById('teamCount').innerText = dc.toString();
-    document.getElementById('affAmt').innerText = dc.toString();
-    const all = await contract.getAllLevels(userAddr);
-    const totCom = parseFloat(ethers.utils.formatUnits(all[1],18));
-    const totLoy = parseFloat(ethers.utils.formatUnits(all[2],18));
-    // LIVE madhun total yeto, ithe fakt Affiliate Team dakhavto
-    document.getElementById('totalAmt').innerText = (totCom + totLoy).toFixed(2);
-  }catch(e){}
+    document.getElementById("myDirect").innerText = dc.toString();
+    const base = window.location.origin + window.location.pathname;
+    document.getElementById("refLink").value = base + "?ref=" + userAddr;
+    const url = new URLSearchParams(window.location.search);
+    const r = url.get("ref");
+    if(r) document.getElementById("refInput").value = r;
+    let totCommP=0, totCommC=0, totLoyG=0, totLoyC=0;
+    let statuses=[];
+    for(let lvl=1; lvl<=12; lvl++){
+      try{
+        const s = await contract.getStatus(userAddr, lvl);
+        const ul=s[0];
+        statuses.push({lvl, has:ul.has, everHad:ul.everHad, retop:ul.retopupCount, done:ul.communityDone, qual:ul.isQualifiedNow});
+        totCommP += Number(ethers.utils.formatEther(s[1]));
+        totCommC += Number(ethers.utils.formatEther(s[2]));
+        totLoyG += Number(ethers.utils.formatEther(ul.loyaltyGrossInCycle));
+        totLoyC += Number(ethers.utils.formatEther(s[3]));
+      }catch(e){}
+    }
+    document.getElementById("commPending").innerText = totCommP.toFixed(2);
+    document.getElementById("commClaim").innerText = totCommC.toFixed(2);
+    document.getElementById("loyGross").innerText = totLoyG.toFixed(2);
+    document.getElementById("loyClaim").innerText = totLoyC.toFixed(2);
+    document.getElementById("totalLive").innerText = (totCommP+totCommC+totLoyG+totLoyC).toFixed(2)+" MGG";
+    renderPkgs(statuses);
+  }catch(e){ console.log(e); }
 }
-async function buyPkg(level){
-  if(!signer){ return; }
-  if(CONTRACT_ADDRESS==="0x0000000000000000000000000000000000000000"){ return; }
+function renderPkgs(statuses){
+  let h="";
+  PKGS.forEach((p,i)=>{
+    const lvl=i+1;
+    const st = statuses.find(x=>x.lvl===lvl) || {has:false,everHad:false,retop:0,done:false};
+    let status = "Available";
+    if(st.has) status = "Owned • Cycle "+(st.retop+1)+" / 6";
+    else if(st.everHad) status = "CLOSED • Re-Buy to Restart";
+    h += `<div class="pkg"><h3>P${lvl} - ${p.toLocaleString()} MGG</h3><p>Cap: ${(p*3).toLocaleString()} MGG • Directs Needed: ${DIRECTS[i]} • Status: ${status}</p><button class="btn btn-gold" onclick="buy(${lvl})" ${st.has?"disabled":""}>${st.everHad?"Re-Buy P"+lvl:"Buy P"+lvl}</button><button class="btn btn-dark" style="margin-top:8px" onclick="triggerOne(${lvl})">Trigger Auto P${lvl}</button></div>`;
+  });
+  document.getElementById("pkgs").innerHTML=h;
+}
+async function buy(lvl){
   try{
-    const ref = document.getElementById('refInput').value.trim() || "0x0000000000000000000000000000000000000000";
-    const amt = ethers.utils.parseUnits(PACKAGES[level-1].amt.toString(),18);
-    const allow = await tokenContract.allowance(userAddr, CONTRACT_ADDRESS);
-    if(allow.lt(amt)){ const txA = await tokenContract.approve(CONTRACT_ADDRESS, amt); await txA.wait(); }
-    const tx = await contract.buyPackage(level, ref);
-    
-    await tx.wait();
-    
-    await refreshBalances(); await refreshUser();
-  }catch(e){  }
+    let ref = document.getElementById("refInput").value.trim();
+    if(!ref) ref = "0x0000000000000000000000000000000000000000";
+    const amount = ethers.utils.parseEther(PKGS[lvl-1].toString());
+    const allow = await tokenContract.allowance(userAddr, contractAddr);
+    if(allow.lt(amount)){ const tx1 = await tokenContract.approve(contractAddr, amount); await tx1.wait(); }
+    const tx = await contract.buyPackage(lvl, ref);
+    alert("Buy Sent: "+tx.hash);
+    await tx.wait(); await loadAll();
+  }catch(e){ alert("Buy Failed: "+(e.reason||e.message)); }
 }
-async function triggerPkg(level){
-  if(!signer){ return; }
-  try{
-    const tx = await contract.triggerAutoLevel(userAddr, level); await tx.wait();
-    await refreshUser();
-    await refreshLive();
-  }catch(e){  }
+async function triggerAll(){
+  try{ const tx=await contract.triggerAuto(userAddr); await tx.wait(); alert("Triggered"); await loadAll(); }catch(e){ alert(e.message); }
 }
-async function doTriggerAll(){
-  if(!signer){ return; }
-  try{ const tx = await contract.triggerAuto(userAddr); await tx.wait(); await refreshBalances(); await refreshUser(); await refreshLive(); }catch(e){  }
+async function triggerOne(lvl){
+  try{ const tx=await contract.triggerAutoLevel(userAddr,lvl); await tx.wait(); alert("Triggered P"+lvl); await loadAll(); }catch(e){ alert(e.message); }
 }
-function copyLink(){ const el=document.getElementById('refLink'); el.select(); document.execCommand('copy');  }
-function shareWA(){ const l=document.getElementById('refLink').value; window.open("https://wa.me/?text="+encodeURIComponent("MGG ROKET LEGEND - Join: "+l)); }
-function shareTG(){ const l=document.getElementById('refLink').value; window.open("https://t.me/share/url?url="+encodeURIComponent(l)+"&text="+encodeURIComponent("MGG ROKET LEGEND")); }
-const urlParams = new URLSearchParams(window.location.search);
-if(urlParams.get('ref')){ document.getElementById('refInput').value = urlParams.get('ref'); }
+function copyRef(){
+  const el=document.getElementById("refLink"); el.select(); document.execCommand("copy"); alert("Copied");
+}
+renderPkgs([]);
 </script>
-<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
+</body>
 </html>
