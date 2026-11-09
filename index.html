@@ -36,7 +36,7 @@ h1{text-align:center;color:#d4af37;margin:6px 0 2px;font-size:28px} .sub{text-al
 input{width:100%;padding:11px;border-radius:9px;border:1px solid #444;background:#111;color:#fff;margin:6px 0}
 #msg{background:#221a00;border:1px solid #d4af37;color:#ffe9a8;padding:10px;border-radius:10px;font-size:13px;display:none;white-space:pre-wrap;word-break:break-all}
 </style></head><body>
-<h1>MGG ROKET LEGEND</h1><div class="sub">opBNB Mainnet • Chain ID 204 • MGG Token • FIXED - ethers CDN</div>
+<h1>MGG ROKET LEGEND</h1><div class="sub">opBNB Mainnet • Chain ID 204 • MGG Token • FIXED V2 - Referrer + Gas Fix<br><b style="color:#ffcc00">Wallet GAWALI-PDB (0x8431...324D) nech vapra - Creator Wallet ne Buy karu naka. OPBNB kamit kami 0.001 BNB theva.</b></div>
 <div class="card">
 <button class="btn" onclick="connectWallet()">Connect Wallet</button>
 <div id="walletLine" style="text-align:center;color:#aaa;margin-top:8px">Not Connected</div>
@@ -44,7 +44,7 @@ input{width:100%;padding:11px;border-radius:9px;border:1px solid #444;background
 <div class="row"><span>OPBNB Balance</span><b id="bnbBal">-</b></div>
 <div class="row"><span>MGG Balance</span><b id="mggBal">-</b></div>
 <div class="row"><span>Contract</span><b style="font-size:11px">0xC555...dEc9</b></div>
-<div style="margin-top:10px"><label class="small">Referrer (first P1 buy sathi - nasel tar 0x000...0 thev)</label><input id="refInput" value="0x0000000000000000000000000000000000000000"></div>
+<div style="margin-top:10px"><label class="small">Referrer (first P1 buy sathi - nasel tar 0x000...0 thev)</label><input id="refInput" value="0x8eC323e2e9aab0907365E117b374c872f73cD31e"></div>
 <button class="btn2" onclick="triggerAuto()">Trigger Auto - Pending Bonus Ghe</button>
 <button class="btn2" onclick="refresh()">Refresh Balance</button>
 <div id="msg"></div>
@@ -117,8 +117,15 @@ async function buyPkg(level){
   let allow=await erc.allowance(userAddr,CONTRACT);
   if(allow.lt(amt)){let tx=await erc.approve(CONTRACT,amt); await tx.wait();}
   show('Step 2/2: Buy Package '+info.n+' ... Confirm daba.');
-  let c=new ethers.Contract(CONTRACT,["function buyPackage(uint256,address)"],signer);
-  let tx2=await c.buyPackage(level,ref); show('Buy Transaction Pathavli: '+tx2.hash+' ... Confirm hotay...');
+  let c=new ethers.Contract(CONTRACT,["function buyPackage(uint256,address)","function buyPackage(address,uint256)"],signer);
+  let tx2;
+  try{
+    tx2=await c["buyPackage(uint256,address)"](level,ref,{gasLimit:600000});
+  }catch(e1){
+    show('Pahila try fail zala, dusra try - buyPackage(referrer, level) ... '+e1.message.slice(0,120));
+    tx2=await c["buyPackage(address,uint256)"](ref,level,{gasLimit:600000});
+  }
+  show('Buy Transaction Pathavli: '+tx2.hash+' ... Confirm hotay...');
   await tx2.wait(); show('Buy SUCCESS ✅ Level '+level+' '+info.n+' Buy zala! Refresh daba.');
   await refresh();
  }catch(e){show('Buy Failed: '+e.message);}
