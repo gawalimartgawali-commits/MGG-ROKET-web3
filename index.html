@@ -134,7 +134,7 @@ async function triggerAuto(){
     let ct=new ethers.Contract(c,abi,signer);
     let tx=await ct.triggerAuto(userAddr);
     await tx.wait();
-    alert("LIVE Done");
+    alert("LIVE Done - Now Press Refresh Income"); await refreshIncome();
   }catch(e){ alert("Transaction failed. Try again."); }
 }
 
@@ -159,25 +159,36 @@ async function refreshIncome(){
   try{
     let c=getContractAddr();
     let ct=new ethers.Contract(c,abi,provider);
-    let all=await ct.getAllLevels(userAddr);
-    let commPending=Number(ethers.utils.formatEther(all.totalPendingComm));
-    let loyGross=Number(ethers.utils.formatEther(all.totalGrossLoy));
-    // Affiliate is paid instantly to wallet, not stored in contract - so we show it as already in balance, and estimate from balance change is not possible. Show 200 if direct exists.
-    // For display: Total Bonus = Community Pending + Loyalty Gross + Affiliate already paid (we show Affiliate as 200 if user has ID 100000 and has 1 direct, else 0 - will be updated after direct buy)
-    // To keep honest: Affiliate box shows "Already Paid to Wallet - Check Balance" if we cannot fetch it. But for this user, we know 1 direct gave 200, so we try to read directCount via getStatus? Use directCount from contract via userLevels? Fallback: show Affiliate from stored local value
+    let totalComm=0, totalLoy=0;
+    let details="";
+    for(let lvl=1; lvl<=12; lvl++){
+      try{
+        let st=await ct.getStatus(userAddr, lvl);
+        // getStatus returns: ul, commPending, commClaimable, loyClaimable, commCap, upgradeRes
+        let commPending=Number(ethers.utils.formatEther(st.commPending));
+        let commClaim=Number(ethers.utils.formatEther(st.commClaimable));
+        let loyClaim=Number(ethers.utils.formatEther(st.loyClaimable));
+        let has=st.ul.has;
+        if(has){
+          totalComm += commPending + commClaim;
+          totalLoy += loyClaim + Number(ethers.utils.formatEther(st.ul.loyaltyGrossInCycle));
+          details += "P"+lvl+": Comm Pending "+commPending+" + Claimable "+commClaim+" | Loy Claimable "+loyClaim+" | Qualified "+st.ul.isQualifiedNow+" | ";
+        }
+      }catch(e){}
+    }
     let affStored=Number(localStorage.getItem("mgg_affiliate")||"0");
-    // Try to get directCount by calling getStatus for P1 and reading? getStatus does not return directCount, so keep stored.
-    // If user has at least 1 direct, Affiliate should be at least 200 - we show stored + note
-    el("comBonusBox").innerText=commPending.toLocaleString()+" MGG";
-    el("loyBonusBox").innerText=loyGross.toLocaleString()+" MGG";
-    el("comPending").innerText=commPending.toLocaleString()+" MGG";
-    el("loyPending").innerText=loyGross.toLocaleString()+" MGG";
-    // Total = Comm + Loy + Affiliate stored
-    let total=commPending+loyGross+affStored;
+    el("comBonusBox").innerText=totalComm.toLocaleString()+" MGG";
+    el("loyBonusBox").innerText=totalLoy.toLocaleString()+" MGG";
+    el("comPending").innerText=totalComm.toLocaleString()+" MGG";
+    el("loyPending").innerText=totalLoy.toLocaleString()+" MGG";
+    el("affBonus").innerText=affStored.toLocaleString()+" MGG (Already in Wallet)";
+    let total=totalComm+totalLoy+affStored;
     el("totalBonus").innerText=total.toLocaleString()+" MGG";
     el("totalIncome").innerText=total.toLocaleString()+" MGG";
-    el("affBonus").innerText=affStored.toLocaleString()+" MGG";
-    if(commPending===0 && loyGross===0){ el("totalIncome").innerText="0 MGG - Press LIVE - Check Bonus to claim Community, Loyalty is Pending in Contract"; }
+    if(total===0){ el("totalIncome").innerText="0 MGG - Press LIVE - Check Bonus first, then Refresh. If still 0, you are not Qualified yet (need 1 Direct)"; }
+    // Show details in debug if exists
+    let dbg=document.getElementById("debugInfo");
+    if(dbg) dbg.innerText="Claimable Details: "+details+" | Note: Affiliate 200 already in Wallet Balance, not in Pending.";
     await refresh();
   }catch(e){ alert("Income Check Failed: "+e.message.slice(0,300)); }
 }
