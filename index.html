@@ -35,20 +35,21 @@
 </div>
 <div style="background:#f5c518;color:#000;border-radius:10px;padding:12px;margin-top:10px;text-align:center"><p style="margin:0;font-size:12px">TOTAL INCOME</p><h1 style="margin:0" id="totalIncome">0 MGG</h1></div>
 <button onclick="refreshIncome()">Refresh Income - LIVE</button></div>
-<div class="card"><h3>Wallet</h3><button onclick="connect()">Connect Wallet</button><p id="addr">Not Connected</p><p>MGG: <span id="mggBal">-</span> | BNB: <span id="bnbBal">-</span> | ID: <span id="myId">-</span></p><label>Contract Address - Fixed</label><input id="contractAddr" value="0xC5550a70C1d2865F9FC1028c5f8D8113CEd9dEc9" readonly style="background:#222;color:#00ff88"><label>Affiliate / Referrer Address</label><p id="affDisplay" style="color:#00ff88;font-size:12px">First user = 0x000...0, others = link ?ref=</p><input id="referrer" value="0x0000000000000000000000000000000000000000"></div>
+<div class="card"><h3>Wallet</h3><button onclick="connect()">Connect Wallet</button><p id="addr">Not Connected</p><p>MGG: <span id="mggBal">-</span> | BNB: <span id="bnbBal">-</span> | ID: <span id="myId">-</span></p><label>Contract Address - Fixed</label><input id="contractAddr" value="0xC5550a70C1d2865F9FC1028c5f8D8113CEd9dEc9" readonly style="background:#222;color:#00ff88"><label>Affiliate / Referrer Address</label><p id="affDisplay" style="color:#00ff88;font-size:12px">First user = 0x000...0, others = link ?ref=</p><button onclick="useZero()" style="background:#333;color:#f5c518;border:1px solid #f5c518">I am First User (0x8431... Wallet) - Use Zero Referrer</button><button onclick="useFirst()" style="background:#333;color:#00ff88;border:1px solid #00ff88">I am Second User - Use First Wallet as Referrer</button><input id="referrer" value="0x843162bFc44b13dAAdB13652681b3902332f324D"></div>
 <div class="card"><h3>Referral Link</h3><input id="refLink" readonly value="Connect wallet to get link"><button onclick="copyRef()">Copy Referral Link</button><p id="copyMsg"></p></div>
 <div class="card" style="border:2px solid #00ff88"><h3 style="color:#00ff88">LOYALTY BONUS - LIVE</h3><p>Loyalty Pending: <span id="loyPending">-</span> MGG | Cap: <span id="loyCap">3000 (P1)</span></p><p>Cycle: <span id="loyCycle">-</span> / 6 | Reserve: <span id="loyReserve">-</span></p><p>Status: <span id="loyStatus">-</span></p><button onclick="refreshLoyalty()">LOYALTY - Check Live</button></div>
 <div class="card" style="border:2px solid #f5c518"><h3 style="color:#f5c518">COMMUNITY BONUS - LIVE</h3><p>Community Pending: <span id="comPending">-</span></p><button onclick="triggerAuto()">LIVE - Check Bonus</button><button onclick="refresh()">Refresh Balance</button></div>
-<h2 style="text-align:center;color:#f5c518">PACKAGES - 12 Levels</h2>
+<div class="card" style="border:2px solid red"><h3 style="color:red">DEBUG - Why Buy Fails?</h3><p id="debugInfo">Connect Wallet then press Check</p><button onclick="checkDebug()">Check My ID + Referrer + Allowance</button></div><h2 style="text-align:center;color:#f5c518">PACKAGES - 12 Levels</h2>
 <div id="pkgs"></div>
 <div class="card"><p>Distribution: Loyalty 60%, Affiliate 20%, Community 10%, Creator 10%. Community one-time per level. Loyalty cap 300%. Level closes after 6 cycles.</p></div>
 <script>
 const TOKEN="0x7bAFE03A292fEf5bF3c60ae2c924a9956ff1B39D";
+const DEFAULT_REFERRER="0x843162bFc44b13dAAdB13652681b3902332f324D";
 const CONTRACT_ADDR="0xC5550a70C1d2865F9FC1028c5f8D8113CEd9dEc9";
 const pkgs=[[1,1000,0],[2,2000,1],[3,5000,2],[4,10000,3],[5,20000,5],[6,50000,10],[7,100000,20],[8,200000,30],[9,500000,40],[10,1000000,50],[11,2000000,60],[12,5000000,70]];
 let provider=null, signer=null, userAddr=null;
 const abi=["function buyPackage(uint8 level,address _referrer) external","function triggerAuto(address _user) external","function userId(address) view returns(uint256)"];
-const ercAbi=["function approve(address spender,uint256 amount) external returns(bool)","function balanceOf(address) view returns(uint256)"];
+const ercAbi=["function approve(address spender,uint256 amount) external returns(bool)","function balanceOf(address) view returns(uint256)","function allowance(address owner,address spender) view returns(uint256)"];
 function el(id){ return document.getElementById(id); }
 function render(){
   let h="";
@@ -100,12 +101,32 @@ async function buy(lvl){
     let raw=(el("referrer").value||"").trim();
     let ref="0x0000000000000000000000000000000000000000";
     if(raw.startsWith("0x") && raw.length===42){ ref=raw; }
+    if(userAddr && ref.toLowerCase()===userAddr.toLowerCase()){
+      alert("Self Refer nahi chalat! Tuzyach Wallet la Referrer taklays. Ata Zero Referrer vaparto - First User sathi hech barobar aahe.");
+      ref="0x0000000000000000000000000000000000000000";
+      el("referrer").value=ref;
+    }
+    // CHECK 1: Already have ID?
+    let ctRead=new ethers.Contract(c,abi,provider);
+    let myId=await ctRead.userId(userAddr);
+    if(myId.toString()!=="0"){
+      // Already registered - check if already has this level? Try buy anyway, but warn
+      el("affDisplay").innerText="Your ID already: "+myId.toString()+" - If P1 already bought, 2nd Buy will Fail. Try P2 or check ID.";
+    }
     let ct=new ethers.Contract(c,abi,signer);
     let tx=await ct.buyPackage(lvl,ref);
     await tx.wait();
-    alert("Buy Done");
+    alert("Buy Done - ID: "+myId.toString());
     await refresh();
-  }catch(e){ alert("Transaction failed. Try again."); }
+  }catch(e){
+    let msg=(e && e.message) ? e.message : String(e);
+    let reason="";
+    if(e && e.reason) reason=" Reason: "+e.reason;
+    if(e && e.data && e.data.message) reason+=" Data: "+e.data.message;
+    // Shorten for mobile
+    let shortMsg=msg.slice(0,500);
+    alert("BUY FAILED: " + shortMsg + reason);
+  }
 }
 async function triggerAuto(){
   try{
@@ -116,6 +137,20 @@ async function triggerAuto(){
     alert("LIVE Done");
   }catch(e){ alert("Transaction failed. Try again."); }
 }
+
+async function checkDebug(){
+  try{
+    let c=getContractAddr();
+    let ct=new ethers.Contract(c,abi,provider);
+    let myId=await ct.userId(userAddr);
+    let tok=new ethers.Contract(TOKEN,ercAbi,provider);
+    let allow=await tok.allowance(userAddr,c);
+    let bal=await tok.balanceOf(userAddr);
+    el("debugInfo").innerText="My ID: "+myId.toString()+" | Referrer: "+el("referrer").value+" | Allowance: "+Number(ethers.utils.formatEther(allow)).toLocaleString()+" MGG | Balance: "+Number(ethers.utils.formatEther(bal)).toLocaleString()+" MGG | Contract: "+c+" | If ID !=0, you already bought P1, 2nd P1 will FAIL. If Allowance <1000, Approve again.";
+  }catch(e){ el("debugInfo").innerText="Check Failed: "+e.message.slice(0,300); }
+}
+
+function useZero(){ el("referrer").value="0x0000000000000000000000000000000000000000"; el("affDisplay").innerText="First User - Zero Referrer - ID 100000 milnar"; } function useFirst(){ el("referrer").value=DEFAULT_REFERRER; el("affDisplay").innerText="Second User - Referrer: "+DEFAULT_REFERRER; }
 async function refreshLoyalty(){
   el("loyStatus").innerText="Connect Wallet, then check. Loyalty comes when team buys.";
 }
