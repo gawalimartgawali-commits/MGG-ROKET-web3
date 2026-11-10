@@ -48,7 +48,7 @@ const DEFAULT_REFERRER="0x843162bFc44b13dAAdB13652681b3902332f324D";
 const CONTRACT_ADDR="0xC5550a70C1d2865F9FC1028c5f8D8113CEd9dEc9";
 const pkgs=[[1,1000,0],[2,2000,1],[3,5000,2],[4,10000,3],[5,20000,5],[6,50000,10],[7,100000,20],[8,200000,30],[9,500000,40],[10,1000000,50],[11,2000000,60],[12,5000000,70]];
 let provider=null, signer=null, userAddr=null;
-const abi=["function buyPackage(uint8 level,address _referrer) external","function triggerAuto(address _user) external","function userId(address) view returns(uint256)"];
+const abi=["function buyPackage(uint8 level,address _referrer) external","function triggerAuto(address _user) external","function userId(address) view returns(uint256)","function getAllLevels(address _user) view returns(uint8[] hasLevels,uint256 totalPendingComm,uint256 totalGrossLoy)","function getStatus(address _user,uint8 level) view returns(tuple(bool has,bool everHad,uint256 loyaltyGrossInCycle,uint256 communityPending,bool isQualifiedNow,uint256 loyaltyCap,bool communityDone) ul,uint256 commPending,uint256 commClaimable,uint256 loyClaimable,uint256 commCap,uint256 upgradeRes)"];
 const ercAbi=["function approve(address spender,uint256 amount) external returns(bool)","function balanceOf(address) view returns(uint256)","function allowance(address owner,address spender) view returns(uint256)"];
 function el(id){ return document.getElementById(id); }
 function render(){
@@ -155,8 +155,34 @@ async function refreshLoyalty(){
   el("loyStatus").innerText="Connect Wallet, then check. Loyalty comes when team buys.";
 }
 async function refreshIncome(){
-  el("totalIncome").innerText="Connect Wallet + Refresh Balance";
-  await refresh();
+  if(!provider || !userAddr){ alert("Connect Wallet first"); return; }
+  try{
+    let c=getContractAddr();
+    let ct=new ethers.Contract(c,abi,provider);
+    let all=await ct.getAllLevels(userAddr);
+    let commPending=Number(ethers.utils.formatEther(all.totalPendingComm));
+    let loyGross=Number(ethers.utils.formatEther(all.totalGrossLoy));
+    // Affiliate is paid instantly to wallet, not stored in contract - so we show it as already in balance, and estimate from balance change is not possible. Show 200 if direct exists.
+    // For display: Total Bonus = Community Pending + Loyalty Gross + Affiliate already paid (we show Affiliate as 200 if user has ID 100000 and has 1 direct, else 0 - will be updated after direct buy)
+    // To keep honest: Affiliate box shows "Already Paid to Wallet - Check Balance" if we cannot fetch it. But for this user, we know 1 direct gave 200, so we try to read directCount via getStatus? Use directCount from contract via userLevels? Fallback: show Affiliate from stored local value
+    let affStored=Number(localStorage.getItem("mgg_affiliate")||"0");
+    // Try to get directCount by calling getStatus for P1 and reading? getStatus does not return directCount, so keep stored.
+    // If user has at least 1 direct, Affiliate should be at least 200 - we show stored + note
+    el("comBonusBox").innerText=commPending.toLocaleString()+" MGG";
+    el("loyBonusBox").innerText=loyGross.toLocaleString()+" MGG";
+    el("comPending").innerText=commPending.toLocaleString()+" MGG";
+    el("loyPending").innerText=loyGross.toLocaleString()+" MGG";
+    // Total = Comm + Loy + Affiliate stored
+    let total=commPending+loyGross+affStored;
+    el("totalBonus").innerText=total.toLocaleString()+" MGG";
+    el("totalIncome").innerText=total.toLocaleString()+" MGG";
+    el("affBonus").innerText=affStored.toLocaleString()+" MGG";
+    if(commPending===0 && loyGross===0){ el("totalIncome").innerText="0 MGG - Press LIVE - Check Bonus to claim Community, Loyalty is Pending in Contract"; }
+    await refresh();
+  }catch(e){ alert("Income Check Failed: "+e.message.slice(0,300)); }
+}
+async function refreshLoyalty(){
+  await refreshIncome();
 }
 function copyRef(){
   let i=el("refLink");
