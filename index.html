@@ -61,11 +61,11 @@ async function autoConnect(){
     if(accs && accs.length>0){
       signer=provider.getSigner(); userAddr=accs[0];
       el("addr").innerText=userAddr;
-      el("autoMsg").innerText="Wallet Auto-Connected: "+userAddr.slice(0,6)+"..."+userAddr.slice(-4);
+      el("autoMsg").innerText="";
       await refresh();
       await resolveRef();
     } else {
-      el("autoMsg").innerText="Wallet Connect nahi - Connect Wallet daba (ekda Connect kelyavar pudhchya veles aapoaap hoil)";
+      el("autoMsg").innerText="";
     }
   }catch(e){}
 }
@@ -122,7 +122,25 @@ function affCacheKey(){ return "mgg_aff_"+userAddr.toLowerCase(); }
 function getAffCache(){ try{ return Number(localStorage.getItem(affCacheKey())||"0"); }catch(e){ return 0; } }
 function saveAffCache(v){ try{ let old=getAffCache(); if(v>old) localStorage.setItem(affCacheKey(), String(v)); }catch(e){} }
 
-async function connect(){ try{ provider=new ethers.providers.Web3Provider(window.ethereum); await provider.send("eth_requestAccounts",[]); signer=provider.getSigner(); userAddr=await signer.getAddress(); el("addr").innerText=userAddr; await refresh(); }catch(e){  } }
+async function connect(){
+  if(!window.ethereum){
+    el("addr").innerText="Wallet sapadla nahi - MetaMask / Trust Wallet App madhye site ughad";
+    el("autoMsg").innerText="Chrome madhye Connect honar nahi - MetaMask App > Browser > Link tak";
+    return;
+  }
+  try{
+    provider=new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts",[]);
+    signer=provider.getSigner(); userAddr=await signer.getAddress();
+    el("addr").innerText=userAddr;
+    el("autoMsg").innerText="";
+    // opBNB check - 204 chainId
+    try{ let net=await provider.getNetwork(); if(net.chainId!==204){ try{ await provider.send("wallet_switchEthereumChain",[{chainId:"0xCC"}]); }catch(e){} } }catch(e){}
+    await refresh();
+  }catch(e){
+    el("addr").innerText="Connect Reject zala - parat Connect daba";
+  }
+}
 
 
 async function updatePackageButtons(){
@@ -267,11 +285,11 @@ async function autoConnect(){
     if(accs && accs.length>0){
       signer=provider.getSigner(); userAddr=accs[0];
       el("addr").innerText=userAddr;
-      el("autoMsg").innerText="Wallet Auto-Connected: "+userAddr.slice(0,6)+"..."+userAddr.slice(-4);
+      el("autoMsg").innerText="";
       await refresh();
       await resolveRef();
     } else {
-      el("autoMsg").innerText="Wallet Connect nahi - Connect Wallet daba (ekda Connect kelyavar pudhchya veles aapoaap hoil)";
+      el("autoMsg").innerText="";
     }
   }catch(e){}
 }
