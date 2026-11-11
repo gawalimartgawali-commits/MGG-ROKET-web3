@@ -190,7 +190,7 @@ const TOKEN="0x7bAFE03A292fEf5bF3c60ae2c924a9956ff1B39D";
 const CONTRACT_ADDR="0xC5550a70C1d2865F9FC1028c5f8D8113CEd9dEc9";
 const pkgs=[[1,1000,0],[2,2000,1],[3,5000,2],[4,10000,3],[5,20000,5],[6,50000,10],[7,100000,20],[8,200000,30],[9,500000,40],[10,1000000,50],[11,2000000,60],[12,5000000,70]];
 let provider=null,signer=null,userAddr=null;
-const abi=["function buyPackage(uint8 level,address _referrer) external","function triggerAuto(address _user) external","function userId(address) view returns(uint256)","function idToAddress(uint256) view returns(address)","function getAllLevels(address _user) view returns(uint8[] hasLevels,uint256 totalPendingComm,uint256 totalGrossLoy)","event Registered(address indexed user,uint256 indexed id,address indexed referrer)","event AffiliateAuto(address indexed to,address indexed from,uint8 level,uint256 amount)","function getStatus(address _user,uint8 level) view returns(tuple(bool has,bool everHad,uint256 loyaltyGrossInCycle,uint256 communityPending,bool isQualifiedNow,uint256 loyaltyCap,bool communityDone) ul,uint256 commPending,uint256 commClaimable,uint256 loyClaimable,uint256 commCap,uint256 upgradeRes)"];
+const abi=["function buyPackage(uint8 level,address _referrer) external","function triggerAuto(address _user) external","function userId(address) view returns(uint256)","function idToAddress(uint256) view returns(address)","function directCount(address) view returns(uint256)","function referrer(address) view returns(address)","function getAllLevels(address _user) view returns(uint8[] hasLevels,uint256 totalPendingComm,uint256 totalGrossLoy)","event Registered(address indexed user,uint256 indexed id,address indexed referrer)","event AffiliateAuto(address indexed to,address indexed from,uint8 level,uint256 amount)","function getStatus(address _user,uint8 level) view returns(tuple(bool has,bool everHad,uint256 loyaltyGrossInCycle,uint256 communityPending,bool isQualifiedNow,uint256 loyaltyCap,bool communityDone) ul,uint256 commPending,uint256 commClaimable,uint256 loyClaimable,uint256 commCap,uint256 upgradeRes)"];
 const ercAbi=["function approve(address spender,uint256 amount) external returns(bool)","function balanceOf(address) view returns(uint256)","function allowance(address owner,address spender) view returns(uint256)"];
 function el(id){return document.getElementById(id)}
 function getContractAddr(){let v=el("contractAddr").value; if(!v||v.length<10) return CONTRACT_ADDR; return v;}
@@ -254,14 +254,22 @@ async function queryInChunks(ct, filter){
   let all=[];
   try{
     let latest=await provider.getBlockNumber();
-    let start=Math.max(0, latest-200000);
-    for(let s=start; s<=latest; s+=40000){
-      let e=Math.min(s+39999, latest);
-      try{ let chunk=await ct.queryFilter(filter, s, e); all=all.concat(chunk); }catch(err){}
+    // FIX: 0 pasun - kalche, parva che sagle Event - fakt shevatche 200k nahi
+    let start=0;
+    let CHUNK=20000;
+    for(let s=start; s<=latest; s+=CHUNK){
+      let e=Math.min(s+CHUNK-1, latest);
+      try{ let chunk=await ct.queryFilter(filter, s, e); all=all.concat(chunk); }
+      catch(err){ try{ // retry ekda lahan chunk ne
+        for(let s2=s; s2<=e; s2+=5000){ let e2=Math.min(s2+4999,e); try{ let c2=await ct.queryFilter(filter,s2,e2); all=all.concat(c2);}catch(e2){} }
+      }catch(e){} }
     }
   }catch(e){}
   return all;
 }
+function affCacheKey(){ return "mgg_aff_"+userAddr.toLowerCase(); }
+function getAffCache(){ try{ return Number(localStorage.getItem(affCacheKey())||"0"); }catch(e){ return 0; } }
+function saveAffCache(v){ try{ let old=getAffCache(); if(v>old) localStorage.setItem(affCacheKey(), String(v)); }catch(e){} }
 async function refreshIncome(){
   if(!provider||!userAddr) return;
   try{
@@ -294,6 +302,8 @@ async function refreshIncome(){
       let evts=await queryInChunks(ct, filter);
       for(let e of evts) affTotal += Number(ethers.utils.formatEther(e.args.amount));
     }catch(e){}
+    // Kalcha Affiliate - Cache madhun parat ana, 0 hou deu naka
+    saveAffCache(affTotal); affTotal=Math.max(affTotal, getAffCache());
     
     let fmt=(v)=>v.toLocaleString(undefined,{maximumFractionDigits:2})+" MGG";
     // Per-package Affiliate - pratyek package cha vegla
@@ -302,7 +312,10 @@ async function refreshIncome(){
       let f2=ct.filters.AffiliateAuto(userAddr, null, null);
       let ev2=await queryInChunks(ct, f2);
       for(let e of ev2){ let lv=Number(e.args.level); affByLevel[lv]=(affByLevel[lv]||0)+Number(ethers.utils.formatEther(e.args.amount)); }
-      for(let lvl2=1; lvl2<=12; lvl2++){ let ap=el("affP"+lvl2); if(ap) ap.innerText=(affByLevel[lvl2]||0).toLocaleString(undefined,{maximumFractionDigits:2}); }
+      for(let lvl2=1; lvl2<=12; lvl2++){ 
+        let k="mgg_aff_lvl_"+userAddr.toLowerCase()+"_"+lvl2; let cached=Number(localStorage.getItem(k)||"0"); let v=affByLevel[lvl2]||0; if(v>cached) localStorage.setItem(k,String(v)); v=Math.max(v,cached);
+        let ap=el("affP"+lvl2); if(ap) ap.innerText=v.toLocaleString(undefined,{maximumFractionDigits:2}); 
+      }
     }catch(e){}
 
     el("comBonusBox").innerText=fmt(totalComm);
@@ -328,8 +341,13 @@ async function showAffiliates(){
     let affEvts=await queryInChunks(ct, affFilter);
     let affByFrom={}; let affTotal=0;
     for(let e of affEvts){ let f=e.args.from.toLowerCase(); let amt=Number(ethers.utils.formatEther(e.args.amount)); affByFrom[f]=(affByFrom[f]||0)+amt; affTotal+=amt; }
-    el("directCount").innerText=regEvts.length.toString();
-    el("affTotalList").innerText=affTotal.toLocaleString(undefined,{maximumFractionDigits:2})+" MGG";
+    // Direct Count - Contract madhun (permanent, Event var avlambun nahi)
+    let dc=regEvts.length;
+    try{ let c2=await ct.directCount(userAddr); dc=Number(c2.toString()); }catch(e){}
+    el("directCount").innerText=dc.toString();
+    // Affiliate - kalcha pan - Event + Cache, kadhich 0 la parat nahi
+    saveAffCache(affTotal); let affShow=Math.max(affTotal, getAffCache());
+    el("affTotalList").innerText=affShow.toLocaleString(undefined,{maximumFractionDigits:2})+" MGG";
     if(regEvts.length===0){ el("affList").innerHTML=""; return; }
     let out="";
     for(let e of regEvts){
